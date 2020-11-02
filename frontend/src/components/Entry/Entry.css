@@ -1,0 +1,46 @@
+.login-container-wrapper {
+    background-image: url('../../Images/login-background.jpg');
+    opacity: 0.80;
+    min-height: 90vh; 
+    color: white;
+}
+
+.login {
+    margin-top: 30% ; 
+    font-family: 'Lato', sans-serif;
+}
+
+.login-tag-line {
+    margin-bottom: 5%;
+    font-weight: 700;
+}
+
+.login-radio-buttons {
+    margin-bottom: 2%;
+}
+
+.login-tag-line h3{
+    font-weight: 800;
+}
+
+.login-button {
+    background-color: rgb(24, 97, 191);
+    color: #fff;
+    width: 200px;
+    padding: 7px 16px;
+    font-weight: bold;
+}
+
+.login-button:hover {
+    background-color: rgb(12, 64, 133);
+    color: #fff;
+}
+
+.sign-up {
+    font-weight: bold;
+    color: #fff
+}
+
+.sign-up:hover {
+    color: #fff
+}

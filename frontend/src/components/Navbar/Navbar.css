@@ -1,0 +1,125 @@
+.manual-container {
+    margin: 0 5%;
+}
+
+.navbar-container-wrapper {
+    border-bottom: 1px solid lightgray;
+}
+
+nav {
+    background-color: #fff;
+}
+
+.logo-image {
+    height: 60px; 
+    width: 170px
+}
+
+.navbar-search-wrapper {
+    position: relative;
+    width: 370px;
+    height: 40px;
+    border: 1px solid lightgray;
+}
+
+.navbar-search-icon {
+    position: absolute;
+    left: 10px;
+    top: 10px;
+}
+
+.navbar-search {
+    border:none;
+    background:#fff; 
+    display:block; 
+    width: 100%;
+    box-sizing: border-box;
+    text-indent: 25px;;
+}
+
+.navbar-search-placeholder-hidden {
+    display: none;
+}
+
+nav li {
+    margin: 0 5px;
+}
+
+nav .dropdown-toggle {
+    text-align: left;
+}
+
+nav .dropdown-toggle::after {
+    float: right;
+    margin-top: 10px;
+}
+
+.navbar-dropdown-button {
+    border: 1px solid lightgray;
+    width: 130px;
+    height: 40px;
+}
+
+.navbar-search-location {
+    width: 270px;
+}
+
+.green-button {
+    border-radius: 3px;
+    border: 1px solid transparent;
+    font-weight: 500;
+    font-size: 15px;
+    color: #fff;
+    cursor: pointer;
+    display: inline-block;
+    line-height: 1.6;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 88px;
+    background-color: #0CA941;
+    padding: 5px 16px;
+    font-family: 'Lato', sans-serif;
+    height: 40px;
+}
+
+.green-button:hover {
+    background-color: #056b27;
+    color: #fff;
+}
+
+.notification-icon {
+    margin-left: 30px;
+    margin-top: 3px;
+    cursor: pointer;
+}
+
+.notification-icon .notification-icon-hover {
+    display: none;
+}
+
+.notification-icon:hover .notification-icon-hover {
+    display: block;
+}
+
+.notification-icon:hover .normal-notification-icon {
+    display: none;
+}
+
+.user-icon {
+    margin-top: 2px;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.user-icon .user-icon-hover {
+    display: none;
+}
+
+.user-icon:hover .user-icon-hover {
+    display: block;
+}
+
+.user-icon:hover .normal-user-icon {
+    display: none;
+}
