@@ -4,6 +4,8 @@ import { Route } from "react-router-dom"
 import Navbar from './Navbar/Navbar'
 import Login from './Entry/Login'
 import Signup from './Entry/SignUp'
+import Dashboard from './Students/Landing/Dashboard'
+import UserProfile from './Students/Profile/UserProfile'
 
 class Routes extends Component {
     render () {
@@ -12,6 +14,8 @@ class Routes extends Component {
                 <Route path="/" component={ Navbar } />
                 <Route path="/login" component={ Login } />
                 <Route path="/signup" component={ Signup } />
+                <Route path="/userdashboard" component={ Dashboard } />
+                <Route path="/user/profile" component={ UserProfile } />
             </div>
         )
     }
