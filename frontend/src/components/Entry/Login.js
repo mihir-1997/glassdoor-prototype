@@ -16,8 +16,8 @@ class Login extends Component {
                                     <h3>Find The Job That Fits Your Life</h3>
                                 </div>
                                 <div className="login-radio-buttons">
-                                    <input type="radio" name="selected" onChange={ this.radioChange } value="user" required />
-                                    &nbsp;<label htmlFor="user">Customer</label>&nbsp;&nbsp;
+                                    <input type="radio" name="selected" onChange={ this.radioChange } value="student" required />
+                                    &nbsp;<label htmlFor="student">Student</label>&nbsp;&nbsp;
                                     <input type="radio" name="selected" onChange={ this.radioChange } value="employer" required />
                                     &nbsp;<label htmlFor="employer">Employer</label>&nbsp;&nbsp;
                                     <input type="radio" name="selected" onChange={ this.radioChange } value="admin" required />
