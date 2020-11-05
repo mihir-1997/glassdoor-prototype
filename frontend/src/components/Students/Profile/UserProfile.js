@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import './UserProfile.css'
 import SEO from '../../SEO/SEO'
 import BasicInfo from './MainProfile/BasicInfo'
+import Resume from './Resume/Resume'
 
 class UserProfile extends Component {
 
@@ -17,6 +18,13 @@ class UserProfile extends Component {
         SEO( {
             title: "User Profile | Glassdoor"
         } )
+        if ( this.props ) {
+            if ( this.props.location.section ) {
+                if ( this.props.location.section === "resumes" ) {
+                    this.selectSection( "resumes" )
+                }
+            }
+        }
     }
 
     selectSection = ( option ) => {
@@ -33,6 +41,8 @@ class UserProfile extends Component {
         let activeSection = null
         if ( this.state.selectedSection === "profile" ) {
             activeSection = <BasicInfo />
+        } else if ( this.state.selectedSection === "resumes" ) {
+            activeSection = <Resume />
         }
         return (
             <div className="userprofile-wrapper">

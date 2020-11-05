@@ -58,14 +58,14 @@ class AddEducation extends Component {
                         <form className="popup-form">
                             <div className="form-row">
                                 <div className="form-group col-md">
-                                    <label htmlFor="inputSchool">School</label>
-                                    <input type="text" className="form-control" id="inputSchool" placeholder="School" />
+                                    <label htmlFor="educationInputSchool">School</label>
+                                    <input type="text" className="form-control" id="educationInputSchool" placeholder="School" />
                                 </div>
                             </div>
                             <div className="form-row">
                                 <div className="form-group col-md">
-                                    <label htmlFor="inputDegree">Degree / Certificate</label>
-                                    <select className="custom-select" id="inputDegree" onChange={ this.degreeChange }>
+                                    <label htmlFor="educationInputDegree">Degree / Certificate</label>
+                                    <select className="custom-select" id="educationInputDegree" onChange={ this.degreeChange }>
                                         <option value="">Select your option</option>
                                         <option value="High School">High School Diploma</option>
                                         <option value="Associate">Associate's Degree</option>
@@ -80,45 +80,45 @@ class AddEducation extends Component {
                             </div>
                             <div className="form-row">
                                 <div className="form-group col-md">
-                                    <label htmlFor="inputStudy">Field of Study</label>
-                                    <input type="text" className="form-control" id="inputStudy" placeholder="Field of Study" />
+                                    <label htmlFor="educationInputStudy">Field of Study</label>
+                                    <input type="text" className="form-control" id="educationInputStudy" placeholder="Field of Study" />
                                 </div>
                             </div>
                             <div className="form-row">
                                 <div className="form-group col-md">
-                                    <label htmlFor="inputLocation">Location</label>
-                                    <input type="text" className="form-control" id="inputLocation" placeholder="Location" />
+                                    <label htmlFor="educationInputLocation">Location</label>
+                                    <input type="text" className="form-control" id="educationInputLocation" placeholder="Location" />
                                 </div>
                             </div>
                             <div className="form-row">
                                 <div className="form-group col-md-4">
-                                    <label htmlFor="inputStartMonth">Start Month</label>
-                                    { selectMonth( "inputStartMonth", this.changeStartMonth ) }
+                                    <label htmlFor="educationInputStartMonth">Start Month</label>
+                                    { selectMonth( "educationInputStartMonth", this.changeStartMonth ) }
                                 </div>
                                 <div className="form-group col-md-2">
-                                    <label htmlFor="inputStartYear">Start Year</label>
-                                    <input type="number" className="form-control" id="inputStartYear" />
+                                    <label htmlFor="educationInputStartYear">Start Year</label>
+                                    <input type="number" className="form-control" id="educationInputStartYear" />
                                 </div>
                             </div>
                             <div className="form-row">
                                 <div className="form-group col-md-4">
-                                    <label htmlFor="inputEndMonth">End Month</label>
-                                    { selectMonth( "inputEndMonth", this.changeEndMonth ) }
+                                    <label htmlFor="educationInputEndMonth">End Month</label>
+                                    { selectMonth( "educationInputEndMonth", this.changeEndMonth ) }
                                 </div>
                                 <div className="form-group col-md-2">
-                                    <label htmlFor="inputEndYear">End Year</label>
-                                    <input type="number" className="form-control" id="inputEndYear" />
+                                    <label htmlFor="educationInputEndYear">End Year</label>
+                                    <input type="number" className="form-control" id="educationInputEndYear" />
                                 </div>
                             </div>
                             <div className="form-row">
                                 <div className="form-group col-md">
-                                    <label htmlFor="inputDescription">Description</label>
-                                    <textarea type="text" className="form-control" id="inputDescription" placeholder="Description" />
+                                    <label htmlFor="educationInputDescription">Description</label>
+                                    <textarea type="text" className="form-control" id="educationInputDescription" placeholder="Description" />
                                 </div>
                             </div>
                         </form>
                     </div>
-                    <Footer closePopup={ this.closePopup } saveEducation={ this.saveEducation } />
+                    <Footer closePopup={ this.closePopup } saveChanges={ this.saveEducation } />
                 </div>
             </div>
         )

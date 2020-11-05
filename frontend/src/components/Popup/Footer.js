@@ -7,9 +7,9 @@ class Footer extends Component {
         this.props.closePopup()
     }
 
-    saveExperience = ( e ) => {
+    saveChanges = ( e ) => {
         e.preventDefault()
-        this.props.saveExperience()
+        this.props.saveChanges()
     }
 
     render () {
@@ -18,7 +18,7 @@ class Footer extends Component {
                 <div className="popup-buttons-wrapper">
                     <div className="popup-buttons">
                         <button type="button" className="btn update-profile" onClick={ this.closePopup }>Cancel</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <button type="button" className="btn reverse-update-proflie" onClick={ this.saveExperience }>Save Changes</button>
+                        <button type="button" className="btn reverse-update-proflie" onClick={ this.saveChanges }>Save Changes</button>
                     </div>
                 </div>
             </div>

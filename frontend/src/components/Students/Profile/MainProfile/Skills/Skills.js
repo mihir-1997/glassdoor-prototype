@@ -8,8 +8,8 @@ class Skills extends Component {
         let skills = [ "Docker", "Kubernetes", "AWS", "GCP", "Helm", "Terraform", "NodeJS", "ReactJS", "HTML", "CSS", "JavaScript", "Python" ]
         return (
             <div>
-                {skills.map( ( skill ) => {
-                    return <span className="each-skill">
+                {skills.map( ( skill, index ) => {
+                    return <span key={ index } className="each-skill">
                         { skill }
                     </span>
                 } ) }

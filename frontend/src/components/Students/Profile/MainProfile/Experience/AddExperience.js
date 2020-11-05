@@ -54,51 +54,51 @@ class AddExperience extends Component {
                         <form className="popup-form">
                             <div className="form-row">
                                 <div className="form-group col-md">
-                                    <label htmlFor="inputTitle">Title</label>
-                                    <input type="text" className="form-control" id="inputTitle" placeholder="Title" />
+                                    <label htmlFor="experienceInputTitle">Title</label>
+                                    <input type="text" className="form-control" id="experienceInputTitle" placeholder="Title" />
                                 </div>
                             </div>
                             <div className="form-row">
                                 <div className="form-group col-md">
-                                    <label htmlFor="inputCompanyName">Company Name</label>
-                                    <input type="text" className="form-control" id="inputCompanyName" placeholder="Company Name" />
+                                    <label htmlFor="experienceInputCompanyName">Company Name</label>
+                                    <input type="text" className="form-control" id="experienceInputCompanyName" placeholder="Company Name" />
                                 </div>
                             </div>
                             <div className="form-row">
                                 <div className="form-group col-md">
-                                    <label htmlFor="inputLocation">Location</label>
-                                    <input type="text" className="form-control" id="inputLocation" placeholder="Location" />
+                                    <label htmlFor="experienceInputLocation">Location</label>
+                                    <input type="text" className="form-control" id="experienceInputLocation" placeholder="Location" />
                                 </div>
                             </div>
                             <div className="form-row">
                                 <div className="form-group col-md-4">
-                                    <label htmlFor="inputStartMonth">Start Month</label>
-                                    { selectMonth( "inputStartMonth", this.changeStartMonth ) }
+                                    <label htmlFor="experienceInputStartMonth">Start Month</label>
+                                    { selectMonth( "experienceInputStartMonth", this.changeStartMonth ) }
                                 </div>
                                 <div className="form-group col-md-2">
-                                    <label htmlFor="inputStartYear">Start Year</label>
-                                    <input type="number" className="form-control" id="inputStartYear" />
+                                    <label htmlFor="experienceInputStartYear">Start Year</label>
+                                    <input type="number" className="form-control" id="experienceInputStartYear" />
                                 </div>
                             </div>
                             <div className="form-row">
                                 <div className="form-group col-md-4">
-                                    <label htmlFor="inputEndMonth">End Month</label>
-                                    { selectMonth( "inputEndMonth", this.changeEndMonth ) }
+                                    <label htmlFor="experienceInputEndMonth">End Month</label>
+                                    { selectMonth( "experienceInputEndMonth", this.changeEndMonth ) }
                                 </div>
                                 <div className="form-group col-md-2">
-                                    <label htmlFor="inputEndYear">End Year</label>
-                                    <input type="number" className="form-control" id="inputEndYear" />
+                                    <label htmlFor="experienceInputEndYear">End Year</label>
+                                    <input type="number" className="form-control" id="experienceInputEndYear" />
                                 </div>
                             </div>
                             <div className="form-row">
                                 <div className="form-group col-md">
-                                    <label htmlFor="inputDescription">Description</label>
-                                    <textarea type="text" className="form-control" id="inputDescription" placeholder="Description" />
+                                    <label htmlFor="experienceInputDescription">Description</label>
+                                    <textarea type="text" className="form-control" id="experienceInputDescription" placeholder="Description" />
                                 </div>
                             </div>
                         </form>
                     </div>
-                    <Footer closePopup={ this.closePopup } saveExperience={ this.saveExperience } />
+                    <Footer closePopup={ this.closePopup } saveChanges={ this.saveExperience } />
                 </div>
             </div>
         )

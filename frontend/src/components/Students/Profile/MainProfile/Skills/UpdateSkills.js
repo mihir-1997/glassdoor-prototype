@@ -33,7 +33,7 @@ class UpdateSkills extends Component {
                             </div>
                         </form>
                     </div>
-                    <Footer closePopup={ this.closePopup } saveEducation={ this.saveSkills } />
+                    <Footer closePopup={ this.closePopup } saveChanges={ this.saveSkills } />
                 </div>
             </div>
         )

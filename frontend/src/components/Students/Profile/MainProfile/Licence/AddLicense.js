@@ -54,45 +54,45 @@ class AddLicense extends Component {
                         <form className="popup-form">
                             <div className="form-row">
                                 <div className="form-group col-md">
-                                    <label htmlFor="inputTitle">Title</label>
-                                    <input type="text" className="form-control" id="inputTitle" placeholder="Title" />
+                                    <label htmlFor="licenseInputTitle">Title</label>
+                                    <input type="text" className="form-control" id="licenseInputTitle" placeholder="Title" />
                                 </div>
                             </div>
                             <div className="form-row">
                                 <div className="form-group col-md">
-                                    <label htmlFor="inputIssueOrg">Issuing Organization</label>
-                                    <input type="text" className="form-control" id="inputIssueOrg" placeholder="Issuing Organization" />
+                                    <label htmlFor="licenseInputIssueOrg">Issuing Organization</label>
+                                    <input type="text" className="form-control" id="licenseInputIssueOrg" placeholder="Issuing Organization" />
                                 </div>
                             </div>
                             <div className="form-row">
                                 <div className="form-group col-md-4">
-                                    <label htmlFor="inputIssueMonth">Issue Month</label>
+                                    <label htmlFor="licenseInputIssueMonth">Issue Month</label>
                                     { selectMonth( "inputIssueMonth", this.changeIssueMonth ) }
                                 </div>
                                 <div className="form-group col-md-3">
-                                    <label htmlFor="inputIssueYear">Issue Year</label>
-                                    <input type="number" className="form-control" id="inputIssueYear" />
+                                    <label htmlFor="licenseInputIssueYear">Issue Year</label>
+                                    <input type="number" className="form-control" id="licenseInputIssueYear" />
                                 </div>
                             </div>
                             <div className="form-row">
                                 <div className="form-group col-md-4">
-                                    <label htmlFor="inputExpirationMonth">Expiration Month</label>
+                                    <label htmlFor="licenseInputExpirationMonth">Expiration Month</label>
                                     { selectMonth( "inputExpirationMonth", this.changeExpirationMonth ) }
                                 </div>
                                 <div className="form-group col-md-3">
-                                    <label htmlFor="inputExpirationYear">Expiration Year</label>
-                                    <input type="number" className="form-control" id="inputExpirationYear" />
+                                    <label htmlFor="licenseInputExpirationYear">Expiration Year</label>
+                                    <input type="number" className="form-control" id="licenseInputExpirationYear" />
                                 </div>
                             </div>
                             <div className="form-row">
                                 <div className="form-group col-md">
-                                    <label htmlFor="inputDescription">Description</label>
-                                    <textarea type="text" className="form-control" id="inputDescription" placeholder="Description" />
+                                    <label htmlFor="licenseInputDescription">Description</label>
+                                    <textarea type="text" className="form-control" id="licenseInputDescription" placeholder="Description" />
                                 </div>
                             </div>
                         </form>
                     </div>
-                    <Footer closePopup={ this.closePopup } saveLicense={ this.saveLicense } />
+                    <Footer closePopup={ this.closePopup } saveChanges={ this.saveLicense } />
                 </div>
             </div>
         )
