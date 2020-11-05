@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 
 import './UserProfile.css'
-import BasicInfo from './BasicInfo'
+import SEO from '../../SEO/SEO'
+import BasicInfo from './MainProfile/BasicInfo'
 
 class UserProfile extends Component {
 
@@ -10,6 +11,12 @@ class UserProfile extends Component {
         this.state = {
             selectedSection: "profile"
         }
+    }
+
+    componentDidMount () {
+        SEO( {
+            title: "User Profile | Glassdoor"
+        } )
     }
 
     selectSection = ( option ) => {

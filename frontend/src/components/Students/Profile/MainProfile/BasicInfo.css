@@ -50,3 +50,9 @@
 .basic-info-circle-svg:hover .basic-info-circle-g-hover {
     display: block;
 }
+
+.skills,
+.education,
+.license {
+    margin-top: 3%;
+}

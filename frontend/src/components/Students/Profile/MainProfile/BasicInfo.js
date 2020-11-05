@@ -3,6 +3,12 @@ import React, { Component } from 'react'
 import './BasicInfo.css'
 import Experience from './Experience/Experience'
 import AddExperience from './Experience/AddExperience'
+import Skills from '../Skills/Skills'
+import UpdateSkills from '../Skills/UpdateSkills'
+import Education from './Education/Education'
+import AddEducation from './Education/AddEducation'
+import License from './Licence/License'
+import AddLicense from './Licence/AddLicense'
 
 class BasicInfo extends Component {
 
@@ -17,6 +23,30 @@ class BasicInfo extends Component {
     addExperience = ( e ) => {
         e.preventDefault()
         let popup = document.getElementById( "experience-popup" )
+        let modal = document.getElementById( "modal" )
+        modal.appendChild( popup )
+        popup.classList.add( "popup-wrapper-show" )
+    }
+
+    updateSkills = ( e ) => {
+        e.preventDefault()
+        let popup = document.getElementById( "skills-popup" )
+        let modal = document.getElementById( "modal" )
+        modal.appendChild( popup )
+        popup.classList.add( "popup-wrapper-show" )
+    }
+
+    addEducation = ( e ) => {
+        e.preventDefault()
+        let popup = document.getElementById( "education-popup" )
+        let modal = document.getElementById( "modal" )
+        modal.appendChild( popup )
+        popup.classList.add( "popup-wrapper-show" )
+    }
+
+    addLicense = ( e ) => {
+        e.preventDefault()
+        let popup = document.getElementById( "license-popup" )
         let modal = document.getElementById( "modal" )
         modal.appendChild( popup )
         popup.classList.add( "popup-wrapper-show" )
@@ -130,9 +160,62 @@ class BasicInfo extends Component {
                     <Experience />
                     <AddExperience />
                 </div>
-                <div className="skills"></div>
-                <div className="education"></div>
-                <div className="licence"></div>
+                <div className="skills">
+                    <h3>
+                        Skills
+                        <span onClick={ this.updateSkills }>
+                            <svg className="basic-info-pen-svg" style={ { "width": "24px", "height": "24px" } } xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                <g className="basic-info-pen" fill="#ccc" fillRule="evenodd">
+                                    <path d="M14.775 6.202l2.99 2.99-11.81 11.663a.499.499 0 01-.352.144H3.498a.5.5 0 01-.5-.5v-2.342a.5.5 0 01.147-.354l11.63-11.6zM16.19 4.79l1.641-1.638a.502.502 0 01.707 0l2.3 2.298a.5.5 0 010 .707l-.003.003-1.648 1.627L16.19 4.79z"></path>
+                                </g>
+                                <g className="basic-info-pen-hover" fill="#20262e" fillRule="evenodd">
+                                    <path d="M14.775 6.202l2.99 2.99-11.81 11.663a.499.499 0 01-.352.144H3.498a.5.5 0 01-.5-.5v-2.342a.5.5 0 01.147-.354l11.63-11.6zM16.19 4.79l1.641-1.638a.502.502 0 01.707 0l2.3 2.298a.5.5 0 010 .707l-.003.003-1.648 1.627L16.19 4.79z"></path>
+                                </g>
+                            </svg>
+                        </span>
+                    </h3>
+                    <Skills />
+                    <UpdateSkills />
+                </div>
+                <div className="education">
+                    <h3>
+                        Education
+                        <span onClick={ this.addEducation }>
+                            <svg className="basic-info-circle-svg" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+                                <g className="basic-info-circle-g" fill="none" fillRule="evenodd">
+                                    <circle cx="12" cy="12" fill="#f5f6f7" r="12"></circle>
+                                    <path d="M12.5 12.5H18h-5.5V7zm0 0V18v-5.5H7z" stroke="#1861bf" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"></path>
+                                </g>
+                                <g className="basic-info-circle-g-hover" fill="none" fillRule="evenodd">
+                                    <circle cx="12" cy="12" fill="#1861bf" r="12"></circle>
+                                    <path d="M12.5 12.5H18h-5.5V7zm0 0V18v-5.5H7z" stroke="#f5f6f7" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"></path>
+                                </g>
+                            </svg>
+
+                        </span>
+                    </h3>
+                    <Education />
+                    <AddEducation />
+                </div>
+                <div className="license">
+                    <h3>
+                        Licences & Certifications
+                        <span onClick={ this.addLicense }>
+                            <svg className="basic-info-circle-svg" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+                                <g className="basic-info-circle-g" fill="none" fillRule="evenodd">
+                                    <circle cx="12" cy="12" fill="#f5f6f7" r="12"></circle>
+                                    <path d="M12.5 12.5H18h-5.5V7zm0 0V18v-5.5H7z" stroke="#1861bf" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"></path>
+                                </g>
+                                <g className="basic-info-circle-g-hover" fill="none" fillRule="evenodd">
+                                    <circle cx="12" cy="12" fill="#1861bf" r="12"></circle>
+                                    <path d="M12.5 12.5H18h-5.5V7zm0 0V18v-5.5H7z" stroke="#f5f6f7" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"></path>
+                                </g>
+                            </svg>
+                        </span>
+                    </h3>
+                    <License />
+                    <AddLicense />
+                </div>
             </div>
         )
     }

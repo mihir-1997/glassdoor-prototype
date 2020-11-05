@@ -1,0 +1,65 @@
+.license-wrapper {
+    margin-top: 2%;
+}
+
+.license-second-col {
+    padding-bottom: 2%;
+    margin-bottom: 2%;
+    border-bottom: 1px solid lightgray;
+}
+
+.license-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 1%;
+}
+
+.license-issue-org {
+    font-size: 15px;
+    color: #2367C1;
+    font-weight: bold;
+}
+
+.license-description {
+    margin-top: 3%;
+}
+
+.license-more-icon {
+    cursor: pointer;
+}
+
+.license-more-icon .license-more-icon-g-hover {
+    display: none;
+}
+
+.license-more-icon:hover .license-more-icon-g {
+    display: none;
+}
+
+.license-more-icon:hover .license-more-icon-g-hover {
+    display: block;
+}
+
+.license-more-icon-option-wrapper {
+    position: relative;
+}
+
+.license-more-icon-option {
+    position: absolute;
+    top: 0px;
+    right: 80px;
+    display: none;
+    box-shadow: 0 4px 6px 0 rgba(69,77,87,.32);
+    padding: 5px 0px;
+    font-size: 16px;
+    min-width: 120px;
+    background-color: #fff;
+}
+
+.license-more-icon-option-show {
+    display: block;
+}
+
+.license-more-icon-option .dropdown-item {
+    padding: 10px 15px;
+}

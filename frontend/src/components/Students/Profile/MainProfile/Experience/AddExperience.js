@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 
 import './Experience.css'
-import Header from '../../../Popup/Header'
-import Footer from '../../../Popup/Footer'
+import Header from '../../../../Popup/Header'
+import Footer from '../../../../Popup/Footer'
 
 class AddExperience extends Component {
 

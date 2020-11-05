@@ -1,8 +1,15 @@
 import React, { Component } from 'react'
 
 import './Dashboard.css'
+import SEO from '../../SEO/SEO'
 
 class Dashboard extends Component {
+
+    componentDidMount () {
+        SEO( {
+            title: "Glassdoor Job Search | Find The Job That Fits Your Life"
+        } )
+    }
 
     updateProfile = () => {
 

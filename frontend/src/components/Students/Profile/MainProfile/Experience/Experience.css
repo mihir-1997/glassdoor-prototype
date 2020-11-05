@@ -34,27 +34,27 @@
     margin-top: 1%;
 }
 
-.more-icon {
+.experience-more-icon {
     cursor: pointer;
 }
 
-.more-icon .more-icon-g-hover {
+.experience-more-icon .experience-more-icon-g-hover {
     display: none;
 }
 
-.more-icon:hover .more-icon-g {
+.experience-more-icon:hover .experience-more-icon-g {
     display: none;
 }
 
-.more-icon:hover .more-icon-g-hover {
+.experience-more-icon:hover .experience-more-icon-g-hover {
     display: block;
 }
 
-.more-icon-option-wrapper {
+.experience-more-icon-option-wrapper {
     position: relative;
 }
 
-.more-icon-option {
+.experience-more-icon-option {
     position: absolute;
     top: 0px;
     right: 80px;
@@ -63,13 +63,14 @@
     padding: 5px 0px;
     font-size: 16px;
     min-width: 120px;
+    background-color: #fff;
 }
 
-.more-icon-option-show {
+.experience-more-icon-option-show {
     display: block;
 }
 
-.more-icon-option .dropdown-item {
+.experience-more-icon-option .dropdown-item {
     padding: 10px 15px;
 }
 

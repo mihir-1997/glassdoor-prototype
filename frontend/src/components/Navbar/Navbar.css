@@ -10,6 +10,10 @@ nav {
     background-color: #fff;
 }
 
+nav input.form-control::placeholder {
+    color: #C4C7CB;
+}
+
 .logo-image {
     height: 60px; 
     width: 170px
