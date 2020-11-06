@@ -4,6 +4,8 @@ import './UserProfile.css'
 import SEO from '../../SEO/SEO'
 import BasicInfo from './MainProfile/BasicInfo'
 import Resume from './Resume/Resume'
+import JobPreference from './Job Preference/JobPreference'
+import Demographics from './Demographics/Demographics'
 
 class UserProfile extends Component {
 
@@ -43,6 +45,10 @@ class UserProfile extends Component {
             activeSection = <BasicInfo />
         } else if ( this.state.selectedSection === "resumes" ) {
             activeSection = <Resume />
+        } else if ( this.state.selectedSection === "job-preference" ) {
+            activeSection = <JobPreference />
+        } else if ( this.state.selectedSection === "demographics" ) {
+            activeSection = <Demographics />
         }
         return (
             <div className="userprofile-wrapper">

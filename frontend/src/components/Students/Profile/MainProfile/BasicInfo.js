@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 
 import './BasicInfo.css'
+import SEO from '../../../SEO/SEO'
 import Experience from './Experience/Experience'
 import AddExperience from './Experience/AddExperience'
 import Skills from './Skills/Skills'
@@ -11,6 +12,12 @@ import License from './Licence/License'
 import AddLicense from './Licence/AddLicense'
 
 class BasicInfo extends Component {
+
+    componentDidMount () {
+        SEO( {
+            title: "User Profile | Glassdoor"
+        } )
+    }
 
     updateBasicInfo = ( e ) => {
         e.preventDefault()
