@@ -1,10 +1,9 @@
 var passport = require( "passport" );
 var JwtStrategy = require( 'passport-jwt' ).Strategy;
 var ExtractJwt = require( 'passport-jwt' ).ExtractJwt;
-var students = require( '../models/students' );
-var employers = require( '../models/employers' );
+var users = require( '../models/users' );
+var restaurants = require( '../models/restaurants' );
 var { secret } = require( '../config/config' )
-var connection = require( '../config/db_config' )
 
 // Setup work and export for the JWT passport strategy
 function auth () {
@@ -12,38 +11,35 @@ function auth () {
     opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
     opts.secretOrKey = secret;
     passport.use( new JwtStrategy( opts, function ( jwt_payload, callback ) {
-
+        // console.log( "JWT payload received", jwt_payload );
 
         if ( jwt_payload.type == "students" ) {
-            var sql = `select * from students where email="${ jwt_payload.email }"`;
-            connection.query( sql, ( err, results ) => {
+            users.findOne( { email: jwt_payload.email }, function ( err, user ) {
                 if ( err ) {
                     console.log( "Error in passport" + err )
                     return callback( err, false );
-                } else {
-                    if ( results ) {
-                        callback( null, results );
-                    } else {
-                        callback( null, false );
-                    }
                 }
-
+                if ( user ) {
+                    callback( null, user );
+                } else {
+                    callback( null, false );
+                }
+            } ).catch( error => {
+                console.log( "Error in auth users", error )
             } );
-
         } else if ( jwt_payload.type == "employers" ) {
-            var sql = `select * from employers where email="${ jwt_payload.email }"`;
-            connection.query( sql, ( err, results ) => {
+            restaurants.findOne( { email: jwt_payload.email }, function ( err, restaurant ) {
                 if ( err ) {
                     console.log( "Error in passport" + err )
                     return callback( err, false );
-                } else {
-                    if ( results ) {
-                        callback( null, results );
-                    } else {
-                        callback( null, false );
-                    }
                 }
-
+                if ( restaurant ) {
+                    callback( null, restaurant );
+                } else {
+                    callback( null, false );
+                }
+            } ).catch( error => {
+                console.log( "Error in auth restaurants", error )
             } );
         }
     } ) );
