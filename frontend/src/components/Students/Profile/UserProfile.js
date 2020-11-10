@@ -24,6 +24,10 @@ class UserProfile extends Component {
             if ( this.props.location.section ) {
                 if ( this.props.location.section === "resumes" ) {
                     this.selectSection( "resumes" )
+                } else if ( this.props.location.section === "job-preference" ) {
+                    this.selectSection( "job-preference" )
+                } else if ( this.props.location.section === "demographics" ) {
+                    this.selectSection( "demographics" )
                 }
             }
         }

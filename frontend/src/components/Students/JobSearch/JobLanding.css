@@ -1,0 +1,59 @@
+.job-search-wrapper {
+    background-color: #EAEAEA;
+    padding: 0 5% 0 6%;
+    height: calc(100vh - 80px);
+}
+
+.job-search {
+    padding-top: 15px;
+    height: 100%;
+}
+
+.job-search-filters {
+    height: 50px;
+    background-color: #fff;
+    border-bottom: 1px solid #E7E7E7;
+}
+
+.job-search-display {
+    background-color: #fff;
+    height: calc(100vh - 145px);
+}
+
+.job-search-display-left,
+.job-search-display-right {
+    overflow-y: scroll;
+}
+
+/* Job search left pane */
+
+.job-search-display-left {
+    float: left;
+    width: 40%;
+    height: 100%;
+    border-right: 1px solid #E7E7E7;
+}
+
+/* Job search right pane */
+
+.job-search-display-right {
+    float: right;
+    width: 60%;
+    height: 100%;
+}
+
+.job-search-clear {
+    clear: both;
+}
+
+/* Scrollbar css */
+
+::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 7px;
+  }
+  
+::-webkit-scrollbar-thumb {
+background-color: #DDDDDD;
+box-shadow: 0 0 1px rgba(255, 255, 255, .5);
+}

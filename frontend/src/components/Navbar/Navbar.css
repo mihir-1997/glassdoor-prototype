@@ -8,6 +8,7 @@
 
 nav {
     background-color: #fff;
+    height: 80px;
 }
 
 nav input.form-control::placeholder {

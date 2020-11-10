@@ -79,8 +79,8 @@ class Navbar extends Component {
                                             <div className="user-icon-dropdown" >
                                                 <Link to="/user/profile" style={ { textDecoration: 'none' } }><button className="dropdown-item" type="button" value="Profile">Profile</button></Link>
                                                 <Link to={ { pathname: "/user/profile", section: "resumes" } } style={ { textDecoration: 'none' } }><button className="dropdown-item" type="button" value="Resumes">Resumes</button></Link>
-                                                <button className="dropdown-item" type="button" value="Job Preferences">Job Preferences</button>
-                                                <button className="dropdown-item" type="button" value="Demographics">Demographics</button>
+                                                <Link to={ { pathname: "/user/profile", section: "job-preference" } } style={ { textDecoration: 'none' } }><button className="dropdown-item" type="button" value="Job Preferences">Job Preferences</button></Link>
+                                                <Link to={ { pathname: "/user/profile", section: "demographics" } } style={ { textDecoration: 'none' } }><button className="dropdown-item" type="button" value="Demographics">Demographics</button></Link>
                                                 <button className="dropdown-item sign-out" type="button" onClick={ this.signOut } value="Sign Out">Sign Out</button>
                                             </div>
                                         </div>
