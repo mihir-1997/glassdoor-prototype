@@ -8,9 +8,9 @@ var { auth, checkAuth } = require( '../config/passport' )
 var kafka = require( '../kafka/client' );
 auth();
 
-//sample get
-router.get( '/test', ( req, res ) => {
-    kafka.make_request( 'test_topic', req.body, function ( err, results ) {
+//stu
+router.get( '/registerUser', ( req, res ) => {
+    kafka.make_request( 'student_signup', req.body, function ( err, results ) {
         if ( err ) {
             console.log( "Inside err", err );
             res.status( 400 ).send( err )
