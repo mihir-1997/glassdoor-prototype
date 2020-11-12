@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import './UserProfile.css'
+import './studentProfile.css'
 import SEO from '../../SEO/SEO'
 import BasicInfo from './MainProfile/BasicInfo'
 import Resume from './Resume/Resume'

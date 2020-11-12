@@ -31,6 +31,14 @@
     border-bottom: 1px solid lightgray;
 }
 
+.header-text {
+    float: left;
+    margin: 2% 0 0 5%;
+    color: #1762BF;
+    font-size: 18px;
+    font-weight: bold;
+}
+
 .cancel-button {
     float: right;
     margin: 1% 1%;

@@ -77,10 +77,10 @@ class Navbar extends Component {
                                                 <path className="user-icon-hover" d="M12 7a3 3 0 103 3 3 3 0 00-3-3zm0 9a6 6 0 00-5.33 3.25 9 9 0 0010.66 0A6 6 0 0012 16zm0-14A10 10 0 112 12 10 10 0 0112 2z" fill="currentColor" fillRule="evenodd"></path>
                                             </svg>
                                             <div className="user-icon-dropdown" >
-                                                <Link to="/user/profile" style={ { textDecoration: 'none' } }><button className="dropdown-item" type="button" value="Profile">Profile</button></Link>
-                                                <Link to={ { pathname: "/user/profile", section: "resumes" } } style={ { textDecoration: 'none' } }><button className="dropdown-item" type="button" value="Resumes">Resumes</button></Link>
-                                                <Link to={ { pathname: "/user/profile", section: "job-preference" } } style={ { textDecoration: 'none' } }><button className="dropdown-item" type="button" value="Job Preferences">Job Preferences</button></Link>
-                                                <Link to={ { pathname: "/user/profile", section: "demographics" } } style={ { textDecoration: 'none' } }><button className="dropdown-item" type="button" value="Demographics">Demographics</button></Link>
+                                                <Link to="/students/profile" style={ { textDecoration: 'none' } }><button className="dropdown-item" type="button" value="Profile">Profile</button></Link>
+                                                <Link to={ { pathname: "/students/profile", section: "resumes" } } style={ { textDecoration: 'none' } }><button className="dropdown-item" type="button" value="Resumes">Resumes</button></Link>
+                                                <Link to={ { pathname: "/students/profile", section: "job-preference" } } style={ { textDecoration: 'none' } }><button className="dropdown-item" type="button" value="Job Preferences">Job Preferences</button></Link>
+                                                <Link to={ { pathname: "/students/profile", section: "demographics" } } style={ { textDecoration: 'none' } }><button className="dropdown-item" type="button" value="Demographics">Demographics</button></Link>
                                                 <button className="dropdown-item sign-out" type="button" onClick={ this.signOut } value="Sign Out">Sign Out</button>
                                             </div>
                                         </div>
