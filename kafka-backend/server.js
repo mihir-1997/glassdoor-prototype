@@ -2,7 +2,10 @@ var connection = new require( './kafka/Connection' );
 var mongoose = require( './config/db_config' );
 
 //topics files
-var test = require( './services/students/test' )
+//students
+var students_signup = require( './services/students/signup' )
+var students_login = require( './services/students/login' )
+var students_getStudent = require( './services/students/getStudent' )
 
 
 function handleTopicRequest ( topic_name, fname ) {
@@ -40,5 +43,6 @@ function handleTopicRequest ( topic_name, fname ) {
 //second argument is a function that will handle this topic request
 
 //students
-handleTopicRequest( "test_topic", test )
-
+handleTopicRequest( "students_signup", students_signup )
+handleTopicRequest( "students_login", students_login )
+handleTopicRequest( "students_getStudent", students_getStudent )

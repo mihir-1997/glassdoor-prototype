@@ -4,7 +4,7 @@ var ExtractJwt = require( 'passport-jwt' ).ExtractJwt;
 var students = require( '../models/students' );
 var employers = require( '../models/employers' );
 var { secret } = require( '../config/config' )
-var connection = require( '../config/db_config' )
+var connection = require( '../config/db_config' ).connection
 
 // Setup work and export for the JWT passport strategy
 function auth () {
@@ -21,7 +21,7 @@ function auth () {
                     console.log( "Error in passport" + err )
                     return callback( err, false );
                 } else {
-                    if ( results ) {
+                    if ( results.length > 0 ) {
                         callback( null, results );
                     } else {
                         callback( null, false );

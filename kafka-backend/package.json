@@ -10,7 +10,6 @@
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.0.0",
-    "bcrypt-nodejs": "0.0.3",
     "dotenv": "^8.2.0",
     "formidable": "^1.2.2",
     "glob": "^7.1.6",
