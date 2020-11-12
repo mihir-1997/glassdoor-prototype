@@ -8,6 +8,8 @@ import Dashboard from './Students/Landing/Dashboard'
 import UserProfile from './Students/Profile/UserProfile'
 import JobLanding from './Students/JobSearch/JobLanding'
 
+import EmployerProfile from './Employer/Profile/EmployerProfile'
+
 class Routes extends Component {
     render () {
         return (
@@ -18,6 +20,7 @@ class Routes extends Component {
                 <Route path="/userdashboard" component={ Dashboard } />
                 <Route path="/user/profile" component={ UserProfile } />
                 <Route path="/user/jobs" component={ JobLanding } />
+                <Route path="/employer/profile" component={ EmployerProfile }/>
             </div>
         )
     }

@@ -1,0 +1,53 @@
+.employer-profile-wrapper {
+  background-color: #eaeaea;
+  width: 100%;
+  padding: 2% 6% 1% 6%;
+}
+
+.root-header {
+  /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); */
+  height: 100%;
+  width: 100%;
+}
+
+.details-wrapper {
+  font-weight: bold;
+  background-color: #fff;
+  top: 10%;
+  padding-bottom: 1%;
+}
+
+.details {
+  position: relative;
+  margin-left: 11%;
+  margin-top: -5%;
+  /* font-size: xx-large; */
+}
+.cover {
+  min-height: 400px;
+  max-height: 600px;
+  width: 100%;
+}
+
+.company-logo {
+  margin: -3% 0 0 2%;
+}
+
+.logo {
+  border: 2px solid #fff;
+}
+
+.info-wrapper {
+  width: 20%;
+  height: 60%;
+}
+
+.jobs-at {
+  align-items: center;
+  margin-left: 40%;
+  background-color: #09aa41;
+  color: #fff;
+  font-weight: bold;
+  border: #09aa41;
+  padding-bottom: 1%;
+}
