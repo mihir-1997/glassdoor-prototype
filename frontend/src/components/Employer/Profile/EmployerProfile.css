@@ -24,8 +24,8 @@
   /* font-size: xx-large; */
 }
 .cover {
-  min-height: 400px;
-  max-height: 600px;
+  min-height: 200px;
+  max-height: 400px;
   width: 100%;
 }
 
@@ -49,5 +49,4 @@
   color: #fff;
   font-weight: bold;
   border: #09aa41;
-  padding-bottom: 1%;
 }

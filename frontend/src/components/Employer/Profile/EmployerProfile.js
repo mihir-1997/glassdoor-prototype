@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 
 import './EmployerProfile.css'
-import cover from '../../../Images/employer.jpg'
+import cover from '../../../Images/employer.png'
 import logo from '../../../Images/linkedin-logo.png'
 import SEO from '../../SEO/SEO'
 
