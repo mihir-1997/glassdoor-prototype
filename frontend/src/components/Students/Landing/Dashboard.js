@@ -1,14 +1,17 @@
 import React, { Component } from 'react'
+import axios from 'axios'
 import { Redirect } from 'react-router'
 
 import './Dashboard.css'
 import SEO from '../../SEO/SEO'
+import { BACKEND_URL, BACKEND_PORT } from '../../Config/Config'
 
 class Dashboard extends Component {
 
     constructor( props ) {
         super( props )
         this.state = {
+            name: "",
             updateProfileButton: false
         }
     }
@@ -17,6 +20,34 @@ class Dashboard extends Component {
         SEO( {
             title: "Glassdoor Job Search | Find The Job That Fits Your Life"
         } )
+        let id = localStorage.getItem( "id" )
+        if ( id ) {
+            axios.defaults.withCredentials = true
+            axios.defaults.headers.common[ 'authorization' ] = localStorage.getItem( 'token' )
+            axios.get( BACKEND_URL + ":" + BACKEND_PORT + "/students/getUser/" + id )
+                .then( ( res ) => {
+                    console.log( res )
+                    if ( res.status === 200 ) {
+                        this.setState( {
+                            name: res.data.name
+                        } )
+                    }
+                } )
+                .catch( ( err ) => {
+                    if ( err.response ) {
+                        if ( err.response.status === 404 ) {
+                            console.log( "Error! No user" )
+                            this.setState( { "error": "No user found" } )
+                        } else if ( err.response.status === 401 ) {
+                            this.setState( { "error": "Wrong Password" } )
+                        } else if ( err.response.status === 400 ) {
+                            this.setState( { "error": "Each field is required" } )
+                        }
+                    }
+                } )
+        } else {
+            console.log( "No ID found in localstorage" )
+        }
     }
 
     updateProfile = ( e ) => {
@@ -27,12 +58,18 @@ class Dashboard extends Component {
     }
 
     render () {
+        let redirectVar = null
+        if ( !localStorage.getItem( "active" ) ) {
+            redirectVar = <Redirect to="/login" />
+            return redirectVar
+        }
         let redirectToProfile = null
         if ( this.state.updateProfileButton ) {
             redirectToProfile = <Redirect to="/students/profile" />
         }
         return (
             <div className="userdashboard-wrapper">
+                {redirectVar }
                 { redirectToProfile }
                 <div className="userdashboard-first-row">
                     <div className="dashboard-tagline">
@@ -129,8 +166,7 @@ class Dashboard extends Component {
                                     </div>
                                 </div>
                                 <div className="userinfo-name">
-                                    {/* {this.state.user_name} */ }
-                                    Mihir Patel
+                                    { this.state.name }
                                 </div>
                                 <div className="userinfo-title">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">

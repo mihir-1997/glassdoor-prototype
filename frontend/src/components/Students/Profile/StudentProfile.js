@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
+import { Redirect } from 'react-router'
 
-import './studentProfile.css'
+import './StudentProfile.css'
 import SEO from '../../SEO/SEO'
 import BasicInfo from './MainProfile/BasicInfo'
 import Resume from './Resume/Resume'
@@ -44,6 +45,11 @@ class UserProfile extends Component {
     }
 
     render () {
+        let redirectVar = null
+        if ( !localStorage.getItem( "active" ) ) {
+            redirectVar = <Redirect to="/login" />
+            return redirectVar
+        }
         let activeSection = null
         if ( this.state.selectedSection === "profile" ) {
             activeSection = <BasicInfo />
@@ -56,6 +62,7 @@ class UserProfile extends Component {
         }
         return (
             <div className="userprofile-wrapper">
+                {redirectVar }
                 <div className="row">
                     <div className="col-4">
                         <div className="userinfo-profile-picture">

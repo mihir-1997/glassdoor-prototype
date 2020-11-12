@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Redirect } from 'react-router'
 
 import './JobLanding.css'
 import intel_logo from '../../../Images/intel.png'
@@ -75,9 +76,15 @@ export default class JobLanding extends Component {
     }
 
     render () {
+        let redirectVar = null
+        if ( !localStorage.getItem( "active" ) ) {
+            redirectVar = <Redirect to="/login" />
+            return redirectVar
+        }
         let jobs = [ "intel", "intel1" ]
         return (
             <div>
+                {redirectVar }
                 <div className="job-search-wrapper">
                     <div className="job-search">
                         <div className="job-search-filters">
