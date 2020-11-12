@@ -8,9 +8,9 @@ var { auth, checkAuth } = require( '../config/passport' )
 var kafka = require( '../kafka/client' );
 auth();
 
-//stu
-router.get( '/registerUser', ( req, res ) => {
-    kafka.make_request( 'student_signup', req.body, function ( err, results ) {
+//students signup
+router.post( '/registerUser', ( req, res ) => {
+    kafka.make_request( 'students_signup', req.body, function ( err, results ) {
         if ( err ) {
             console.log( "Inside err", err );
             res.status( 400 ).send( err )
@@ -23,19 +23,43 @@ router.get( '/registerUser', ( req, res ) => {
     } );
 } )
 
-//sample post
-router.post( '/', ( req, res ) => {
 
+//students login
+router.post( '/loginUser', ( req, res ) => {
+    kafka.make_request( 'students_login', req.body, function ( err, results ) {
+        if ( err ) {
+            console.log( "Inside err", err );
+            if ( err === "401" ) {
+                res.status( 401 ).send( "Wrong Credentials" )
+            } else {
+                res.status( 404 ).send( "No user found" )
+            }
+
+        } else {
+            console.log( "Inside else", results );
+            res.status( 200 ).send( results )
+
+        }
+
+    } );
 } )
 
-//sample put
-router.put( '/', ( req, res ) => {
 
+router.get( '/getUser/:studentID', checkAuth, ( req, res ) => {
+    kafka.make_request( 'students_getStudent', req.params, function ( err, results ) {
+        if ( err ) {
+            console.log( "Inside err", err );
+            res.status( 404 ).send( "No student found" )
+
+
+        } else {
+            console.log( "Inside else", results );
+            res.status( 200 ).send( results )
+
+        }
+
+    } );
 } )
 
-//sample delete
-router.delete( '/', ( req, res ) => {
-
-} )
 
 module.exports = router;
