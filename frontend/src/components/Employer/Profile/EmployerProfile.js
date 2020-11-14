@@ -42,15 +42,60 @@ class EmployerProfile extends Component {
                             </div>
                         <div className="details">
                             <h3>LinkedIn</h3>
+                            {/* <h3>{this.state.name}</h3> */}
                             <h6 color="#404040">Part of <a href="microsoft.com">Microsoft</a></h6>
-
-                            <button className="btn btn-primary jobs-at">
+                            {/* <h6 color="#404040">Part of <a href="microsoft.com">{this.state.parentCompany}</a></h6> */}
+                            <button className="btn reverse-update-profile">
                                 Jobs at LinkedIn
+                                {/* Jobs at {this.state.name} */}
                             </button>
                         </div>
                     </div>   
                     <div className="info-wrapper">
                     
+                    <p style={{fontSize:"20px", lineHeight:"27px"}}>LinkedIn Overview</p>
+                    <div className=" row info-wrapper-row">
+                            <div className="col-6 single-row">
+                                <span className="span-info"> Website:</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; LinkedIn.com
+                               
+                            </div>
+                               
+                            <div className="col-6 single-row">
+                                <span className="span-info"> Headquarters:</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Sunnyvale, CA
+                            </div>
+                            <div className="col-6 single-row">
+                                <span className="span-info"> Size:</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  10000+ Employees    
+                            </div>
+                               
+                            <div className="col-6 single-row">
+                                <span className="span-info"> Founded:</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2003          
+                            </div>
+                            <div className="col-6 single-row">
+                                <span className="span-info"> Type:</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Subsidiary or Business Segment       
+                            </div>
+                               
+                            <div className="col-6 single-row">
+                                <span className="span-info"> Industry:</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Internet        
+                            </div>
+                            <div className="col-6 single-row">
+                                <span className="span-info"> Revenue:</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $5 to $10 Billion(USD)       
+                            </div>
+
+                    </div>
+                    <br/>
+                    <div className="single-row">
+                        <span style={{fontWeight:"bold",  color:"#5D5D5D"}}> Competitors:</span>  
+                            New Work SE, Monster Worldwide   &nbsp; &nbsp;  
+                        <svg class="SVGInline-svg mr-xsm-svg" xmlns="http://www.w3.org/2000/svg" width="20" height="14" viewBox="0 0 20 14"><path fill="#1861BF" d="M7.01 9H0v2h7.01v3L11 10 7.01 6v3zm5.98-1V5H20V3h-7.01V0L9 4l3.99 4z" id="comparisonIcon-prefix__compare" stroke="currentColor"></path></svg>
+                    </div>
+
+                        LinkedIn is the world’s largest professional network, with nearly 690+ million members in over 200 countries and territories around the world. LinkedIn was built to help professionals achieve more in their careers, and every day our members use our products to make connections, discover opportunities, and gain insights.
+                        {/* Info */}
+
+                        <br/>
+                        <br/>
+                        <span style={{fontWeight:"bold", color:"#5D5D5D"}}> Mission:</span> Our mission is to create economic opportunity for every member of the global workforce and this vision connects our more than 16,000 employees in dozens of offices across five continents. It inspires us to invest in our talent, support career growth, and nurture a workplace where every employee feels part of a culture that prioritizes diversity, inclusion, and belonging. 
+                          
                     </div>      
                 </div>
                 

@@ -1,7 +1,7 @@
 .employer-profile-wrapper {
   background-color: #eaeaea;
   width: 100%;
-  padding: 2% 6% 1% 6%;
+  padding: 2% 12% 1% 12%;
 }
 
 .root-header {
@@ -19,8 +19,8 @@
 
 .details {
   position: relative;
-  margin-left: 11%;
-  margin-top: -5%;
+  margin-left: 13%;
+  margin-top: -6%;
   /* font-size: xx-large; */
 }
 .cover {
@@ -38,8 +38,26 @@
 }
 
 .info-wrapper {
-  width: 20%;
-  height: 60%;
+  padding: 20px;
+  margin-top: 20px;
+  background-color: #fff;
+  width: 70%;
+  height: 100%;
+}
+
+.info-wrapper-row {
+  font-size: 15px;
+}
+
+.span-info {
+  color: #505963;
+  font-weight: bold;
+  font: Lato;
+  padding-bottom: 12px;
+}
+
+.single-row {
+  padding-bottom: 12px;
 }
 
 .jobs-at {
