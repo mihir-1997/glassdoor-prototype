@@ -1,0 +1,75 @@
+.contributions-wrapper {
+    background-color: #EAEAEA;
+    padding: 2% 15%;
+    min-height: calc(100vh - 80px);
+    font-family: 'Lato', sans-serif;
+}
+
+.contributions {
+    min-height: calc(100vh - 80px);
+}
+
+/* contributions left pane */
+
+.contributions-left-pane {
+    background-color: #fff;
+    height: 32%;
+    margin: 0 0 0 10%;
+}
+
+.each-contribution-button {
+    height: 25%;
+    cursor: pointer;
+    border-bottom: 1px solid lightgray;
+    padding: 6% 8%;
+    color: #1762BF;
+}
+
+.each-contribution-button:hover {
+    background: #f2f2f2;
+    background-color: #f2f2f2;
+}
+
+.each-contribution-button-active {
+    color: #222323;
+}
+
+/* contributions left pane */
+
+.contributions-right-pane {
+    background-color: #fff;
+    padding: 4% 3%;
+}
+
+.addcontribution-header {
+    font-size: 24px;
+    line-height: 32px;
+    color: #0d0d0d;
+    font-weight: 400;
+}
+
+.addcontribution-button {
+    margin-bottom: 16px;
+}
+
+/* salaries */
+
+/* common to all contributions */
+
+.contributions-text {
+    margin: 4% 0 1% 0;
+}
+
+.contributions-stat-heading {
+    line-height: 50px;
+    margin-top: 4%;
+}
+
+.contributions-stat-column {
+    padding: 1% 2%;
+    border: 1px solid lightgray;
+}
+
+.contributions-stats {
+    line-height: 40px;
+}

@@ -1,16 +1,32 @@
 import React, { Component } from 'react'
+import { Redirect } from 'react-router-dom'
 
 import intel_logo from '../../../Images/intel.png'
 
 class IndividualCompanyCard extends Component {
 
+    constructor( props ) {
+        super( props )
+        this.state = {
+            redirectToAddContribution: null
+        }
+    }
+
     writeReview = ( e ) => {
         e.preventDefault()
+        this.setState( {
+            redirectToAddContribution: true
+        } )
     }
 
     render () {
+        let redirect = null
+        if ( this.state.redirectToAddContribution ) {
+            redirect = <Redirect to="/students/addcontribution" />
+        }
         return (
             <div className="individual-comanycard-wrapper">
+                { redirect }
                 <div className="row">
                     <div className="col-2">
                         <img className="company-search-company-logo" src={ intel_logo } alt="company_logo" />

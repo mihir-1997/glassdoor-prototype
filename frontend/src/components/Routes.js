@@ -8,6 +8,8 @@ import Dashboard from './Students/Landing/Dashboard'
 import StudentProfile from './Students/Profile/StudentProfile'
 import JobLanding from './Students/JobSearch/JobLanding'
 import CompanySearch from './Students/CompanySearch/CompanySearch'
+import Contributions from './Students/Contributions/Contributions'
+import AddContribution from './Students/Contributions/AddContribution'
 
 class Routes extends Component {
     render () {
@@ -20,6 +22,8 @@ class Routes extends Component {
                 <Route path="/students/profile" component={ StudentProfile } />
                 <Route path="/students/jobs" component={ JobLanding } />
                 <Route path="/students/companies" component={ CompanySearch } />
+                <Route path="/students/contributions" component={ Contributions } />
+                <Route path="/students/addcontribution" component={ AddContribution } />
             </div>
         )
     }
