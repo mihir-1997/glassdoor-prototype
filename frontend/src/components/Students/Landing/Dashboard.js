@@ -1,23 +1,76 @@
 import React, { Component } from 'react'
+import axios from 'axios'
+import { Redirect } from 'react-router'
 
 import './Dashboard.css'
 import SEO from '../../SEO/SEO'
+import { BACKEND_URL, BACKEND_PORT } from '../../Config/Config'
 
 class Dashboard extends Component {
+
+    constructor( props ) {
+        super( props )
+        this.state = {
+            name: "",
+            updateProfileButton: false
+        }
+    }
 
     componentDidMount () {
         SEO( {
             title: "Glassdoor Job Search | Find The Job That Fits Your Life"
         } )
+        let id = localStorage.getItem( "id" )
+        if ( id ) {
+            axios.defaults.withCredentials = true
+            axios.defaults.headers.common[ 'authorization' ] = localStorage.getItem( 'token' )
+            axios.get( BACKEND_URL + ":" + BACKEND_PORT + "/students/getUser/" + id )
+                .then( ( res ) => {
+                    console.log( res )
+                    if ( res.status === 200 ) {
+                        this.setState( {
+                            name: res.data.name
+                        } )
+                    }
+                } )
+                .catch( ( err ) => {
+                    if ( err.response ) {
+                        if ( err.response.status === 404 ) {
+                            console.log( "Error! No user" )
+                            this.setState( { "error": "No user found" } )
+                        } else if ( err.response.status === 401 ) {
+                            this.setState( { "error": "Wrong Password" } )
+                        } else if ( err.response.status === 400 ) {
+                            this.setState( { "error": "Each field is required" } )
+                        }
+                    }
+                } )
+        } else {
+            console.log( "No ID found in localstorage" )
+        }
     }
 
-    updateProfile = () => {
-
+    updateProfile = ( e ) => {
+        e.preventDefault()
+        this.setState( {
+            updateProfileButton: !this.state.updateProfileButton
+        } )
     }
 
     render () {
+        let redirectVar = null
+        if ( !localStorage.getItem( "active" ) ) {
+            redirectVar = <Redirect to="/login" />
+            return redirectVar
+        }
+        let redirectToProfile = null
+        if ( this.state.updateProfileButton ) {
+            redirectToProfile = <Redirect to="/students/profile" />
+        }
         return (
             <div className="userdashboard-wrapper">
+                {redirectVar }
+                { redirectToProfile }
                 <div className="userdashboard-first-row">
                     <div className="dashboard-tagline">
                         <h3>Hello, what would you like to explore today?</h3>
@@ -103,8 +156,8 @@ class Dashboard extends Component {
                                         </div>
                                     </div>
                                     <div className="col-2">
-                                        <svg class="SVGInline-svg align-self-start-svg css-12urkm1-svg evfqoqj3-svg" xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="5 4 30 35">
-                                            <g fill="none" fill-rule="evenodd">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="5 4 30 35">
+                                            <g fill="none" fillRule="evenodd">
                                                 <path fill="#FFF" stroke="#F5C131" strokeLinejoin="square" strokeWidth="3" d="M10 7.5A1.5 1.5 0 008.5 9v19.397a1.5 1.5 0 00.72 1.281l10 6.09a1.5 1.5 0 001.56 0l10-6.09a1.5 1.5 0 00.72-1.281V9A1.5 1.5 0 0030 7.5H10z"></path>
                                                 <path stroke="#fff" d="M10 5.5h20A3.5 3.5 0 0133.5 9v19.397a3.5 3.5 0 01-1.68 2.99l-10 6.09a3.5 3.5 0 01-3.64 0l-10-6.09a3.5 3.5 0 01-1.68-2.99V9A3.5 3.5 0 0110 5.5z"></path>
                                                 <path fill="#F5C131" d="M19.036 21.667h-4.783c-.692 0-.934-.458-.54-1.025l6.698-9.617c.394-.566.636-.462.542.212l-.989 7.096h4.783c.692 0 .934.458.54 1.025l-6.698 9.617c-.394.566-.636.462-.542-.212l.989-7.096z"></path>
@@ -113,8 +166,7 @@ class Dashboard extends Component {
                                     </div>
                                 </div>
                                 <div className="userinfo-name">
-                                    {/* {this.state.user_name} */ }
-                                    Mihir Patel
+                                    { this.state.name }
                                 </div>
                                 <div className="userinfo-title">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">

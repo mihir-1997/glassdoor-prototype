@@ -11,12 +11,12 @@ var multer = require( 'multer' );
 var aws = require( 'aws-sdk' );
 var multerS3 = require( 'multer-s3' );
 var cors = require( 'cors' );
-var { frontend_url } = require( './config' )
+var { frontend_url } = require( './config/config' )
 
 //routes
 var students = require( './students/routes' )
 var employers = require( './employers/routes' )
-var reviews = require( './reviews/routes' )
+var contributions = require( './contributions/routes' )
 var jobs = require( './jobs/routes' );
 
 
@@ -46,7 +46,7 @@ app.use(
 //routes
 app.use( '/students', students );
 app.use( '/employers', employers );
-app.use( '/reviews', reviews );
+app.use( '/contributions', contributions );
 app.use( '/jobs', jobs );
 
 
