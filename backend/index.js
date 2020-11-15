@@ -41,6 +41,44 @@ app.use(
 );
 
 
+// image storage
+// profile picture
+const profileImage_storage = multer.diskStorage( {
+    destination: './public/images/profilepics/',
+    filename: function ( req, file, cb ) {
+        cb(
+            null,
+            file.fieldname + '_' + Date.now() + path.extname( file.originalname )
+        )
+    }
+} )
+
+const upload_profileImage = multer( {
+    storage: profileImage_storage
+} ).single( 'myImage' )
+
+app.set( "upload_profileImage", upload_profileImage );
+
+//resume
+const resume_storage = multer.diskStorage( {
+    destination: './public/images/resumes/',
+    filename: function ( req, file, cb ) {
+        cb(
+            null,
+            file.fieldname + '_' + Date.now() + path.extname( file.originalname )
+        )
+    }
+} )
+
+const upload_Resume = multer( {
+    storage: resume_storage
+} ).single( 'myResume' )
+
+app.set( "upload_Resume", upload_Resume );
+
+
+
+
 //APIs
 
 //routes
