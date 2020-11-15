@@ -4,6 +4,7 @@ import './EmployerProfile.css'
 import cover from '../../../Images/employer.png'
 import logo from '../../../Images/linkedin-logo.png'
 import SEO from '../../SEO/SEO'
+import bullseye from '../../../Images/bullseye-svgrepo-com.svg'
 
 
 class EmployerProfile extends Component {
@@ -37,7 +38,7 @@ class EmployerProfile extends Component {
                         <img className="cover" src={cover} alt="Cover"  />
                     </div>
                     <div className="details-wrapper">
-                            <div className="company-logo">
+                            <div className="employer-company-logo">
                                 <img className="logo" src={logo} alt="logo"/>
                             </div>
                         <div className="details">
@@ -49,6 +50,19 @@ class EmployerProfile extends Component {
                                 Jobs at LinkedIn
                                 {/* Jobs at {this.state.name} */}
                             </button>
+                        </div>
+                        <div className="row multiple-links">
+                            <div className="col-1.2 single-link icon-bullseye-select"><a href="/overview">Overview</a> </div> 
+                            <div className="col-1.2 single-link"><a href="/employer/profile/overview">Reviews</a> </div>
+                            <div className="col-1.2 single-link"><a href="/overview">Jobs</a> </div>
+                            <div className="col-1.2 single-link"><a href="/overview">Salaries</a> </div>
+                            <div className="col-1.2 single-link"><a href="/overview">Interviews</a> </div>
+                            <div className="col-1.2 single-link"><a href="/overview">Benefits</a> </div>
+                            <div className="col-1.2 single-link"><a href="/overview">Photos</a> </div>
+                            
+                            <div className="col-1.2" style={{paddingLeft:"150px", paddingBottom:"15px", paddingTop:"15px"}} >Follow</div>
+                            <div className="col-1.2" style={{paddingLeft:"20px",paddingBottom:"15px", paddingTop:"15px"}}>Add Review</div>
+
                         </div>
                     </div>   
                     <div className="info-wrapper">
@@ -96,7 +110,11 @@ class EmployerProfile extends Component {
                         <br/>
                         <span style={{fontWeight:"bold", color:"#5D5D5D"}}> Mission:</span> Our mission is to create economic opportunity for every member of the global workforce and this vision connects our more than 16,000 employees in dozens of offices across five continents. It inspires us to invest in our talent, support career growth, and nurture a workplace where every employee feels part of a culture that prioritizes diversity, inclusion, and belonging. 
                           
-                    </div>      
+                    </div> 
+
+                    <div className="form-wrapper">
+                    form
+                    </div>     
                 </div>
                 
             </div>

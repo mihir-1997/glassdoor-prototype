@@ -17,6 +17,19 @@
   padding-bottom: 1%;
 }
 
+.multiple-links {
+  padding-left: 25px;
+}
+
+.single-link {
+  font-weight: normal;
+  padding: 15px;
+  color: #1861bf;
+  font-size: 15px;
+  font-style: sans-serif;
+  border-right: 1px solid #eaeaea;
+}
+
 .details {
   position: relative;
   margin-left: 13%;
@@ -29,7 +42,7 @@
   width: 100%;
 }
 
-.company-logo {
+.employer-company-logo {
   margin: -3% 0 0 2%;
 }
 
@@ -45,6 +58,16 @@
   height: 100%;
 }
 
+.form-wrapper {
+  position: absolute;
+  top: 69.2%;
+  right: 12%;
+  padding: 20px;
+  margin-top: 20px;
+  background-color: #fff;
+  width: 22%;
+  height: 60%;
+}
 .info-wrapper-row {
   font-size: 15px;
 }

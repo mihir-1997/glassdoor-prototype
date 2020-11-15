@@ -28,7 +28,6 @@ class Routes extends Component {
                 <Route path="/students/addcontribution" component={ AddContribution } />
                 {/* Employer Routes */}
                 <Route path="/employer/profile" component={ EmployerProfile }/>
-
             </div>
         )
     }
