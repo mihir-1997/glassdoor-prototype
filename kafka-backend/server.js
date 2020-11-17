@@ -21,6 +21,12 @@ var student_removeResume = require( './services/students/removeResume' )
 var students_updateJobPreferences = require( './services/students/updateJobPreferences' )
 var students_updateDemographics = require( './services/students/updateDemographics' )
 
+//contrubutions
+var contributions_addReview = require( './services/contributions/addReview' )
+var contributions_removeReview = require( './services/contributions/removeReview' )
+
+
+
 
 function handleTopicRequest ( topic_name, fname ) {
     //var topic_name = 'root_topic';
@@ -75,5 +81,7 @@ handleTopicRequest( "remove_resume", student_removeResume )
 handleTopicRequest( "students_updateJobPreferences", students_updateJobPreferences )
 handleTopicRequest( "students_updateDemographics", students_updateDemographics )
 
-
+//contributions
+handleTopicRequest( "contributions_addReview", contributions_addReview )
+handleTopicRequest( "contributions_removeReview", contributions_removeReview )
 
