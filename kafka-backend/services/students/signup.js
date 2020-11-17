@@ -23,8 +23,8 @@ function handle_request ( msg, callback ) {
             education: [],
             skills: [],
             resume: [],
-            jobPreference: [],
-            userDemographics: [],
+            jobPreference: {},
+            userDemographics: {},
             profilePicture: "",
 
         } )
