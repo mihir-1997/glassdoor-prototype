@@ -24,12 +24,12 @@ var educationSchema = new Schema( {
 } )
 
 var resumeSchema = new Schema( {
+    resumeID: String,
     isPrimary: Boolean,
     resumeName: String,
 } )
 
 var jobPreferenceSchema = new Schema( {
-    jobPreferenceID: String,
     searchStatus: String,
     jobTitle: String,
     targetSalary: String,
@@ -39,7 +39,6 @@ var jobPreferenceSchema = new Schema( {
 } )
 
 var userDemographicsSchema = new Schema( {
-    userDemographicsID: String,
     ethnicity: String,
     gender: String,
     disability: String,
@@ -55,12 +54,13 @@ var studentSchema = new Schema( {
     city: String,
     zipcode: String,
     website: String,
+    aboutMe: String,
     experience: [ experienceSchema ],
     education: [ educationSchema ],
     skills: [ String ],
     resume: [ resumeSchema ],
-    jobPreference: [ jobPreferenceSchema ],
-    userDemographics: [ userDemographicsSchema ],
+    jobPreference: jobPreferenceSchema,
+    userDemographics: userDemographicsSchema,
     profilePicture: String,
 
 }

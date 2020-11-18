@@ -1,7 +1,7 @@
 const path = require( 'path' )
 require( 'dotenv' ).config( { path: path.resolve( __dirname, '../.env' ) } )
 
-let frontend_url = "http://localhost:3000/"
+let frontend_url = "http://localhost:3000"
 let mongodb_string = process.env.MONGO_STRING
 let secret = process.env.SECRET
 let mysql_username = process.env.MYSQL_USERNAME
