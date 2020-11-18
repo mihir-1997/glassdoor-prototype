@@ -21,6 +21,9 @@ var student_removeResume = require( './services/students/removeResume' )
 var students_updateJobPreferences = require( './services/students/updateJobPreferences' )
 var students_updateDemographics = require( './services/students/updateDemographics' )
 
+//employers
+var employer_signup = require('./services/employers/employer_signup') 
+var employer_login = require('./services/employers/employer_login')
 
 function handleTopicRequest ( topic_name, fname ) {
     //var topic_name = 'root_topic';
@@ -28,10 +31,11 @@ function handleTopicRequest ( topic_name, fname ) {
     var producer = connection.getProducer();
     console.log( 'server is running ' );
     consumer.on( 'message', function ( message ) {
+        console.log("message:",message);
         console.log( 'message received for ' + topic_name + " ", fname );
         console.log( JSON.stringify( message.value ) );
         var data = JSON.parse( message.value );
-
+        console.log("data : ",data);
         fname.handle_request( data.data, function ( err, res ) {
             console.log( 'after handle' + res );
             var payloads = [
@@ -75,5 +79,6 @@ handleTopicRequest( "remove_resume", student_removeResume )
 handleTopicRequest( "students_updateJobPreferences", students_updateJobPreferences )
 handleTopicRequest( "students_updateDemographics", students_updateDemographics )
 
-
-
+//employers
+handleTopicRequest( "employer_signup",employer_signup)
+handleTopicRequest("employer_login",employer_login)
