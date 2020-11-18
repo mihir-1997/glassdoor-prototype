@@ -24,6 +24,12 @@ var students_updateDemographics = require( './services/students/updateDemographi
 //employers
 var employer_signup = require('./services/employers/employer_signup') 
 var employer_login = require('./services/employers/employer_login')
+//contrubutions
+var contributions_addReview = require( './services/contributions/addReview' )
+var contributions_removeReview = require( './services/contributions/removeReview' )
+
+
+
 
 function handleTopicRequest ( topic_name, fname ) {
     //var topic_name = 'root_topic';
@@ -82,3 +88,7 @@ handleTopicRequest( "students_updateDemographics", students_updateDemographics )
 //employers
 handleTopicRequest( "employer_signup",employer_signup)
 handleTopicRequest("employer_login",employer_login)
+//contributions
+handleTopicRequest( "contributions_addReview", contributions_addReview )
+handleTopicRequest( "contributions_removeReview", contributions_removeReview )
+
