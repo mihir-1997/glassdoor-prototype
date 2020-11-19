@@ -70,47 +70,47 @@ router.post( '/addReview', ( req, res ) => {
     //     description: req.body.description,
     //     helpful: req.body.helpful
     // }
-    console.log( "in" )
-    let reviews = []
-    for ( let i = 0; i < 10000; i++ ) {
-        let newReview = {
-            type: "review",
-            studentID: faker.random.uuid(),
-            employerID: faker.random.uuid(),
-            ratingOverall: faker.random.number(),
-            ratingRTF: faker.random.number(),
-            ratingCEO: faker.random.number(),
-            headline: faker.lorem.sentence(),
-            pros: faker.lorem.words(),
-            cons: faker.lorem.words(),
-            description: faker.lorem.sentences(),
-            helpful: faker.random.number()
-        }
-        reviews.push( newReview )
-    }
-    contributionsSchema.insertMany( reviews )
-        .then( doc => {
-            console.log( "Review Added" )
-            // callback( null, doc )
-            res.status( 200 ).send( doc );
-        } ).catch( error => {
-            console.log( "error", error );
-            // callback( error, null )
-            res.status( 400 ).send( "Error following" );
-        } )
-    // kafka.make_request( 'contributions_addReview', req.body, function ( err, results ) {
-    //     if ( err ) {
-    //         console.log( "Inside err", err );
-    //         res.status( 404 ).send( "Failed" )
-
-
-    //     } else {
-    //         console.log( "Inside else", results );
-    //         res.status( 200 ).send( results )
-
+    // console.log( "in" )
+    // let reviews = []
+    // for ( let i = 0; i < 10000; i++ ) {
+    //     let newReview = {
+    //         type: "review",
+    //         studentID: faker.random.uuid(),
+    //         employerID: faker.random.uuid(),
+    //         ratingOverall: faker.random.number(),
+    //         ratingRTF: faker.random.number(),
+    //         ratingCEO: faker.random.number(),
+    //         headline: faker.lorem.sentence(),
+    //         pros: faker.lorem.words(),
+    //         cons: faker.lorem.words(),
+    //         description: faker.lorem.sentences(),
+    //         helpful: faker.random.number()
     //     }
+    //     reviews.push( newReview )
+    // }
+    // contributionsSchema.insertMany( reviews )
+    //     .then( doc => {
+    //         console.log( "Review Added" )
+    //         // callback( null, doc )
+    //         res.status( 200 ).send( doc );
+    //     } ).catch( error => {
+    //         console.log( "error", error );
+    //         // callback( error, null )
+    //         res.status( 400 ).send( "Error following" );
+    //     } )
+    kafka.make_request( 'contributions_addReview', req.body, function ( err, results ) {
+        if ( err ) {
+            console.log( "Inside err", err );
+            res.status( 404 ).send( "Failed" )
 
-    // } );
+
+        } else {
+            console.log( "Inside else", results );
+            res.status( 200 ).send( results )
+
+        }
+
+    } );
 } )
 
 //remove review
