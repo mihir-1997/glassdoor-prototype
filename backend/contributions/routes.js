@@ -10,16 +10,16 @@ var faker = require( 'faker' )
 var redis = require( 'redis' )
 var { auth, checkAuth } = require( '../config/passport' )
 auth();
-var redis = require( 'redis' );
-var redisClient = redis.createClient();
+// var redis = require( 'redis' );
+// var redisClient = redis.createClient();
 
-redisClient.on( 'connect', function () {
-    console.log( 'Redis client connected' );
-} );
+// redisClient.on( 'connect', function () {
+//     console.log( 'Redis client connected' );
+// } );
 
-redisClient.on( 'error', function ( err ) {
-    console.log( 'Something went wrong while connecting redis' + err );
-} );
+// redisClient.on( 'error', function ( err ) {
+//     console.log( 'Something went wrong while connecting redis' + err );
+// } );
 
 //get review
 router.get( '/getReviews/:studentID', ( req, res ) => {

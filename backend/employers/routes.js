@@ -48,6 +48,60 @@ router.post( '/loginEmployer', ( req, res ) => {
     } );
 } )
 
+
+//get employer by name
+router.get( '/getEmployerByName/:name', checkAuth, ( req, res ) => {
+    console.log("inside getEmployerByName")
+    kafka.make_request( 'employer_getEmployerByName', req.params, function ( err, results ) {
+        if ( err ) {
+            console.log( "Inside err", err );
+            res.status( 404 ).send( "No employer found" )
+
+
+        } else {
+            console.log( "Inside else", results );
+            res.status( 200 ).send( results )
+
+        }
+
+    } );
+} )
+
+//get employer by id
+router.get( '/getEmployerById/:employerId',  ( req, res ) => {
+    console.log("inside getEmployerById")
+    kafka.make_request( 'employer_getEmployerById', req.params, function ( err, results ) {
+        if ( err ) {
+            console.log( "Inside err", err );
+            res.status( 404 ).send( "No employer found by this Id" )
+
+
+        } else {
+            console.log( "Inside else", results );
+            res.status( 200 ).send( results )
+
+        }
+
+    } );
+} )
+
+//update student basic info
+router.put( '/updateEmployerBasicInfo/:employerId', ( req, res ) => {
+    req.body.params = req.params
+    kafka.make_request( 'employer_updateEmployerBasicInfo', req.body, function ( err, results ) {
+        if ( err ) {
+            console.log( "Inside err", err );
+            res.status( 404 ).send( "No employer found" )
+
+
+        } else {
+            console.log( "Inside else", results );
+            res.status( 200 ).send( results )
+
+        }
+
+    } );
+} )
 //sample post
 router.post( '/', ( req, res ) => {
 
