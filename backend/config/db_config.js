@@ -23,7 +23,7 @@ connection.connect( ( error ) => {
 
 
 mongoose.connect( mongodb_string, {
-    poolSize: 10,
+    poolSize: 15,
     useNewUrlParser: true,
     useUnifiedTopology: true
     // useMongoClient: true

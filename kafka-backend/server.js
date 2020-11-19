@@ -27,6 +27,7 @@ var employer_login = require('./services/employers/employer_login')
 //contrubutions
 var contributions_addReview = require( './services/contributions/addReview' )
 var contributions_removeReview = require( './services/contributions/removeReview' )
+var contributions_getReview = require( './services/contributions/getReviews' )
 
 
 
@@ -91,4 +92,5 @@ handleTopicRequest("employer_login",employer_login)
 //contributions
 handleTopicRequest( "contributions_addReview", contributions_addReview )
 handleTopicRequest( "contributions_removeReview", contributions_removeReview )
+handleTopicRequest( "contributions_getReview", contributions_getReview )
 

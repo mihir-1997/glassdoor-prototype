@@ -25,6 +25,7 @@
     "nodemon": "^2.0.6",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
+    "redis": "^3.0.2",
     "uuidv4": "^1.0.1"
   }
 }
