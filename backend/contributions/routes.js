@@ -24,32 +24,32 @@ auth();
 //get review
 router.get( '/getReviews/:studentID', ( req, res ) => {
     const RedisKey = req.params.studentID;
-    redisClient.get( RedisKey, ( err, data ) => {
-        if ( data != null ) {
-            console.log( "from redis" )
-            res.status( 200 ).send( JSON.parse( data ) )
+    // redisClient.get( RedisKey, ( err, data ) => {
+    //     if ( data != null ) {
+    //         console.log( "from redis" )
+    //         res.status( 200 ).send( JSON.parse( data ) )
+    //     } else {
+    kafka.make_request( 'contributions_getReview', req.params, function ( err, results ) {
+        if ( err ) {
+            console.log( "Inside err", err );
+            res.status( 404 ).send( "Failed" )
+
+
         } else {
-            kafka.make_request( 'contributions_getReview', req.params, function ( err, results ) {
-                if ( err ) {
-                    console.log( "Inside err", err );
-                    res.status( 404 ).send( "Failed" )
+            console.log( "Inside else", results );
+            res.status( 200 ).send( results )
 
-
-                } else {
-                    console.log( "Inside else", results );
-                    res.status( 200 ).send( results )
-
-                }
-            } )
-            // contributionsSchema.findOne( { "studentID": req.params.studentID } ).then( doc => {
-            //     // console.log( RedisKey, doc )
-            //     redisClient.setex( RedisKey, 600, JSON.stringify( doc ) )
-            //     res.status( 200 ).send( doc );
-            // } ).catch( error => {
-            //     res.status( 400 ).send( "Error getting" + error );
-            // } )
         }
     } )
+    // contributionsSchema.findOne( { "studentID": req.params.studentID } ).then( doc => {
+    //     // console.log( RedisKey, doc )
+    //     redisClient.setex( RedisKey, 600, JSON.stringify( doc ) )
+    //     res.status( 200 ).send( doc );
+    // } ).catch( error => {
+    //     res.status( 400 ).send( "Error getting" + error );
+    // } )
+    //     }
+    // } )
 
 
 

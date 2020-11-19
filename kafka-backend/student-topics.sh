@@ -1,14 +1,28 @@
 declare -a arr=(
-                #  "students_signup" 
-                #  "students_login" 
-                #  "students_getStudent"
-                 "students_updateBasicInfo"
-                 "student_updateAboutMe"
+               "response_topic"
+               "students_getStudent"
+               "students_signup"
+               "students_login"
+               "students_updateBasicInfo"
+               "students_updateAboutMe"
+               "students_addExperience"
+               "students_removeExperience"
+               "students_updateExperience"
+               "students_updateSkills"
+               "students_addEducation"
+               "students_updateEducation"
+               "students_removeEducation"
+               "upload_ProfilePicture"
+               "upload_resume"
+               "remove_resume"
+               "students_updateJobPreferences"
+               "students_updateDemographics"
+               "contributions_addReview"
+               "contributions_removeReview"
                      
             )
 for custom_topic in "${arr[@]}"
 do
- echo $custom_topic
  bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic $custom_topic
    
 done
