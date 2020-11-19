@@ -1,15 +1,15 @@
 const contributionsSchema = require( '../../models/contributions' );
 
-var redis = require( 'redis' );
-var redisClient = redis.createClient();
+// var redis = require( 'redis' );
+// var redisClient = redis.createClient();
 
-redisClient.on( 'connect', function () {
-    console.log( 'Redis client connected' );
-} );
+// redisClient.on( 'connect', function () {
+//     console.log( 'Redis client connected' );
+// } );
 
-redisClient.on( 'error', function ( err ) {
-    console.log( 'Something went wrong while connecting redis' + err );
-} );
+// redisClient.on( 'error', function ( err ) {
+//     console.log( 'Something went wrong while connecting redis' + err );
+// } );
 
 function handle_request ( msg, callback ) {
     let req = {

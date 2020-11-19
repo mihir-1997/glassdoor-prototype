@@ -15,7 +15,7 @@ function handle_request ( msg, callback ) {
             name: req.body.name,
             email: req.body.email,
             address: "",
-            profileImageUrl: "",
+          profileImageUrl: "",
             website: "",
             companySize: "",
             companyType: "",

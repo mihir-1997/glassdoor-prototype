@@ -24,6 +24,9 @@ var students_updateDemographics = require( './services/students/updateDemographi
 //employers
 var employer_signup = require('./services/employers/employer_signup') 
 var employer_login = require('./services/employers/employer_login')
+var employer_getEmployerByName = require('./services/employers/employer_getEmployerByName')
+var employer_getEmployerById = require('./services/employers/employer_getEmployerById')
+var employer_updateEmployerBasicInfo = require('./services/employers/employer_updateEmployerBasicInfo')
 //contrubutions
 var contributions_addReview = require( './services/contributions/addReview' )
 var contributions_removeReview = require( './services/contributions/removeReview' )
@@ -89,6 +92,9 @@ handleTopicRequest( "students_updateDemographics", students_updateDemographics )
 //employers
 handleTopicRequest( "employer_signup",employer_signup)
 handleTopicRequest("employer_login",employer_login)
+handleTopicRequest("employer_getEmployerByName",employer_getEmployerByName)
+handleTopicRequest("employer_getEmployerById",employer_getEmployerById)
+handleTopicRequest("employer_updateEmployerBasicInfo",employer_updateEmployerBasicInfo)
 //contributions
 handleTopicRequest( "contributions_addReview", contributions_addReview )
 handleTopicRequest( "contributions_removeReview", contributions_removeReview )
