@@ -32,8 +32,10 @@ var contributions_addReview = require( './services/contributions/addReview' )
 var contributions_removeReview = require( './services/contributions/removeReview' )
 var contributions_getReview = require( './services/contributions/getReviews' )
 
-
-
+//jobs
+var job_createJob= require('./services/jobs/job_createJob')
+var job_getJobsForEmployer = require('./services/jobs/job_getJobsForEmployer')
+var job_getAllJobs = require('./services/jobs/job_getAllJobs')
 
 function handleTopicRequest ( topic_name, fname ) {
     //var topic_name = 'root_topic';
@@ -100,3 +102,7 @@ handleTopicRequest( "contributions_addReview", contributions_addReview )
 handleTopicRequest( "contributions_removeReview", contributions_removeReview )
 handleTopicRequest( "contributions_getReview", contributions_getReview )
 
+//jobs
+handleTopicRequest("job_createJob",job_createJob)
+handleTopicRequest("job_getJobsForEmployer",job_getJobsForEmployer)
+handleTopicRequest("job_getAllJobs",job_getAllJobs)

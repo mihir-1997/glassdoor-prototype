@@ -17,8 +17,7 @@ var { frontend_url } = require( './config/config' )
 var students = require( './students/routes' )
 var employers = require( './employers/routes' )
 var contributions = require( './contributions/routes' )
-var jobs = require( './jobs/routes' );
-
+var jobs = require( './jobs/routes' )
 
 
 //Session management

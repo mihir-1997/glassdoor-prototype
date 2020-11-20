@@ -68,7 +68,7 @@ router.get( '/getEmployerByName/:name', checkAuth, ( req, res ) => {
 } )
 
 //get employer by id
-router.get( '/getEmployerById/:employerId',  ( req, res ) => {
+router.get( '/getEmployerById/:employerId', checkAuth,  ( req, res ) => {
     console.log("inside getEmployerById")
     kafka.make_request( 'employer_getEmployerById', req.params, function ( err, results ) {
         if ( err ) {
@@ -86,7 +86,7 @@ router.get( '/getEmployerById/:employerId',  ( req, res ) => {
 } )
 
 //update student basic info
-router.put( '/updateEmployerBasicInfo/:employerId', ( req, res ) => {
+router.put( '/updateEmployerBasicInfo/:employerId',checkAuth,  ( req, res ) => {
     req.body.params = req.params
     kafka.make_request( 'employer_updateEmployerBasicInfo', req.body, function ( err, results ) {
         if ( err ) {
