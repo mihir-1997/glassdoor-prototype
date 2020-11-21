@@ -75,6 +75,22 @@ const upload_Resume = multer( {
 
 app.set( "upload_Resume", upload_Resume );
 
+//office photos
+const photos_storage = multer.diskStorage( {
+    destination: './public/images/officePhotos/',
+    filename: function ( req, file, cb ) {
+        cb(
+            null,
+            file.fieldname + '_' + Date.now() + path.extname( file.originalname )
+        )
+    }
+} )
+
+const upload_officePhotos = multer( {
+    storage: photos_storage
+} ).array( 'officePhotos', 10 )
+
+app.set( "upload_officePhotos", upload_officePhotos );
 
 
 
@@ -87,6 +103,7 @@ app.use( '/contributions', contributions );
 app.use( '/jobs', jobs );
 app.use( '/public/images/resumes', express.static( path.join( __dirname, '/public/images/resumes' ) ) );
 app.use( '/public/images/profilepics', express.static( path.join( __dirname, '/public/images/profilepics' ) ) );
+app.use( '/public/images/officePhotos', express.static( path.join( __dirname, '/public/images/officePhotos' ) ) );
 
 //starting the server
 app.listen( PORT, () => {

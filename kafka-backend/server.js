@@ -35,6 +35,7 @@ var contributions_removeReview = require( './services/contributions/removeReview
 var contributions_getReview = require( './services/contributions/getReviewsbyStudent' )
 var contributions_getReviewByEmployer = require( './services/contributions/getReviewsByEmployer' )
 var contributions_helpfulReview = require( './services/contributions/helpfulReview' )
+var contributions_addPhotos = require( './services/contributions/addPhotos' )
 
 //jobs
 var job_createJob = require( './services/jobs/job_createJob' )
@@ -110,6 +111,7 @@ handleTopicRequest( "contributions_removeReview", contributions_removeReview )
 handleTopicRequest( "contributions_getReview", contributions_getReview )
 handleTopicRequest( "contributions_getReviewByEmployer", contributions_getReviewByEmployer )
 handleTopicRequest( "contributions_helpfulReview", contributions_helpfulReview )
+handleTopicRequest( "contributions_addPhotos", contributions_addPhotos )
 
 //jobs
 handleTopicRequest( "job_createJob", job_createJob )

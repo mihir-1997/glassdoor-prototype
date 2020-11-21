@@ -45,7 +45,7 @@ router.get( '/getReviewsbyStudent/:studentID', ( req, res ) => {
 } )
 
 //get review by Employers
-router.get( '/getReviewsbyEmployer/:employerID', ( req, res ) => {
+router.get( '/getReviewsbyEmployer/:employerName', ( req, res ) => {
     // redisClient.get( RedisKey, ( err, data ) => {
     //     if ( data != null ) {
     //         console.log( "from redis" )
@@ -119,5 +119,33 @@ router.put( '/helpfulReview/:reviewID', ( req, res ) => {
 
     } );
 } )
+
+//upload office photos
+router.post( '/uploadPhotos/:employerID', checkAuth, ( req, res ) => {
+    let upload = req.app.get( 'upload_officePhotos' );
+    upload( req, res, err => {
+        if ( err ) {
+            console.log( "Error uploading officePhotos", err );
+            res.status( 400 ).end( 'Issue with uploading' )
+        } else {
+            console.log( "Inside upload", req.file, req.body );
+            req.body.file = req.files
+            req.body.params = req.params
+            kafka.make_request( 'contributions_addPhotos', req.body, function ( err, results ) {
+                if ( err ) {
+                    console.log( "Inside err" );
+                    res.status( 400 ).send( "Error Fetching users", err )
+                } else {
+                    // console.log( "Inside else", results );
+                    res.status( 200 ).send( JSON.stringify( results ) )
+
+                }
+
+            } );
+
+
+        }
+    } );
+} );
 
 module.exports = router;

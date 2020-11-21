@@ -6,7 +6,7 @@ function handle_request ( msg, callback ) {
         params: msg
     }
 
-    contributionsSchema.find( { $and: [ { "employerID": req.params.employerID }, { "type": "review" } ] } ).then( doc => {
+    contributionsSchema.find( { $and: [ { "employerName": req.params.employerName }, { "type": "review" } ] } ).then( doc => {
         var overallRating = 0
         var averageRecommended = 0
         var averageCEOApproval = 0
