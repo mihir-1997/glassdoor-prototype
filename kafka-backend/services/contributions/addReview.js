@@ -19,7 +19,12 @@ function handle_request ( msg, callback ) {
         pros: req.body.pros,
         cons: req.body.cons,
         description: req.body.description,
-        helpful: req.body.helpful
+        helpful: req.body.helpful,
+        reviewStatus: "Pending",
+        reviewDate: Date.now(),
+        featured: false,
+        favourite: false,
+        replies: [],
     } )
 
     newReview.save().then( doc => {

@@ -84,6 +84,79 @@ router.post( '/addReview', ( req, res ) => {
     } );
 } )
 
+//update review status
+router.put( '/reviewStatus/:reviewID', ( req, res ) => {
+    req.body.params = req.params
+    kafka.make_request( 'contributions_updateReviewStatus', req.body, function ( err, results ) {
+        if ( err ) {
+            console.log( "Inside err", err );
+            res.status( 404 ).send( "Failed" )
+
+
+        } else {
+            console.log( "Inside else", results );
+            res.status( 200 ).send( results )
+
+        }
+
+    } );
+} )
+
+//mark review as favourite
+router.put( '/favouriteReview/:reviewID', ( req, res ) => {
+    req.body.params = req.params
+    kafka.make_request( 'contributions_markReviewAsFavourite', req.body, function ( err, results ) {
+        if ( err ) {
+            console.log( "Inside err", err );
+            res.status( 404 ).send( "Failed" )
+
+
+        } else {
+            console.log( "Inside else", results );
+            res.status( 200 ).send( results )
+
+        }
+
+    } );
+} )
+
+//mark review as featured
+router.put( '/featureReview/:reviewID', ( req, res ) => {
+    req.body.params = req.params
+    kafka.make_request( 'contributions_markReviewAsFeatured', req.body, function ( err, results ) {
+        if ( err ) {
+            console.log( "Inside err", err );
+            res.status( 404 ).send( "Failed" )
+
+
+        } else {
+            console.log( "Inside else", results );
+            res.status( 200 ).send( results )
+
+        }
+
+    } );
+} )
+
+
+//reply to review
+router.put( '/reply/:reviewID', ( req, res ) => {
+    req.body.params = req.params
+    kafka.make_request( 'contributions_replyToReview', req.body, function ( err, results ) {
+        if ( err ) {
+            console.log( "Inside err", err );
+            res.status( 404 ).send( "Failed" )
+
+
+        } else {
+            console.log( "Inside else", results );
+            res.status( 200 ).send( results )
+
+        }
+
+    } );
+} )
+
 //remove review
 router.delete( '/removeReview/:reviewID', checkAuth, ( req, res ) => {
 

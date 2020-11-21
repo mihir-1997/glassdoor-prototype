@@ -36,8 +36,14 @@ var contributions_removeReview = require( './services/contributions/removeReview
 var contributions_getReview = require( './services/contributions/getReviewsbyStudent' )
 var contributions_getReviewByEmployer = require( './services/contributions/getReviewsByEmployer' )
 var contributions_helpfulReview = require( './services/contributions/helpfulReview' )
+var contributions_replyToReview = require( './services/contributions/replyToReview' )
+var contributions_updateReviewStatus = require( './services/contributions/updateReviewStatus' )
+var contributions_markReviewAsFavourite = require( './services/contributions/markReviewAsFavourite' )
+var contributions_markReviewAsFeatured = require( './services/contributions/markReviewAsFeatured' )
+
 var contributions_addPhotos = require( './services/contributions/addPhotos' )
 var contributions_addSalary = require( './services/contributions/addSalaries' )
+
 var contributions_getSalariesByEmployer = require( './services/contributions/getSalariesByEmployer' )
 
 
@@ -116,6 +122,10 @@ handleTopicRequest( "contributions_removeReview", contributions_removeReview )
 handleTopicRequest( "contributions_getReview", contributions_getReview )
 handleTopicRequest( "contributions_getReviewByEmployer", contributions_getReviewByEmployer )
 handleTopicRequest( "contributions_helpfulReview", contributions_helpfulReview )
+handleTopicRequest( "contributions_replyToReview", contributions_replyToReview )
+handleTopicRequest( "contributions_updateReviewStatus", contributions_updateReviewStatus )
+handleTopicRequest( "contributions_markReviewAsFeatured", contributions_markReviewAsFeatured )
+handleTopicRequest( "contributions_markReviewAsFavourite", contributions_markReviewAsFavourite )
 
 //photos
 handleTopicRequest( "contributions_addPhotos", contributions_addPhotos )
