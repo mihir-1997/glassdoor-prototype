@@ -12,6 +12,7 @@ import Contributions from './Students/Contributions/Contributions'
 import AddContribution from './Students/Contributions/AddContribution'
 
 import EmployerProfile from './Employer/Profile/EmployerProfile'
+import EmployerReviews from './Employer/Reviews/EmployerReviews'
 
 class Routes extends Component {
     render () {
@@ -28,6 +29,7 @@ class Routes extends Component {
                 <Route path="/students/addcontribution" component={ AddContribution } />
                 {/* Employer Routes */}
                 <Route path="/employer/profile" component={ EmployerProfile }/>
+                <Route path="/employer/reviews" component={ EmployerReviews }/>
             </div>
         )
     }

@@ -52,13 +52,12 @@ class EmployerProfile extends Component {
                             </button>
                         </div>
                         <div className="row multiple-links">
-                            <div className="col-1.2 single-link icon-bullseye-select"><a href="/overview">Overview</a> </div> 
-                            <div className="col-1.2 single-link"><a href="/employer/profile/overview">Reviews</a> </div>
-                            <div className="col-1.2 single-link"><a href="/overview">Jobs</a> </div>
-                            <div className="col-1.2 single-link"><a href="/overview">Salaries</a> </div>
-                            <div className="col-1.2 single-link"><a href="/overview">Interviews</a> </div>
-                            <div className="col-1.2 single-link"><a href="/overview">Benefits</a> </div>
-                            <div className="col-1.2 single-link"><a href="/overview">Photos</a> </div>
+                            <div className="col-1.2 single-link"><a href="/employer/overview">Overview</a> </div> 
+                            <div className="col-1.2 single-link"><a href="/employer/reviews">Reviews</a> </div>
+                            <div className="col-1.2 single-link"><a href="/employer/jobs">Jobs</a> </div>
+                            <div className="col-1.2 single-link"><a href="/employer/salaries">Salaries</a> </div>
+                            <div className="col-1.2 single-link"><a href="/employer/interviews">Interviews</a> </div>
+                            <div className="col-1.2 single-link"><a href="/employer/photos">Photos</a> </div>
                             
                             <div className="col-1.2" style={{paddingLeft:"150px", paddingBottom:"15px", paddingTop:"15px"}} >Follow</div>
                             <div className="col-1.2" style={{paddingLeft:"20px",paddingBottom:"15px", paddingTop:"15px"}}>Add Review</div>
@@ -112,7 +111,7 @@ class EmployerProfile extends Component {
                           
                     </div> 
 
-                    <div className="form-wrapper">
+                    <div className="form-wrapper-side">
                     form
                     </div>     
                 </div>
