@@ -86,7 +86,8 @@ app.use( '/students', students );
 app.use( '/employers', employers );
 app.use( '/contributions', contributions );
 app.use( '/jobs', jobs );
-
+app.use( '/public/images/resumes', express.static( path.join( __dirname, '/public/images/resumes' ) ) );
+app.use( '/public/images/profilepics', express.static( path.join( __dirname, '/public/images/profilepics' ) ) );
 
 //starting the server
 app.listen( PORT, () => {

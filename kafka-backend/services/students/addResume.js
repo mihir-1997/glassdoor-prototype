@@ -10,7 +10,7 @@ function handle_request ( msg, callback ) {
     let newResume = {
         resumeID: Date.now(),
         isPrimary: req.body.isPrimary,
-        resumeName: req.body.file.filename
+        resumeName: req.body.file.originalname
     }
 
     studentsSchema.findById( { _id: req.body.params.studentID }

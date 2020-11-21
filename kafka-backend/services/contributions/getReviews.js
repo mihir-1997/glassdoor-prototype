@@ -18,7 +18,7 @@ function handle_request ( msg, callback ) {
 
     contributionsSchema.findOne( { "studentID": req.params.studentID } ).then( doc => {
 
-        redisClient.setex( req.params.studentID, 600, JSON.stringify( doc ) )
+        //redisClient.setex( req.params.studentID, 600, JSON.stringify( doc ) )
         callback( null, doc )
         //res.status( 200 ).send( doc );
     } ).catch( error => {

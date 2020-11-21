@@ -242,7 +242,7 @@ router.post( '/updateUserProfilePicture/:studentID', checkAuth, ( req, res ) => 
                     console.log( "Inside err" );
                     res.status( 400 ).send( "Error Fetching users", err )
                 } else {
-                    console.log( "Inside else", results );
+                    // console.log( "Inside else", results );
                     res.status( 200 ).send( JSON.stringify( results ) )
 
                 }
@@ -270,7 +270,7 @@ router.post( '/addUserResume/:studentID', checkAuth, ( req, res ) => {
                     console.log( "Inside err" );
                     res.status( 400 ).send( "Error Fetching users", err )
                 } else {
-                    console.log( "Inside else", results );
+                    // console.log( "Inside else", results );
                     res.status( 200 ).send( JSON.stringify( results ) )
 
                 }

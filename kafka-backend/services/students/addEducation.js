@@ -12,7 +12,7 @@ function handle_request ( msg, callback ) {
         degree: req.body.degree,
         major: req.body.major,
         collegeLocation: req.body.collegeLocation,
-        collegeStartDate: req.body.collegeEndDate,
+        collegeStartDate: req.body.collegeStartDate,
         collegeDescription: req.body.collegeDescription,
         collegeEndDate: req.body.collegeEndDate
     }

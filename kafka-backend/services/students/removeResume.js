@@ -22,7 +22,7 @@ function handle_request ( msg, callback ) {
                 return true
             }
         } )
-        if ( flag ) {
+        if ( flag && filtered.length !== 0 ) {
             filtered[ filtered.length - 1 ].isPrimary = "true"
 
         }
