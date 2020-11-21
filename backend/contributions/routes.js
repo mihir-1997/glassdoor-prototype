@@ -148,4 +148,41 @@ router.post( '/uploadPhotos/:employerID', checkAuth, ( req, res ) => {
     } );
 } );
 
+
+//add salary
+router.post( '/addSalary', ( req, res ) => {
+
+    kafka.make_request( 'contributions_addSalary', req.body, function ( err, results ) {
+        if ( err ) {
+            console.log( "Inside err", err );
+            res.status( 404 ).send( "Failed" )
+
+
+        } else {
+            console.log( "Inside else", results );
+            res.status( 200 ).send( results )
+
+        }
+
+    } );
+} )
+
+//get salary by employer
+router.get( '/getSalaries/:employerName', ( req, res ) => {
+
+    kafka.make_request( 'contributions_getSalariesByEmployer', req.params, function ( err, results ) {
+        if ( err ) {
+            console.log( "Inside err", err );
+            res.status( 404 ).send( "Failed" )
+
+
+        } else {
+            console.log( "Inside else", results );
+            res.status( 200 ).send( results )
+
+        }
+
+    } );
+} )
+
 module.exports = router;

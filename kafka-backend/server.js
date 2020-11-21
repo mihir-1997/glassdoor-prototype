@@ -28,8 +28,8 @@ var employer_login = require( './services/employers/employer_login' )
 var employer_getEmployerByName = require( './services/employers/employer_getEmployerByName' )
 var employer_getEmployerById = require( './services/employers/employer_getEmployerById' )
 var employer_updateEmployerBasicInfo = require( './services/employers/employer_updateEmployerBasicInfo' )
-var employer_updateEmployerProfilePicture = require('./services/employers/employer_updateEmployerProfilePicture')
-var employer_getAllEmployers = require('./services/employers/employer_getAllEmployers')
+var employer_updateEmployerProfilePicture = require( './services/employers/employer_updateEmployerProfilePicture' )
+var employer_getAllEmployers = require( './services/employers/employer_getAllEmployers' )
 //contrubutions
 var contributions_addReview = require( './services/contributions/addReview' )
 var contributions_removeReview = require( './services/contributions/removeReview' )
@@ -37,6 +37,9 @@ var contributions_getReview = require( './services/contributions/getReviewsbyStu
 var contributions_getReviewByEmployer = require( './services/contributions/getReviewsByEmployer' )
 var contributions_helpfulReview = require( './services/contributions/helpfulReview' )
 var contributions_addPhotos = require( './services/contributions/addPhotos' )
+var contributions_addSalary = require( './services/contributions/addSalaries' )
+var contributions_getSalariesByEmployer = require( './services/contributions/getSalariesByEmployer' )
+
 
 //jobs
 var job_createJob = require( './services/jobs/job_createJob' )
@@ -104,8 +107,8 @@ handleTopicRequest( "employer_login", employer_login )
 handleTopicRequest( "employer_getEmployerByName", employer_getEmployerByName )
 handleTopicRequest( "employer_getEmployerById", employer_getEmployerById )
 handleTopicRequest( "employer_updateEmployerBasicInfo", employer_updateEmployerBasicInfo )
-handleTopicRequest("employer_updateEmployerProfilePicture",employer_updateEmployerProfilePicture)
-handleTopicRequest("employer_getAllEmployers",employer_getAllEmployers)
+handleTopicRequest( "employer_updateEmployerProfilePicture", employer_updateEmployerProfilePicture )
+handleTopicRequest( "employer_getAllEmployers", employer_getAllEmployers )
 //contributions
 //reviews
 handleTopicRequest( "contributions_addReview", contributions_addReview )
@@ -113,7 +116,14 @@ handleTopicRequest( "contributions_removeReview", contributions_removeReview )
 handleTopicRequest( "contributions_getReview", contributions_getReview )
 handleTopicRequest( "contributions_getReviewByEmployer", contributions_getReviewByEmployer )
 handleTopicRequest( "contributions_helpfulReview", contributions_helpfulReview )
+
+//photos
 handleTopicRequest( "contributions_addPhotos", contributions_addPhotos )
+
+//salaries
+handleTopicRequest( "contributions_addSalary", contributions_addSalary )
+handleTopicRequest( "contributions_getSalariesByEmployer", contributions_getSalariesByEmployer )
+
 
 //jobs
 handleTopicRequest( "job_createJob", job_createJob )
