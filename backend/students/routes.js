@@ -300,6 +300,24 @@ router.delete( '/removeUserResume/:studentID', checkAuth, ( req, res ) => {
     } );
 } )
 
+//update student primary resume
+router.put( '/updateUserPrimaryResume/:studentID', checkAuth, ( req, res ) => {
+    req.body.params = req.params
+    kafka.make_request( 'updatePrimary_resume', req.body, function ( err, results ) {
+        if ( err ) {
+            console.log( "Inside err", err );
+            res.status( 404 ).send( "No student found" )
+
+
+        } else {
+            console.log( "Inside else", results );
+            res.status( 200 ).send( results )
+
+        }
+
+    } );
+} )
+
 //update student job preferences
 router.put( '/updateUserJobPreferences/:studentID', checkAuth, ( req, res ) => {
     req.body.params = req.params
