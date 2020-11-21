@@ -48,6 +48,33 @@ router.post( '/loginEmployer', ( req, res ) => {
     } );
 } )
 
+//upload profile pic employer
+router.post( '/updateEmployerProfilePicture/:employerID',  checkAuth, ( req, res ) => {
+    let upload = req.app.get( 'upload_profileImage' );
+    upload( req, res, err => {
+        if ( err ) {
+            console.log( "Error uploading image", err );
+            res.status( 400 ).end( 'Issue with uploading' )
+        } else {
+            console.log( "Inside upload", req.file, req.body );
+            req.body.file = req.file
+            req.body.params = req.params
+            kafka.make_request( 'employer_updateEmployerProfilePicture', req.body, function ( err, results ) {
+                if ( err ) {
+                    console.log( "Inside err" );
+                    res.status( 400 ).send( "Error Fetching users", err )
+                } else {
+                    // console.log( "Inside else", results );
+                    res.status( 200 ).send( JSON.stringify( results ) )
+
+                }
+
+            } );
+
+
+        }
+    } );
+} );
 
 //get employer by name
 router.get( '/getEmployerByName/:name', checkAuth, ( req, res ) => {
@@ -66,6 +93,25 @@ router.get( '/getEmployerByName/:name', checkAuth, ( req, res ) => {
 
     } );
 } )
+
+//get all employers
+router.get( '/getAllEmployers', checkAuth, ( req, res ) => {
+    console.log("inside getAllEmployers")
+    kafka.make_request( 'employer_getAllEmployers', req.params, function ( err, results ) {
+        if ( err ) {
+            console.log( "Inside err", err );
+            res.status( 404 ).send( "No employer found" )
+
+
+        } else {
+            console.log( "Inside else", results );
+            res.status( 200 ).send( results )
+
+        }
+
+    } );
+} )
+
 
 //get employer by id
 router.get( '/getEmployerById/:employerId', checkAuth,  ( req, res ) => {

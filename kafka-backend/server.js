@@ -28,7 +28,8 @@ var employer_login = require( './services/employers/employer_login' )
 var employer_getEmployerByName = require( './services/employers/employer_getEmployerByName' )
 var employer_getEmployerById = require( './services/employers/employer_getEmployerById' )
 var employer_updateEmployerBasicInfo = require( './services/employers/employer_updateEmployerBasicInfo' )
-
+var employer_updateEmployerProfilePicture = require('./services/employers/employer_updateEmployerProfilePicture')
+var employer_getAllEmployers = require('./services/employers/employer_getAllEmployers')
 //contrubutions
 var contributions_addReview = require( './services/contributions/addReview' )
 var contributions_removeReview = require( './services/contributions/removeReview' )
@@ -103,7 +104,8 @@ handleTopicRequest( "employer_login", employer_login )
 handleTopicRequest( "employer_getEmployerByName", employer_getEmployerByName )
 handleTopicRequest( "employer_getEmployerById", employer_getEmployerById )
 handleTopicRequest( "employer_updateEmployerBasicInfo", employer_updateEmployerBasicInfo )
-
+handleTopicRequest("employer_updateEmployerProfilePicture",employer_updateEmployerProfilePicture)
+handleTopicRequest("employer_getAllEmployers",employer_getAllEmployers)
 //contributions
 //reviews
 handleTopicRequest( "contributions_addReview", contributions_addReview )
