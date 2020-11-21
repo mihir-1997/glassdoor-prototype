@@ -5,13 +5,35 @@ import Footer from '../../../Popup/Footer'
 
 class AddRace extends Component {
 
+    constructor( props ) {
+        super( props )
+        this.state = {
+            race: "",
+            error: ""
+        }
+    }
+
+    onChange = ( e ) => {
+        this.setState( {
+            race: e.target.value
+        } )
+    }
+
+
     closePopup = () => {
         let popup = document.getElementById( "race-popup" )
         popup.classList.remove( "popup-wrapper-show" )
     }
 
     saveRace = ( e ) => {
-        e.preventDefault()
+        if ( this.state.race ) {
+            this.closePopup()
+            this.props.saveRace( this.state.race )
+        } else {
+            this.setState( {
+                error: "Please select one"
+            } )
+        }
     }
 
     render () {
@@ -26,39 +48,42 @@ class AddRace extends Component {
                         <div>
                             <form>
                                 <div>
-                                    <input type="checkbox" value="Indigenous American or Alaska Native" />&nbsp;&nbsp;Indigenous American or Alaska Native
+                                    <input type="radio" name="race" value="Indigenous American or Alaska Native" onChange={ this.onChange } />&nbsp;&nbsp;Indigenous American or Alaska Native
                                 </div>
                                 <div>
-                                    <input type="checkbox" value="East Asian" />&nbsp;&nbsp;East Asian
+                                    <input type="radio" name="race" value="East Asian" onChange={ this.onChange } />&nbsp;&nbsp;East Asian
                                 </div>
                                 <div>
-                                    <input type="checkbox" value="South Asian" />&nbsp;&nbsp;South Asian
+                                    <input type="radio" name="race" value="South Asian" onChange={ this.onChange } />&nbsp;&nbsp;South Asian
                                 </div>
                                 <div>
-                                    <input type="checkbox" value="Southeast Asian" />&nbsp;&nbsp;Southeast Asian
+                                    <input type="radio" name="race" value="Southeast Asian" onChange={ this.onChange } />&nbsp;&nbsp;Southeast Asian
                                 </div>
                                 <div>
-                                    <input type="checkbox" value="Native Hawaiian or Other Pacific Islander" />&nbsp;&nbsp;Native Hawaiian or Other Pacific Islander
+                                    <input type="radio" name="race" value="Native Hawaiian or Other Pacific Islander" onChange={ this.onChange } />&nbsp;&nbsp;Native Hawaiian or Other Pacific Islander
                                 </div>
                                 <div>
-                                    <input type="checkbox" value="Middle Eastern" />&nbsp;&nbsp;Middle Eastern
+                                    <input type="radio" name="race" value="Middle Eastern" onChange={ this.onChange } />&nbsp;&nbsp;Middle Eastern
                                 </div>
                                 <div>
-                                    <input type="checkbox" value="Black or African American" />&nbsp;&nbsp;Black or African American
+                                    <input type="radio" name="race" value="Black or African American" onChange={ this.onChange } />&nbsp;&nbsp;Black or African American
                                 </div>
                                 <div>
-                                    <input type="checkbox" value="Hispanic or Latinx" />&nbsp;&nbsp;Hispanic or Latinx
+                                    <input type="radio" name="race" value="Hispanic or Latinx" onChange={ this.onChange } />&nbsp;&nbsp;Hispanic or Latinx
                                 </div>
                                 <div>
-                                    <input type="checkbox" value="White" />&nbsp;&nbsp;White
+                                    <input type="radio" name="race" value="White" onChange={ this.onChange } />&nbsp;&nbsp;White
                                 </div>
                                 <div>
-                                    <input type="checkbox" value="Prefer to Self Describe" />&nbsp;&nbsp;Prefer to Self Describe
+                                    <input type="radio" name="race" value="Prefer to Self Describe" onChange={ this.onChange } />&nbsp;&nbsp;Prefer to Self Describe
                                 </div>
                                 <div>
-                                    <input type="checkbox" value="Prefer Not to Say" />&nbsp;&nbsp;Prefer Not to Say
+                                    <input type="radio" name="race" value="Prefer Not to Say" onChange={ this.onChange } />&nbsp;&nbsp;Prefer Not to Say
                                 </div>
                             </form>
+                        </div>
+                        <div className="error">
+                            { this.state.error }
                         </div>
                     </div>
                     <Footer closePopup={ this.closePopup } saveChanges={ this.saveRace } />

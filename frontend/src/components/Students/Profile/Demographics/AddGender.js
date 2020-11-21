@@ -5,13 +5,35 @@ import Footer from '../../../Popup/Footer'
 
 class AddGender extends Component {
 
+    constructor( props ) {
+        super( props )
+        this.state = {
+            gender: "",
+            error: ""
+        }
+    }
+
+    onChange = ( e ) => {
+        this.setState( {
+            gender: e.target.value
+        } )
+    }
+
+
     closePopup = () => {
         let popup = document.getElementById( "gender-popup" )
         popup.classList.remove( "popup-wrapper-show" )
     }
 
-    saveGender = ( e ) => {
-        e.preventDefault()
+    saveGender = () => {
+        if ( this.state.gender ) {
+            this.closePopup()
+            this.props.saveGender( this.state.gender )
+        } else {
+            this.setState( {
+                error: "Please select one"
+            } )
+        }
     }
 
     render () {
@@ -26,21 +48,24 @@ class AddGender extends Component {
                         <div>
                             <form>
                                 <div>
-                                    <input type="radio" name="gener" value="Man" />&nbsp;&nbsp;Man
+                                    <input type="radio" name="gener" value="Man" onChange={ this.onChange } />&nbsp;&nbsp;Man
                                 </div>
                                 <div>
-                                    <input type="radio" name="gener" value="Woman" />&nbsp;&nbsp;Woman
+                                    <input type="radio" name="gener" value="Woman" onChange={ this.onChange } />&nbsp;&nbsp;Woman
                                 </div>
                                 <div>
-                                    <input type="radio" name="gener" value="Non-Binary" />&nbsp;&nbsp;Non-Binary
+                                    <input type="radio" name="gener" value="Non-Binary" onChange={ this.onChange } />&nbsp;&nbsp;Non-Binary
                                 </div>
                                 <div>
-                                    <input type="radio" name="gener" value="Prefer to Self Describe" />&nbsp;&nbsp;Prefer to Self Describe
+                                    <input type="radio" name="gener" value="Prefer to Self Describe" onChange={ this.onChange } />&nbsp;&nbsp;Prefer to Self Describe
                                 </div>
                                 <div>
-                                    <input type="radio" name="gener" value="Prefer Not to Say" />&nbsp;&nbsp;Prefer Not to Say
+                                    <input type="radio" name="gener" value="Prefer Not to Say" onChange={ this.onChange } />&nbsp;&nbsp;Prefer Not to Say
                                 </div>
                             </form>
+                            <div className="error">
+                                { this.state.error }
+                            </div>
                         </div>
                     </div>
                     <Footer closePopup={ this.closePopup } saveChanges={ this.saveGender } />

@@ -5,13 +5,34 @@ import Footer from '../../../Popup/Footer'
 
 class AddVeteran extends Component {
 
+    constructor( props ) {
+        super( props )
+        this.state = {
+            veteran: "",
+            error: ""
+        }
+    }
+
+    onChange = ( e ) => {
+        this.setState( {
+            veteran: e.target.value
+        } )
+    }
+
     closePopup = () => {
         let popup = document.getElementById( "veteran-popup" )
         popup.classList.remove( "popup-wrapper-show" )
     }
 
-    saveVeteran = ( e ) => {
-        e.preventDefault()
+    saveVeteran = () => {
+        if ( this.state.veteran ) {
+            this.closePopup()
+            this.props.saveVeteran( this.state.veteran )
+        } else {
+            this.setState( {
+                error: "Please select one"
+            } )
+        }
     }
 
     render () {
@@ -26,13 +47,13 @@ class AddVeteran extends Component {
                         <div>
                             <form>
                                 <div>
-                                    <input type="radio" name="veteran" value="Yes" />&nbsp;&nbsp;Yes
+                                    <input type="radio" name="veteran" value="Yes" onChange={ this.onChange } />&nbsp;&nbsp;Yes
                                 </div>
                                 <div>
-                                    <input type="radio" name="veteran" value="No" />&nbsp;&nbsp;No
+                                    <input type="radio" name="veteran" value="No" onChange={ this.onChange } />&nbsp;&nbsp;No
                                 </div>
                                 <div>
-                                    <input type="radio" name="veteran" value="Prefer Not to Say" />&nbsp;&nbsp;Prefer Not to Say
+                                    <input type="radio" name="veteran" value="Prefer Not to Say" onChange={ this.onChange } />&nbsp;&nbsp;Prefer Not to Say
                                 </div>
                             </form>
                         </div>

@@ -6,12 +6,41 @@ import Footer from '../../../../Popup/Footer'
 
 class AddExperience extends Component {
 
+    constructor( props ) {
+        super( props )
+        this.state = {
+            experienceID: "",
+            companyName: "",
+            jobTitle: "",
+            jobStartMonth: "",
+            jobStartYear: "",
+            jobEndMonth: "",
+            jobEndYear: "",
+            jobLocation: "",
+            jobDescription: "",
+            error: ""
+        }
+    }
+
+    onChange = ( e ) => {
+        e.preventDefault()
+        this.setState( {
+            [ e.target.name ]: e.target.value
+        } )
+    }
+
     changeStartMonth = ( e ) => {
         console.log( e.target.value )
+        this.setState( {
+            jobStartMonth: e.target.value
+        } )
     }
 
     changeEndMonth = ( e ) => {
         console.log( e.target.value )
+        this.setState( {
+            jobEndMonth: e.target.value
+        } )
     }
 
     closePopup = () => {
@@ -20,13 +49,27 @@ class AddExperience extends Component {
     }
 
     saveExperience = () => {
-
+        if ( this.state.jobTitle && this.state.companyName && this.state.jobStartMonth && this.state.jobStartYear ) {
+            let experience = {
+                companyName: this.state.companyName,
+                jobTitle: this.state.jobTitle,
+                jobStartDate: this.state.jobStartMonth + " " + this.state.jobStartYear,
+                jobEndDate: this.state.jobEndMonth + " " + this.state.jobEndYear,
+                jobLocation: this.state.jobLocation,
+                jobDescription: this.state.jobDescription
+            }
+            this.props.saveExperience( experience )
+        } else {
+            this.setState( {
+                error: "Some of the required fields are missing"
+            } )
+        }
     }
 
     render () {
 
-        let selectMonth = ( label, onChange ) => {
-            return <select className="custom-select" id={ label } onChange={ onChange }>
+        let selectMonth = ( label, name, value, onChange ) => {
+            return <select className="custom-select" name={ name } id={ label } value={ value } onChange={ onChange }>
                 <option value=""></option>
                 <option value="Jan">January</option>
                 <option value="Feb">February</option>
@@ -50,53 +93,56 @@ class AddExperience extends Component {
                     <div className="popup-body">
                         <div className="popup-title">
                             Add Experience
-                    </div>
+                        </div>
                         <form className="popup-form">
                             <div className="form-row">
                                 <div className="form-group col-md">
-                                    <label htmlFor="experienceInputTitle">Title</label>
-                                    <input type="text" className="form-control" id="experienceInputTitle" placeholder="Title" />
+                                    <label htmlFor="addExperienceInputTitle">Title*</label>
+                                    <input type="text" name="jobTitle" className="form-control" id="addExperienceInputTitle" placeholder="Title" value={ this.state.jobTitle } onChange={ this.onChange } />
                                 </div>
                             </div>
                             <div className="form-row">
                                 <div className="form-group col-md">
-                                    <label htmlFor="experienceInputCompanyName">Company Name</label>
-                                    <input type="text" className="form-control" id="experienceInputCompanyName" placeholder="Company Name" />
+                                    <label htmlFor="addExperienceInputCompanyName">Company Name*</label>
+                                    <input type="text" name="companyName" className="form-control" id="addExperienceInputCompanyName" placeholder="Company Name" value={ this.state.companyName } onChange={ this.onChange } />
                                 </div>
                             </div>
                             <div className="form-row">
                                 <div className="form-group col-md">
-                                    <label htmlFor="experienceInputLocation">Location</label>
-                                    <input type="text" className="form-control" id="experienceInputLocation" placeholder="Location" />
+                                    <label htmlFor="addExperienceInputLocation">Location</label>
+                                    <input type="text" name="jobLocation" className="form-control" id="addExperienceInputLocation" placeholder="Location" value={ this.state.jobLocation } onChange={ this.onChange } />
                                 </div>
                             </div>
                             <div className="form-row">
                                 <div className="form-group col-md-4">
-                                    <label htmlFor="experienceInputStartMonth">Start Month</label>
-                                    { selectMonth( "experienceInputStartMonth", this.changeStartMonth ) }
+                                    <label htmlFor="addExperienceInputStartMonth">Start Month*</label>
+                                    { selectMonth( "addExperienceInputStartMonth", "jobStartMonth", this.state.jobStartMonth, this.changeStartMonth ) }
                                 </div>
                                 <div className="form-group col-md-2">
-                                    <label htmlFor="experienceInputStartYear">Start Year</label>
-                                    <input type="number" className="form-control" id="experienceInputStartYear" />
+                                    <label htmlFor="addExperienceInputStartYear">Start Year*</label>
+                                    <input type="number" name="jobStartYear" className="form-control" id="addExperienceInputStartYear" value={ this.state.jobStartYear } onChange={ this.onChange } />
                                 </div>
                             </div>
                             <div className="form-row">
                                 <div className="form-group col-md-4">
-                                    <label htmlFor="experienceInputEndMonth">End Month</label>
-                                    { selectMonth( "experienceInputEndMonth", this.changeEndMonth ) }
+                                    <label htmlFor="addExperienceInputEndMonth">End Month</label>
+                                    { selectMonth( "addExperienceInputEndMonth", "jobEndMonth", this.state.jobEndMonth, this.changeEndMonth ) }
                                 </div>
                                 <div className="form-group col-md-2">
-                                    <label htmlFor="experienceInputEndYear">End Year</label>
-                                    <input type="number" className="form-control" id="experienceInputEndYear" />
+                                    <label htmlFor="addExperienceInputEndYear">End Year</label>
+                                    <input type="number" name="jobEndYear" className="form-control" id="addExperienceInputEndYear" value={ this.state.jobEndYear } onChange={ this.onChange } />
                                 </div>
                             </div>
                             <div className="form-row">
                                 <div className="form-group col-md">
-                                    <label htmlFor="experienceInputDescription">Description</label>
-                                    <textarea type="text" className="form-control" id="experienceInputDescription" placeholder="Description" />
+                                    <label htmlFor="addExperienceInputDescription">Description</label>
+                                    <textarea type="text" name="jobDescription" className="form-control" id="addExperienceInputDescription" placeholder="Description" value={ this.state.jobDescription } onChange={ this.onChange } />
                                 </div>
                             </div>
                         </form>
+                        <div className="error">
+                            { this.state.error }
+                        </div>
                     </div>
                     <Footer closePopup={ this.closePopup } saveChanges={ this.saveExperience } />
                 </div>

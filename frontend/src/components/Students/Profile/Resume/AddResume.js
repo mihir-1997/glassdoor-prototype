@@ -7,7 +7,13 @@ import Footer from '../../../Popup/Footer'
 
 class AddResume extends Component {
 
-    componentDidMount () {
+    constructor( props ) {
+        super( props )
+        this.state = {
+            selectedResume: "",
+            isPrimary: false,
+            error: ""
+        }
     }
 
     closePopup = () => {
@@ -19,7 +25,14 @@ class AddResume extends Component {
     }
 
     saveResume = () => {
-
+        this.closePopup()
+        if ( this.state.selectedResume ) {
+            this.props.saveResume( this.state.selectedResume, this.state.isPrimary )
+        } else {
+            this.setState( {
+                error: "Please select a resume"
+            } )
+        }
     }
 
     uploadResume = ( e ) => {
@@ -30,7 +43,16 @@ class AddResume extends Component {
     }
 
     uploadResumeInput = ( e ) => {
-        console.log( e.target.value )
+        e.preventDefault()
+        this.setState( {
+            selectedResume: e.target.files[ 0 ]
+        } )
+    }
+
+    onChange = ( e ) => {
+        this.setState( {
+            isPrimary: !this.state.isPrimary
+        } )
     }
 
     render () {
@@ -55,18 +77,34 @@ class AddResume extends Component {
                                         <div className="resume-upload-text">
                                             <div>
                                                 Select a file to upload
-                                        </div>
+                                            </div>
                                             <div className="resume-upload-bold-text">
-                                                Choose a file to Upload
+                                                { this.state.selectedResume ?
+                                                    null
+                                                    : <span>Choose a file to Upload</span>
+                                                }
+                                            </div>
+                                            <div className="resume-upload-bold-text">
+                                                { this.state.selectedResume ?
+                                                    this.state.selectedResume.name
+                                                    : null }
                                             </div>
                                         </div>
                                     </div>
-                                    <input type="file" id="resume-upload" className="resume-upload-input" onChange={ this.uploadResumeInput } />
+                                    <div className="isprimary-input">
+                                        <div>
+                                            <input type="checkbox" name="isPrimary" onChange={ this.onChange } checked={ this.state.isPrimary } />&nbsp;Primary?
+                                        </div>
+                                    </div>
+                                    <input type="file" name="selectedResume" id="resume-upload" accept="application/pdf" className="resume-upload-input" onChange={ this.uploadResumeInput } />
                                 </div>
                             </div>
                         </form>
+                        <div className="error">
+                            { this.state.error }
+                        </div>
                     </div>
-                    <Footer closePopup={ this.closePopup } saveChanges={ this.saveresume } />
+                    <Footer closePopup={ this.closePopup } saveChanges={ this.saveResume } />
                 </div>
             </div>
         )

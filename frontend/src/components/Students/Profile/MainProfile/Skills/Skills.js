@@ -4,15 +4,24 @@ import './Skills.css'
 
 class Skills extends Component {
 
+    constructor( props ) {
+        super( props )
+        this.state = {
+            skills: this.props.skills
+        }
+    }
+
     render () {
-        let skills = [ "Docker", "Kubernetes", "AWS", "GCP", "Helm", "Terraform", "NodeJS", "ReactJS", "HTML", "CSS", "JavaScript", "Python" ]
         return (
             <div>
-                {skills.map( ( skill, index ) => {
-                    return <span key={ index } className="each-skill">
-                        { skill }
-                    </span>
-                } ) }
+                {this.state.skills ?
+                    this.state.skills.map( ( skill, index ) => {
+                        return <span key={ index } className="each-skill">
+                            { skill }
+                        </span>
+                    } )
+                    : null
+                }
             </div>
         )
     }

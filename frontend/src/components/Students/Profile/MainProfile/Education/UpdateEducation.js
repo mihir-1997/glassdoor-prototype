@@ -1,14 +1,14 @@
 import React, { Component } from 'react'
 
-import './Education.css'
 import Header from '../../../../Popup/Header'
 import Footer from '../../../../Popup/Footer'
 
-class AddEducation extends Component {
+class UpdateEducation extends Component {
 
     constructor( props ) {
         super( props )
         this.state = {
+            educationID: "",
             collegeName: "",
             degree: "",
             major: "",
@@ -20,6 +20,41 @@ class AddEducation extends Component {
             collegeDescription: "",
             error: ""
         }
+    }
+
+    componentDidMount () {
+        let startMonth = ""
+        let startYear = ""
+        let endMonth = ""
+        let endYear = ""
+        if ( this.props.education.collegeStartDate ) {
+            if ( /\s/.test( this.props.education.collegeStartDate ) ) {
+                startMonth = this.props.education.collegeStartDate.split( " " )[ 0 ]
+                startYear = this.props.education.collegeStartDate.split( " " )[ 1 ]
+            } else {
+                startMonth = this.props.education.collegeStartDate
+            }
+        }
+        if ( this.props.education.collegeEndDate ) {
+            if ( /\s/.test( this.props.education.collegeEndDate ) ) {
+                endMonth = this.props.education.collegeEndDate.split( " " )[ 0 ]
+                endYear = this.props.education.collegeEndDate.split( " " )[ 1 ]
+            } else {
+                endMonth = this.props.education.collegeEndDate
+            }
+        }
+        this.setState( {
+            educationID: this.props.education.educationID,
+            collegeName: this.props.education.collegeName,
+            degree: this.props.education.degree,
+            major: this.props.education.major,
+            collegeLocation: this.props.education.collegeLocation,
+            collegeStartMonth: startMonth,
+            collegeStartYear: startYear,
+            collegeEndMonth: endMonth,
+            collegeEndYear: endYear,
+            collegeDescription: this.props.education.collegeDescription,
+        } )
     }
 
     onChange = ( e ) => {
@@ -51,13 +86,14 @@ class AddEducation extends Component {
     }
 
     closePopup = () => {
-        let popup = document.getElementById( "education-popup" )
+        let popup = document.getElementById( "update-education-popup-" + this.props.index )
         popup.classList.remove( "popup-wrapper-show" )
     }
 
-    saveEducation = () => {
+    updateEducation = () => {
         if ( this.state.collegeName && this.state.degree ) {
             let education = {
+                educationID: this.state.educationID,
                 collegeName: this.state.collegeName,
                 degree: this.state.degree,
                 major: this.state.major,
@@ -66,7 +102,7 @@ class AddEducation extends Component {
                 collegeEndDate: this.state.collegeEndMonth + " " + this.state.collegeEndYear,
                 collegeDescription: this.state.collegeDescription,
             }
-            this.props.saveEducation( education )
+            this.props.updateEducation( education )
         } else {
             this.setState( {
                 error: "Some of the required fields are missing"
@@ -95,24 +131,24 @@ class AddEducation extends Component {
         }
 
         return (
-            <div id="education-popup" className="popup-container">
+            <div id={ "update-education-popup-" + this.props.index } className="popup-container">
                 <div className="popup-wrapper">
                     <Header closePopup={ this.closePopup } />
                     <div className="popup-body">
                         <div className="popup-title">
-                            Add Education
+                            Update Education
                     </div>
                         <form className="popup-form">
                             <div className="form-row">
                                 <div className="form-group col-md">
                                     <label htmlFor="educationInputSchool">School*</label>
-                                    <input type="text" name="collegeName" className="form-control" id="educationInputSchool" placeholder="School" value={ this.state.collegeName } onChange={ this.onChange } />
+                                    <input type="text" name="collegeName" className="form-control" id={ "educationInputSchool" + this.props.index } placeholder="School" value={ this.state.collegeName } onChange={ this.onChange } />
                                 </div>
                             </div>
                             <div className="form-row">
                                 <div className="form-group col-md">
                                     <label htmlFor="educationInputDegree">Degree / Certificate*</label>
-                                    <select className="custom-select" id="educationInputDegree" value={ this.state.degree } onChange={ this.degreeChange }>
+                                    <select className="custom-select" id={ "educationInputDegree" + this.props.index } value={ this.state.degree } onChange={ this.degreeChange }>
                                         <option value="">Select your option</option>
                                         <option value="High School">High School Diploma</option>
                                         <option value="Associate">Associate's Degree</option>
@@ -128,39 +164,39 @@ class AddEducation extends Component {
                             <div className="form-row">
                                 <div className="form-group col-md">
                                     <label htmlFor="educationInputStudy">Field of Study</label>
-                                    <input type="text" name="major" className="form-control" id="educationInputStudy" placeholder="Field of Study" value={ this.state.major } onChange={ this.onChange } />
+                                    <input type="text" name="major" className="form-control" id={ "educationInputStudy" + this.props.index } placeholder="Field of Study" value={ this.state.major } onChange={ this.onChange } />
                                 </div>
                             </div>
                             <div className="form-row">
                                 <div className="form-group col-md">
                                     <label htmlFor="educationInputLocation">Location</label>
-                                    <input type="text" name="collegeLocation" className="form-control" id="educationInputLocation" placeholder="Location" value={ this.state.collegeLocation } onChange={ this.onChange } />
+                                    <input type="text" name="collegeLocation" className="form-control" id={ "educationInputLocation" + this.props.index } placeholder="Location" value={ this.state.collegeLocation } onChange={ this.onChange } />
                                 </div>
                             </div>
                             <div className="form-row">
                                 <div className="form-group col-md-4">
                                     <label htmlFor="educationInputStartMonth">Start Month</label>
-                                    { selectMonth( "educationInputStartMonth", "collegeStartMonth", this.state.collegeStartMonth, this.changeStartMonth ) }
+                                    { selectMonth( "educationInputStartMonth" + this.props.index, "collegeStartMonth", this.state.collegeStartMonth, this.changeStartMonth ) }
                                 </div>
                                 <div className="form-group col-md-2">
                                     <label htmlFor="educationInputStartYear">Start Year</label>
-                                    <input type="number" name="collegeStartYear" className="form-control" id="educationInputStartYear" value={ this.state.collegeStartYear } onChange={ this.onChange } />
+                                    <input type="number" name="collegeStartYear" className="form-control" id={ "educationInputStartYear" + this.props.index } value={ this.state.collegeStartYear } onChange={ this.onChange } />
                                 </div>
                             </div>
                             <div className="form-row">
                                 <div className="form-group col-md-4">
                                     <label htmlFor="educationInputEndMonth">End Month</label>
-                                    { selectMonth( "educationInputEndMonth", "collegeEndMonth", this.state.collegeEndMonth, this.changeEndMonth ) }
+                                    { selectMonth( "educationInputEndMonth" + this.props.index, "collegeEndMonth", this.state.collegeEndMonth, this.changeEndMonth ) }
                                 </div>
                                 <div className="form-group col-md-2">
                                     <label htmlFor="educationInputEndYear">End Year</label>
-                                    <input type="number" name="collegeEndYear" className="form-control" id="educationInputEndYear" value={ this.state.collegeEndYear } onChange={ this.onChange } />
+                                    <input type="number" name="collegeEndYear" className="form-control" id={ "educationInputEndYear" + this.props.index } value={ this.state.collegeEndYear } onChange={ this.onChange } />
                                 </div>
                             </div>
                             <div className="form-row">
                                 <div className="form-group col-md">
                                     <label htmlFor="educationInputDescription">Description</label>
-                                    <textarea type="text" name="collegeDescription" className="form-control" id="educationInputDescription" placeholder="Description" value={ this.state.collegeDescription } onChange={ this.onChange } />
+                                    <textarea type="text" name="collegeDescription" className="form-control" id={ "educationInputDescription" + this.props.index } placeholder="Description" value={ this.state.collegeDescription } onChange={ this.onChange } />
                                 </div>
                             </div>
                         </form>
@@ -168,11 +204,11 @@ class AddEducation extends Component {
                             { this.state.error }
                         </div>
                     </div>
-                    <Footer closePopup={ this.closePopup } saveChanges={ this.saveEducation } />
+                    <Footer closePopup={ this.closePopup } saveChanges={ this.updateEducation } />
                 </div>
             </div>
         )
     }
 }
 
-export default AddEducation;
+export default UpdateEducation;

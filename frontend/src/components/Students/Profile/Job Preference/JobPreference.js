@@ -1,15 +1,26 @@
 import React, { Component } from 'react'
+import axios from 'axios'
 
 import './JobPreference.css'
 import SEO from '../../../SEO/SEO'
 import Footer from '../../../Popup/Footer'
+
+import { BACKEND_URL, BACKEND_PORT } from '../../../Config/Config'
 
 class JobPreference extends Component {
 
     constructor( props ) {
         super( props )
         this.state = {
-            relocationChecked: false
+            relocationChecked: false,
+            searchStatus: "",
+            jobTitle: "",
+            targetSalary: "",
+            openToRelocation: false,
+            typeOfIndustry: "",
+            salaryFrom: "",
+            salaryTo: "",
+            payPeriod: ""
         }
     }
 
@@ -17,18 +28,87 @@ class JobPreference extends Component {
         SEO( {
             title: "Job Preferences | Glassdoor"
         } )
+        let id = localStorage.getItem( "id" )
+        if ( id ) {
+            axios.defaults.withCredentials = true
+            axios.defaults.headers.common[ 'authorization' ] = localStorage.getItem( 'token' )
+            axios.get( BACKEND_URL + ":" + BACKEND_PORT + "/students/getUser/" + id )
+                .then( ( res ) => {
+                    if ( res.status === 200 ) {
+                        this.setState( {
+                            searchStatus: res.data.jobPreference.searchStatus,
+                            jobTitle: res.data.jobPreference.jobTitle,
+                            targetSalary: res.data.jobPreference.targetSalary,
+                            openToRelocation: res.data.jobPreference.openToRelocation,
+                            typeOfIndustry: res.data.jobPreference.typeOfIndustry,
+                        } )
+                    }
+                } )
+                .catch( ( err ) => {
+                    if ( err.response ) {
+                        if ( err.response.status === 404 ) {
+                            console.log( err.response.message )
+                        } else if ( err.response.status === 400 ) {
+                            console.log( err.response.message )
+                        }
+                    }
+                } )
+        }
+    }
+
+    onChange = ( e ) => {
+        e.preventDefault()
+        this.setState( {
+            [ e.target.name ]: e.target.value
+        } )
+    }
+
+    sendJobPreferenceUpdate = () => {
+        let id = localStorage.getItem( "id" )
+        if ( id ) {
+            let jobPreference = {
+                searchStatus: this.state.searchStatus,
+                jobTitle: this.state.jobTitle,
+                targetSalary: this.state.targetSalary,
+                openToRelocation: this.state.openToRelocation,
+                typeOfIndustry: this.state.typeOfIndustry,
+            }
+            axios.defaults.withCredentials = true
+            axios.defaults.headers.common[ 'authorization' ] = localStorage.getItem( 'token' )
+            axios.put( BACKEND_URL + ":" + BACKEND_PORT + "/students/updateUserJobPreferences/" + id, jobPreference )
+                .then( ( res ) => {
+                    if ( res.status === 200 ) {
+                        this.componentDidMount()
+                    }
+                } )
+                .catch( ( err ) => {
+                    if ( err.response ) {
+                        if ( err.response.status === 404 ) {
+                            console.log( err.response.message )
+                        } else if ( err.response.status === 400 ) {
+                            console.log( err.response.message )
+                        }
+                    }
+                } )
+        }
     }
 
     searchStatusChange = ( e ) => {
         console.log( e.target.value )
+        this.setState( {
+            searchStatus: e.target.value
+        }, () => {
+            this.sendJobPreferenceUpdate()
+        } )
     }
 
-    salaryPeriodChange = ( e ) => {
-        console.log( e.target.value )
-    }
-
-    saveSalary = ( e ) => {
-        e.preventDefault()
+    saveSalary = () => {
+        this.setState( {
+            targetSalary: this.state.salaryFrom + " - " + this.state.salaryTo + " " + this.state.payPeriod
+        }, () => {
+            this.sendJobPreferenceUpdate()
+            this.closeSalaryPopup()
+        } )
     }
 
     showAddTitle = ( e ) => {
@@ -41,6 +121,7 @@ class JobPreference extends Component {
         e.preventDefault()
         let addTitle = document.getElementById( "add-title-input" )
         addTitle.classList.remove( "add-title-input-show" )
+        this.sendJobPreferenceUpdate()
     }
 
     showSalary = ( e ) => {
@@ -52,7 +133,11 @@ class JobPreference extends Component {
     }
 
     removeJobTitle = () => {
-
+        this.setState( {
+            jobTitle: ""
+        }, () => {
+            this.sendJobPreferenceUpdate()
+        } )
     }
 
     closeSalaryPopup = ( e ) => {
@@ -64,15 +149,24 @@ class JobPreference extends Component {
 
     changeJobLocation = ( e ) => {
         e.preventDefault()
+        this.setState( {
+            openToRelocation: !this.state.openToRelocation
+        }, () => {
+            this.sendJobPreferenceUpdate()
+        } )
     }
 
     addIndustry = ( e ) => {
         e.preventDefault()
-
+        this.sendJobPreferenceUpdate()
     }
 
     removeIndustry = () => {
-
+        this.setState( {
+            typeOfIndustry: ""
+        }, () => {
+            this.sendJobPreferenceUpdate()
+        } )
     }
 
     render () {
@@ -94,7 +188,7 @@ class JobPreference extends Component {
                                 <div className="form-row">
                                     <div className="form-group col-md">
                                         <label htmlFor="joinSearchStatus">Select job search status</label>
-                                        <select className="custom-select" id="joinSearchStatus" onChange={ this.searchStatusChange }>
+                                        <select className="custom-select" id="joinSearchStatus" value={ this.state.searchStatus } onChange={ this.searchStatusChange }>
                                             <option value="">Select</option>
                                             <option value="Not Looking">Not Looking</option>
                                             <option value="Not Looking, but open">Not Looking, but open</option>
@@ -111,20 +205,23 @@ class JobPreference extends Component {
                             </div>
                             <div className="job-prefer-job-title-add">
                                 <div className="add-title-icon" onClick={ this.showAddTitle }>+ Add Job Title</div>
-                                <div className="job-title">
-                                    <span >Software Engineer</span>&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <span className="remove-job-title" onClick={ this.removeJobTitle }>
-                                        <svg width="15" height="15" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fillRule="evenodd" clipRule="evenodd">
-                                            <path fill="#fff" d="M12 11.293l10.293-10.293.707.707-10.293 10.293 10.293 10.293-.707.707-10.293-10.293-10.293 10.293-.707-.707 10.293-10.293-10.293-10.293.707-.707 10.293 10.293z" />
-                                        </svg>
-                                    </span>
-                                </div>
+                                { this.state.jobTitle ?
+                                    <div className="job-title">
+                                        <span >{ this.state.jobTitle }</span>&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <span className="remove-job-title" onClick={ this.removeJobTitle }>
+                                            <svg width="15" height="15" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fillRule="evenodd" clipRule="evenodd">
+                                                <path fill="#fff" d="M12 11.293l10.293-10.293.707.707-10.293 10.293 10.293 10.293-.707.707-10.293-10.293-10.293 10.293-.707-.707 10.293-10.293-10.293-10.293.707-.707 10.293 10.293z" />
+                                            </svg>
+                                        </span>
+                                    </div>
+                                    : null }
+
                                 <div className="add-title-input" id="add-title-input">
                                     <form className="popup-form">
                                         <div className="form-row">
                                             <div className="form-group col-10">
                                                 <label htmlFor="jobPrefInputTitle">Job Title</label>
-                                                <input type="text" className="form-control" id="jobPrefInputTitle" placeholder="Job Title" />
+                                                <input type="text" name="jobTitle" className="form-control" id="jobPrefInputTitle" placeholder="Job Title" value={ this.state.jobTitle } onChange={ this.onChange } />
                                             </div>
                                             <div className="form-group col-2">
                                                 <label>Add</label>
@@ -141,6 +238,11 @@ class JobPreference extends Component {
                             </div>
                             <div className="job-prefer-salary-add">
                                 <div className="job-prefer-salary-add-button" id="salary-add-title" onClick={ this.showSalary }>+ Add Salary Range</div>
+                                <div className="target-salary">
+                                    { this.state.targetSalary ?
+                                        this.state.targetSalary
+                                        : null }
+                                </div>
                                 <div className="salary-add-div" id="salary-add-div">
                                     <div className="salary-add-title">
                                         Add Salary Range
@@ -150,16 +252,16 @@ class JobPreference extends Component {
                                             <div className="form-row">
                                                 <div className="form-group col-6">
                                                     <label htmlFor="jobPrefInputSalaryStart">From</label>
-                                                    <input type="text" className="form-control" id="jobPrefInputSalaryStart" placeholder="" />
+                                                    <input type="text" name="salaryFrom" className="form-control" id="jobPrefInputSalaryStart" placeholder="" value={ this.state.salaryFrom } onChange={ this.onChange } />
                                                 </div>
                                                 <div className="form-group col-6">
                                                     <label htmlFor="jobPrefInputSalaryEnd">To</label>
-                                                    <input type="text" className="form-control" id="jobPrefInputSalaryEnd" placeholder="" />
+                                                    <input type="text" name="salaryTo" className="form-control" id="jobPrefInputSalaryEnd" placeholder="" value={ this.state.salaryTo } onChange={ this.onChange } />
                                                 </div>
                                             </div>
                                             <div className="form-group">
                                                 <label htmlFor="jobPrefInputSalaryPeriod">Pay Period</label>
-                                                <select className="custom-select" id="jobPrefInputSalaryPeriod" onChange={ this.salaryPeriodChange }>
+                                                <select className="custom-select" name="payPeriod" id="jobPrefInputSalaryPeriod" value={ this.state.payPeriod } onChange={ this.onChange }>
                                                     <option value="">Select</option>
                                                     <option value="Per Year">Per Year</option>
                                                     <option value="Per Month">Per Month</option>
@@ -187,7 +289,7 @@ class JobPreference extends Component {
                                 <span>Where would you prefer to work?</span>
                             </div>
                             <div className="relocation-checkbox">
-                                <input type="checkbox" checked={ this.state.relocationChecked } onChange={ this.changeJobLocation } />&nbsp;&nbsp;<label>I'm open to relocation</label>
+                                <input type="checkbox" checked={ this.state.openToRelocation } onChange={ this.changeJobLocation } />&nbsp;&nbsp;<label>I'm open to relocation</label>
                             </div>
                         </div>
                     </div>
@@ -195,19 +297,21 @@ class JobPreference extends Component {
                         <div className="job-prefer-search-status-text">
                             <span>What industries do you prefer?</span>
                         </div>
-                        <div className="job-title">
-                            <span >Information Technology</span>&nbsp;&nbsp;&nbsp;&nbsp;
+                        { this.state.typeOfIndustry ?
+                            <div className="job-title">
+                                <span >{ this.state.typeOfIndustry }</span>&nbsp;&nbsp;&nbsp;&nbsp;
                                     <span className="remove-job-title" onClick={ this.removeIndustry }>
-                                <svg width="15" height="15" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fillRule="evenodd" clipRule="evenodd">
-                                    <path fill="#fff" d="M12 11.293l10.293-10.293.707.707-10.293 10.293 10.293 10.293-.707.707-10.293-10.293-10.293 10.293-.707-.707 10.293-10.293-10.293-10.293.707-.707 10.293 10.293z" />
-                                </svg>
-                            </span>
-                        </div>
+                                    <svg width="15" height="15" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fillRule="evenodd" clipRule="evenodd">
+                                        <path fill="#fff" d="M12 11.293l10.293-10.293.707.707-10.293 10.293 10.293 10.293-.707.707-10.293-10.293-10.293 10.293-.707-.707 10.293-10.293-10.293-10.293.707-.707 10.293 10.293z" />
+                                    </svg>
+                                </span>
+                            </div>
+                            : null }
                         <form className="popup-form">
                             <div className="form-row">
                                 <div className="form-group col-10">
                                     <label htmlFor="jobPrefInputIndustry">Industry</label>
-                                    <input type="text" className="form-control" id="jobPrefInputIndustry" placeholder="Industry" />
+                                    <input type="text" name="typeOfIndustry" className="form-control" id="jobPrefInputIndustry" placeholder="Industry" onChange={ this.onChange } />
                                 </div>
                                 <div className="form-group col-2">
                                     <label>Add</label>

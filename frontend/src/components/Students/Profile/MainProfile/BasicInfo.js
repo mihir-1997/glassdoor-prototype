@@ -1,30 +1,138 @@
 import React, { Component } from 'react'
+import axios from 'axios'
 
 import './BasicInfo.css'
 import SEO from '../../../SEO/SEO'
+import AddBasicInfo from './AddBasicInfo'
+import AddAboutMe from './AddAboutMe'
 import Experience from './Experience/Experience'
 import AddExperience from './Experience/AddExperience'
 import Skills from './Skills/Skills'
 import UpdateSkills from './Skills/UpdateSkills'
 import Education from './Education/Education'
 import AddEducation from './Education/AddEducation'
-import License from './Licence/License'
-import AddLicense from './Licence/AddLicense'
+
+import { BACKEND_URL, BACKEND_PORT } from '../../../Config/Config'
 
 class BasicInfo extends Component {
+
+    constructor( props ) {
+        super( props )
+        this.state = {
+            name: "",
+            phoneNumber: "",
+            address: "",
+            city: "",
+            zipcode: "",
+            website: "",
+            aboutMe: "",
+            experience: [],
+            education: [],
+            skills: [],
+        }
+    }
 
     componentDidMount () {
         SEO( {
             title: "User Profile | Glassdoor"
         } )
+        let id = localStorage.getItem( "id" )
+        if ( id ) {
+            axios.defaults.withCredentials = true
+            axios.defaults.headers.common[ 'authorization' ] = localStorage.getItem( 'token' )
+            axios.get( BACKEND_URL + ":" + BACKEND_PORT + "/students/getUser/" + id )
+                .then( ( res ) => {
+                    if ( res.status === 200 ) {
+                        this.setState( {
+                            name: res.data.name,
+                            phoneNumber: res.data.phoneNumber,
+                            address: res.data.address,
+                            city: res.data.city,
+                            zipcode: res.data.zipcode,
+                            website: res.data.website,
+                            aboutMe: res.data.aboutMe,
+                            experience: res.data.experience,
+                            education: res.data.education,
+                            skills: res.data.skills
+                        } )
+                    }
+                } )
+                .catch( ( err ) => {
+                    if ( err.response ) {
+                        if ( err.response.status === 404 ) {
+                            console.log( err.response.message )
+                        } else if ( err.response.status === 400 ) {
+                            console.log( err.response.message )
+                        }
+                    }
+                } )
+        }
     }
 
     updateBasicInfo = ( e ) => {
         e.preventDefault()
+        let popup = document.getElementById( "basicinfo-popup" )
+        let modal = document.getElementById( "modal" )
+        modal.appendChild( popup )
+        popup.classList.add( "popup-wrapper-show" )
+    }
+
+    saveBasicInfo = ( student ) => {
+        let id = localStorage.getItem( "id" )
+        if ( id ) {
+            axios.defaults.withCredentials = true
+            axios.defaults.headers.common[ 'authorization' ] = localStorage.getItem( 'token' )
+            axios.put( BACKEND_URL + ":" + BACKEND_PORT + "/students/updateUserBasicInfo/" + id, student )
+                .then( ( res ) => {
+                    if ( res.status === 200 ) {
+                        window.location.reload()
+                    } else {
+                        console.log( "Error updating basic info" )
+                    }
+                } )
+                .catch( ( err ) => {
+                    if ( err.response ) {
+                        if ( err.response.status === 404 ) {
+                            console.log( err.response.message )
+                        } else if ( err.response.status === 400 ) {
+                            console.log( err.response.message )
+                        }
+                    }
+                } )
+        }
     }
 
     updateAboutMe = ( e ) => {
         e.preventDefault()
+        let popup = document.getElementById( "aboutme-popup" )
+        let modal = document.getElementById( "modal" )
+        modal.appendChild( popup )
+        popup.classList.add( "popup-wrapper-show" )
+    }
+
+    saveAboutMe = ( aboutMe ) => {
+        let id = localStorage.getItem( "id" )
+        if ( id ) {
+            axios.defaults.withCredentials = true
+            axios.defaults.headers.common[ 'authorization' ] = localStorage.getItem( 'token' )
+            axios.put( BACKEND_URL + ":" + BACKEND_PORT + "/students/updateUserAbout/" + id, aboutMe )
+                .then( ( res ) => {
+                    if ( res.status === 200 ) {
+                        window.location.reload()
+                    } else {
+                        console.log( "Error updating about me" )
+                    }
+                } )
+                .catch( ( err ) => {
+                    if ( err.response ) {
+                        if ( err.response.status === 404 ) {
+                            console.log( err.response.message )
+                        } else if ( err.response.status === 400 ) {
+                            console.log( err.response.message )
+                        }
+                    }
+                } )
+        }
     }
 
     addExperience = ( e ) => {
@@ -33,6 +141,31 @@ class BasicInfo extends Component {
         let modal = document.getElementById( "modal" )
         modal.appendChild( popup )
         popup.classList.add( "popup-wrapper-show" )
+    }
+
+    saveExperience = ( experience ) => {
+        let id = localStorage.getItem( "id" )
+        if ( id ) {
+            axios.defaults.withCredentials = true
+            axios.defaults.headers.common[ 'authorization' ] = localStorage.getItem( 'token' )
+            axios.post( BACKEND_URL + ":" + BACKEND_PORT + "/students/addUserExperience/" + id, experience )
+                .then( ( res ) => {
+                    if ( res.status === 200 ) {
+                        window.location.reload()
+                    } else {
+                        console.log( "Error adding experience" )
+                    }
+                } )
+                .catch( ( err ) => {
+                    if ( err.response ) {
+                        if ( err.response.status === 404 ) {
+                            console.log( err.response.message )
+                        } else if ( err.response.status === 400 ) {
+                            console.log( err.response.message )
+                        }
+                    }
+                } )
+        }
     }
 
     updateSkills = ( e ) => {
@@ -51,21 +184,73 @@ class BasicInfo extends Component {
         popup.classList.add( "popup-wrapper-show" )
     }
 
-    addLicense = ( e ) => {
-        e.preventDefault()
-        let popup = document.getElementById( "license-popup" )
-        let modal = document.getElementById( "modal" )
-        modal.appendChild( popup )
-        popup.classList.add( "popup-wrapper-show" )
+    saveEducation = ( education ) => {
+        let id = localStorage.getItem( "id" )
+        if ( id ) {
+            axios.defaults.withCredentials = true
+            axios.defaults.headers.common[ 'authorization' ] = localStorage.getItem( 'token' )
+            axios.post( BACKEND_URL + ":" + BACKEND_PORT + "/students/addUserEducation/" + id, education )
+                .then( ( res ) => {
+                    if ( res.status === 200 ) {
+                        window.location.reload()
+                    } else {
+                        console.log( "Error adding education" )
+                    }
+                } )
+                .catch( ( err ) => {
+                    if ( err.response ) {
+                        if ( err.response.status === 404 ) {
+                            console.log( err.response.message )
+                        } else if ( err.response.status === 400 ) {
+                            console.log( err.response.message )
+                        }
+                    }
+                } )
+        }
+    }
+
+    saveSkill = ( skills ) => {
+        let id = localStorage.getItem( "id" )
+        if ( id ) {
+            axios.defaults.withCredentials = true
+            axios.defaults.headers.common[ 'authorization' ] = localStorage.getItem( 'token' )
+            axios.put( BACKEND_URL + ":" + BACKEND_PORT + "/students/updateUserSkills/" + id, skills )
+                .then( ( res ) => {
+                    if ( res.status === 200 ) {
+                        window.location.reload()
+                    } else {
+                        console.log( "Error adding skill" )
+                    }
+                } )
+                .catch( ( err ) => {
+                    if ( err.response ) {
+                        if ( err.response.status === 404 ) {
+                            console.log( err.response.message )
+                        } else if ( err.response.status === 400 ) {
+                            console.log( err.response.message )
+                        }
+                    }
+                } )
+        }
     }
 
     render () {
+        let basicInfo = {
+            name: this.state.name,
+            phoneNumber: this.state.phoneNumber,
+            address: this.state.address,
+            city: this.state.city,
+            zipcode: this.state.zipcode,
+            website: this.state.website,
+        }
         return (
             <div className="basic-info-wrapper">
                 <div className="basic-info">
                     <h3>
-                        Mihir Patel
-                        {/* {this.state.name} */ }
+                        { this.state.name ?
+                            this.state.name
+                            :
+                            localStorage.getItem( "name" ) }
                         <span onClick={ this.updateBasicInfo }>
                             <svg className="basic-info-pen-svg" style={ { "width": "24px", "height": "24px" } } xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                                 <g className="basic-info-pen" fill="#ccc" fillRule="evenodd">
@@ -90,8 +275,7 @@ class BasicInfo extends Component {
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                                     <path d="M19 10a7 7 0 00-14 0c0 3.484 2.298 7.071 7 10.741 4.702-3.67 7-7.257 7-10.741zm-7 12c-5.333-4-8-8-8-12a8 8 0 1116 0c0 4-2.667 8-8 12zm0-10a2 2 0 110-4 2 2 0 010 4zm0 1a3 3 0 100-6 3 3 0 000 6z" fill="#20262E" fillRule="evenodd"></path>
                                 </svg> &nbsp;
-                                    {/* { this.state.user_location } */ }
-                                    San Jose, CA
+                                    { this.state.city }
                             </div>
                         </div>
                         <div className="col-4">
@@ -100,8 +284,10 @@ class BasicInfo extends Component {
                                     <path d="M20.42 5H3.58l7.71 7.71a1 1 0 001.42 0zM3 5.83v12.45l6.23-6.23zm18 0l-6.23 6.23L21 18.28zm-6.93 6.93l-.66.66a2 2 0 01-2.82 0l-.66-.66L3.7 19h16.6zM20.9 4A1.12 1.12 0 0122 5.14v13.72A1.13 1.13 0 0120.9 20H3.1A1.12 1.12 0 012 18.86V5.14A1.13 1.13 0 013.1 4z" fill="currentColor" fillRule="evenodd">
                                     </path>
                                 </svg> &nbsp;
-                                {/* { this.state.email } */ }
-                                    mihir@gmail.com
+                                { this.state.email ?
+                                    this.state.email
+                                    :
+                                    localStorage.getItem( "email" ) }
                             </div>
                             <div className="basic-info-each-item">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="-2 -2 22 22">
@@ -110,8 +296,7 @@ class BasicInfo extends Component {
                                         </path>
                                     </g>
                                 </svg> &nbsp;
-                                    {/* {this.state.website} */ }
-                                    http://mihir.me
+                                    { this.state.website }
                             </div>
 
                         </div>
@@ -122,11 +307,11 @@ class BasicInfo extends Component {
                                         <path d="M7 4a3.13 3.13 0 01.6.06l.27.07 1 5.07-1.51.85a1 1 0 00-.43 1.26 10.94 10.94 0 005.81 5.81 1.09 1.09 0 00.39.08 1 1 0 00.87-.51l.86-1.51 5.06.95a2.5 2.5 0 01.07.26A3.31 3.31 0 0120 17a3 3 0 01-3 3A13 13 0 014 7a3 3 0 013-3m0-1a4 4 0 00-4 4 14 14 0 0014 14 4 4 0 004-4 4.17 4.17 0 00-.08-.8 3.82 3.82 0 00-.33-.95l-6.3-1.19-1.21 2.14a10 10 0 01-5.28-5.28l2.13-1.2-1.18-6.31a3.82 3.82 0 00-1-.33A4.17 4.17 0 007 3z"></path>
                                     </g>
                                 </svg> &nbsp;
-                                {/* {this.state.phone_no} */ }
-                                1234567891
+                                { this.state.phoneNumber }
                             </div>
                         </div>
                     </div>
+                    <AddBasicInfo key={ Math.random() } basicInfo={ basicInfo } saveBasicInfo={ this.saveBasicInfo } />
                 </div>
                 <div className="about-me basic-info-each-section">
                     <h3>
@@ -143,9 +328,9 @@ class BasicInfo extends Component {
                         </span>
                     </h3>
                     <div className="aboutme-text">
-                        {/* {this.state.aboutMe} */ }
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                        { this.state.aboutMe }
                     </div>
+                    <AddAboutMe key={ Math.random() } aboutMe={ this.state.aboutMe } saveAboutMe={ this.saveAboutMe } />
                 </div>
                 <div className="experience basic-info-each-section">
                     <h3>
@@ -164,8 +349,14 @@ class BasicInfo extends Component {
 
                         </span>
                     </h3>
-                    <Experience />
-                    <AddExperience />
+                    {
+                        this.state.experience ?
+                            this.state.experience.map( ( experience, index ) => {
+                                return <Experience key={ index } index={ index } experience={ experience } />
+                            } )
+                            : null
+                    }
+                    <AddExperience saveExperience={ this.saveExperience } />
                 </div>
                 <div className="skills">
                     <h3>
@@ -181,8 +372,12 @@ class BasicInfo extends Component {
                             </svg>
                         </span>
                     </h3>
-                    <Skills />
-                    <UpdateSkills />
+                    {
+                        this.state.skills ?
+                            <Skills key={ Math.random() } skills={ this.state.skills } />
+                            : null
+                    }
+                    <UpdateSkills saveSkill={ this.saveSkill } />
                 </div>
                 <div className="education">
                     <h3>
@@ -201,27 +396,14 @@ class BasicInfo extends Component {
 
                         </span>
                     </h3>
-                    <Education />
-                    <AddEducation />
-                </div>
-                <div className="license">
-                    <h3>
-                        Licences & Certifications
-                        <span onClick={ this.addLicense }>
-                            <svg className="basic-info-circle-svg" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
-                                <g className="basic-info-circle-g" fill="none" fillRule="evenodd">
-                                    <circle cx="12" cy="12" fill="#f5f6f7" r="12"></circle>
-                                    <path d="M12.5 12.5H18h-5.5V7zm0 0V18v-5.5H7z" stroke="#1861bf" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"></path>
-                                </g>
-                                <g className="basic-info-circle-g-hover" fill="none" fillRule="evenodd">
-                                    <circle cx="12" cy="12" fill="#1861bf" r="12"></circle>
-                                    <path d="M12.5 12.5H18h-5.5V7zm0 0V18v-5.5H7z" stroke="#f5f6f7" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"></path>
-                                </g>
-                            </svg>
-                        </span>
-                    </h3>
-                    <License />
-                    <AddLicense />
+                    {
+                        this.state.education ?
+                            this.state.education.map( ( education, index ) => {
+                                return <Education key={ index } index={ index } education={ education } />
+                            } )
+                            : null
+                    }
+                    <AddEducation saveEducation={ this.saveEducation } />
                 </div>
             </div>
         )

@@ -88,3 +88,7 @@
 .experience-description {
     margin-top: 3%;
 }
+
+.error {
+    color: red;
+}

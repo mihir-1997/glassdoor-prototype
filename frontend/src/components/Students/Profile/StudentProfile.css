@@ -5,6 +5,16 @@
 
 .userinfo-profile-picture {
     position: relative;
+    cursor: pointer;
+}
+
+.userinfo-profile {
+    height: 48px;
+    width: 48px;
+}
+
+#user-profile-picture {
+    display: none;
 }
 
 .userinfo-profile-icon {

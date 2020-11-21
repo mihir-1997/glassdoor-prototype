@@ -12,7 +12,8 @@ class Dashboard extends Component {
         super( props )
         this.state = {
             name: "",
-            updateProfileButton: false
+            city: "",
+            updateProfileButton: false,
         }
     }
 
@@ -29,7 +30,8 @@ class Dashboard extends Component {
                     console.log( res )
                     if ( res.status === 200 ) {
                         this.setState( {
-                            name: res.data.name
+                            name: res.data.name,
+                            city: res.data.city
                         } )
                     }
                 } )
@@ -179,8 +181,7 @@ class Dashboard extends Component {
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                                         <path d="M19 10a7 7 0 00-14 0c0 3.484 2.298 7.071 7 10.741 4.702-3.67 7-7.257 7-10.741zm-7 12c-5.333-4-8-8-8-12a8 8 0 1116 0c0 4-2.667 8-8 12zm0-10a2 2 0 110-4 2 2 0 010 4zm0 1a3 3 0 100-6 3 3 0 000 6z" fill="#20262E" fillRule="evenodd"></path>
                                     </svg> &nbsp;
-                                    {/* { this.state.user_location } */ }
-                                    San Jose, CA
+                                    { this.state.city }
                                 </div>
                                 <div className="userinfo-update-button">
                                     <button type="button" className="btn update-profile" onClick={ this.updateProfile }>Update Your Profile</button>
