@@ -16,7 +16,7 @@ function handle_request ( msg, callback ) {
         params: msg
     }
 
-    contributionsSchema.findOne( { "studentID": req.params.studentID } ).then( doc => {
+    contributionsSchema.find( { $and: [ { "studentID": req.params.studentID }, { "type": "review" } ] } ).then( doc => {
 
         //redisClient.setex( req.params.studentID, 600, JSON.stringify( doc ) )
         callback( null, doc )

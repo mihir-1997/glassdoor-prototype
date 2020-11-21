@@ -28,10 +28,13 @@ var employer_login = require( './services/employers/employer_login' )
 var employer_getEmployerByName = require( './services/employers/employer_getEmployerByName' )
 var employer_getEmployerById = require( './services/employers/employer_getEmployerById' )
 var employer_updateEmployerBasicInfo = require( './services/employers/employer_updateEmployerBasicInfo' )
+
 //contrubutions
 var contributions_addReview = require( './services/contributions/addReview' )
 var contributions_removeReview = require( './services/contributions/removeReview' )
-var contributions_getReview = require( './services/contributions/getReviews' )
+var contributions_getReview = require( './services/contributions/getReviewsbyStudent' )
+var contributions_getReviewByEmployer = require( './services/contributions/getReviewsByEmployer' )
+var contributions_helpfulReview = require( './services/contributions/helpfulReview' )
 
 //jobs
 var job_createJob = require( './services/jobs/job_createJob' )
@@ -99,10 +102,14 @@ handleTopicRequest( "employer_login", employer_login )
 handleTopicRequest( "employer_getEmployerByName", employer_getEmployerByName )
 handleTopicRequest( "employer_getEmployerById", employer_getEmployerById )
 handleTopicRequest( "employer_updateEmployerBasicInfo", employer_updateEmployerBasicInfo )
+
 //contributions
+//reviews
 handleTopicRequest( "contributions_addReview", contributions_addReview )
 handleTopicRequest( "contributions_removeReview", contributions_removeReview )
 handleTopicRequest( "contributions_getReview", contributions_getReview )
+handleTopicRequest( "contributions_getReviewByEmployer", contributions_getReviewByEmployer )
+handleTopicRequest( "contributions_helpfulReview", contributions_helpfulReview )
 
 //jobs
 handleTopicRequest( "job_createJob", job_createJob )

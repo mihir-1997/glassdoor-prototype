@@ -26,6 +26,8 @@ var educationSchema = new Schema( {
 var resumeSchema = new Schema( {
     resumeID: String,
     isPrimary: Boolean,
+    imageName: String,
+    date: String,
     resumeName: String,
 } )
 
