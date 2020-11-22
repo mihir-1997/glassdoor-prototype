@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
+import { Redirect } from 'react-router'
 
 import './EmployerProfile.css'
 import cover from '../../../Images/employer.png'
 import logo from '../../../Images/linkedin-logo.png'
 import SEO from '../../SEO/SEO'
-import bullseye from '../../../Images/bullseye-svgrepo-com.svg'
 
 
 class EmployerProfile extends Component {
@@ -31,8 +31,18 @@ class EmployerProfile extends Component {
     }
 
     render() {
+        let redirectVar = null
+        if ( !localStorage.getItem( "active" ) ) {
+            redirectVar = <Redirect to="/login" />
+            return redirectVar
+        }
+        // let redirectToProfile = null
+        // if ( this.state.updateProfileButton ) {
+        //     redirectToProfile = <Redirect to="/students/profile" />
+        // }
         return (
             <div className="employer-profile-wrapper">
+                {redirectVar}
                 <div className="root-header">
                     <div className="image-wrapper">
                         <img className="cover" src={cover} alt="Cover"  />
@@ -46,22 +56,18 @@ class EmployerProfile extends Component {
                             {/* <h3>{this.state.name}</h3> */}
                             <h6 color="#404040">Part of <a href="microsoft.com">Microsoft</a></h6>
                             {/* <h6 color="#404040">Part of <a href="microsoft.com">{this.state.parentCompany}</a></h6> */}
-                            <button className="btn reverse-update-profile">
-                                Jobs at LinkedIn
-                                {/* Jobs at {this.state.name} */}
-                            </button>
+ 
                         </div>
                         <div className="row multiple-links">
-                            <div className="col-1.2 single-link"><a href="/employer/overview">Overview</a> </div> 
+                            <div className="col-1.2 single-link"><a href="/employer/profile">Overview</a> </div> 
                             <div className="col-1.2 single-link"><a href="/employer/reviews">Reviews</a> </div>
                             <div className="col-1.2 single-link"><a href="/employer/jobs">Jobs</a> </div>
                             <div className="col-1.2 single-link"><a href="/employer/salaries">Salaries</a> </div>
                             <div className="col-1.2 single-link"><a href="/employer/interviews">Interviews</a> </div>
                             <div className="col-1.2 single-link"><a href="/employer/photos">Photos</a> </div>
                             
-                            <div className="col-1.2" style={{paddingLeft:"150px", paddingBottom:"15px", paddingTop:"15px"}} >Follow</div>
-                            <div className="col-1.2" style={{paddingLeft:"20px",paddingBottom:"15px", paddingTop:"15px"}}>Add Review</div>
-
+                            <button className="col-1.2 btn btn-primary d-flex justify-content-center align-items-center" style={{marginLeft:"320px", marginBottom:"15px", marginTop:"15px", color:"rgb(24, 97, 191)", background:"white",fontWeight:"bold" ,border:"1px solid rgb(24, 97, 191)"}}>Follow</button>
+                            <button className="col-1.2 btn btn-primary d-flex justify-content-center align-items-center" style={{marginLeft:"10px", marginBottom:"15px", marginTop:"15px", color:"rgb(24, 97, 191)", background:"white",fontWeight:"bold" ,border:"1px solid rgb(24, 97, 191)"}}> + Add Review</button>
                         </div>
                     </div>   
                     <div className="info-wrapper">

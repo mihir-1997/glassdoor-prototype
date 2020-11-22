@@ -13,6 +13,10 @@ import AddContribution from './Students/Contributions/AddContribution'
 
 import EmployerProfile from './Employer/Profile/EmployerProfile'
 import EmployerReviews from './Employer/Reviews/EmployerReviews'
+import EmployerInterviews from './Employer/Interviews/EmployerInterviews'
+import EmployerSalaries from './Employer/Salaries/EmployerSalaries'
+import EmployerPhotos from './Employer/Photos/EmployerPhotos'
+import EmployerJobs from './Employer/Jobs/EmployerJobs'
 
 class Routes extends Component {
     render () {
@@ -30,6 +34,10 @@ class Routes extends Component {
                 {/* Employer Routes */}
                 <Route path="/employer/profile" component={ EmployerProfile }/>
                 <Route path="/employer/reviews" component={ EmployerReviews }/>
+                <Route path="/employer/jobs" component={ EmployerJobs }/>
+                <Route path="/employer/salaries" component={ EmployerSalaries }/>
+                <Route path="/employer/interviews" component={ EmployerInterviews }/>
+                <Route path="/employer/photos" component={ EmployerPhotos }/>
             </div>
         )
     }

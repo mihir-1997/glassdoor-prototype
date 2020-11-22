@@ -1,3 +1,72 @@
+.info-wrapper {
+  padding: 2% 0% 2% 0%;
+}
+
+.review-wrapper {
+  padding: 10px 0px 10px 0px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.review {
+  margin-left: 10%;
+  padding: 10px;
+}
+
+.review-string {
+  color: #1861bf;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.star-string {
+  color: #0a9739f1;
+  font-size: 15px;
+  margin-left: 5px;
+}
+
+.company-logo-review {
+  width: 55px;
+  height: 55px;
+  background: #f1f2f2;
+  border: 2px solid white;
+  float: left;
+}
+
+.pros-cons {
+  font-size: 15px;
+  font-weight: normal;
+  color: #505863;
+  margin-top: 10px;
+}
+
+.pros-cons,
+p {
+  padding: 0px;
+  margin: 0px 0px 0px 0px;
+  color: #505863;
+}
+
+.review,
+span {
+  font-weight: normal;
+  font-family: sans-serif;
+  font-size: 15px;
+  color: #505863;
+  margin-right: 40px;
+}
+.box {
+  height: 15px;
+  width: 15px;
+  margin-bottom: 0px;
+  border-radius: 3px;
+  margin-left: 0px;
+  margin-right: 5px;
+  border: 1px solid #0a9739f1;
+  background-color: #0a9739f1;
+  display: inline-block;
+}
+
 .employer-profile-wrapper {
   background-color: #eaeaea;
   width: 100%;
@@ -5,7 +74,7 @@
 }
 
 .root-header {
-  /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(206, 200, 200, 0.19); */
+  /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); */
   height: 100%;
   width: 100%;
 }
@@ -58,7 +127,7 @@
   height: 100%;
 }
 
-.form-wrapper-side {
+.form-wrapper {
   position: absolute;
   top: 66.2%;
   right: 12%;
@@ -68,6 +137,7 @@
   width: 22%;
   height: 60%;
 }
+
 .info-wrapper-row {
   font-size: 15px;
 }
@@ -81,13 +151,4 @@
 
 .single-row {
   padding-bottom: 12px;
-}
-
-.jobs-at {
-  align-items: center;
-  margin-left: 40%;
-  background-color: #09aa41;
-  color: #fff;
-  font-weight: bold;
-  border: #09aa41;
 }

@@ -86,15 +86,36 @@ class SignUp extends Component {
                         error: "*Some required fields are empty"
                     } )
                 }
-            } else {
-                if ( this.state.name && this.state.email && this.state.address ) {
+            } else if(this.state.selected === "employer"){
+                if ( this.state.name && this.state.email && this.state.password ) {
                     const employer = {
                         name: this.state.name,
                         email: this.state.email,
                         password: this.state.password,
                     }
-                    this.props.register( employer, "employer" )
-                } else {
+                    axios.defaults.withCredentials = true
+                    axios.post( BACKEND_URL + ":" + BACKEND_PORT + "/employers/registerEmployer", employer )
+                        .then( ( res ) => {
+                            if ( res.status === 200 ) {
+                                console.log( "Employer added successfully" )
+                                this.setState( {
+                                    error: ""
+                                } )
+                                window.location.assign( '/login' )
+                            } else {
+                                console.log( "Error creating Employer" )
+                            }
+                        } )
+                        .catch( ( err ) => {
+                            if ( err.response ) {
+                                if ( err.response.status === 409 ) {
+                                    this.setState( { "error": "Employer already exist" } );
+                                }
+                            }
+                        } )
+                } 
+               
+                 else {
                     this.setState( {
                         error: "*Some required fields are empty"
                     } )

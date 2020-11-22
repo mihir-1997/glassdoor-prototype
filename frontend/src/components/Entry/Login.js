@@ -64,7 +64,7 @@ class Login extends Component {
                     .then( ( res ) => {
                         console.log( res )
                         if ( res.status === 200 ) {
-                            console.log( "loggedin successfully" )
+                            console.log( "loggedin successfully")
                             localStorage.setItem( "token", res.data )
                             var decoded = jwt_decode( res.data.split( ' ' )[ 1 ] )
                             localStorage.setItem( "email", decoded.email )
@@ -86,12 +86,39 @@ class Login extends Component {
                             }
                         }
                     } )
-            } else {
+            } else if(this.state.selected === "employer"){
                 const employer = {
                     email: this.state.email,
                     password: this.state.password,
                 }
-                this.props.login( employer, "employer" )
+                axios.defaults.withCredentials = true
+                axios.post( BACKEND_URL + ":" + BACKEND_PORT + "/employers/loginEmployer", employer )
+                    .then( ( res ) => {
+                        console.log( res )
+                        if ( res.status === 200 ) {
+                            console.log( "loggedin successfully" )
+                            localStorage.setItem( "token", res.data )
+                            var decoded = jwt_decode( res.data.split( ' ' )[ 1 ] )
+                            localStorage.setItem( "email", decoded.email )
+                            localStorage.setItem( "id", decoded.id )
+                            localStorage.setItem( "name", decoded.name )
+                            localStorage.setItem( "active", decoded.type )
+                            window.location.assign( '/employer/profile' )
+                        }
+                    } )
+                    .catch( ( err ) => {
+                        if ( err.response ) {
+                            if ( err.response.status === 404 ) {
+                                console.log( "Error! No user" )
+                                this.setState( { "error": "No user found" } )
+                            } else if ( err.response.status === 401 ) {
+                                this.setState( { "error": "Wrong Password" } )
+                            } else if ( err.response.status === 400 ) {
+                                this.setState( { "error": "Each field is required" } )
+                            }
+                        }
+                    } )
+              
             }
         } else {
             this.setState( {

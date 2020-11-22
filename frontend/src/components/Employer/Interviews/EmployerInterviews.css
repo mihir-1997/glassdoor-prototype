@@ -2,31 +2,26 @@
   padding: 2% 0% 2% 0%;
 }
 
-.review-wrapper {
+.interview-wrapper {
   padding: 10px 0px 10px 0px;
   font-size: 18px;
   font-weight: bold;
 }
 
-.review {
-  margin-left: 10%;
-  padding: 10px;
+.interview {
+  margin-left: 0%;
+  padding: 10px 5px 10px 0px;
 }
 
-.review-string {
-  font-family: "Lato", sans-serif;
+.interview-string {
   color: #1861bf;
   font-weight: bold;
+  font-family: "Lato", sans-serif;
   font-size: 18px;
+  margin-bottom: -20px;
 }
 
-.star-string {
-  color: #0a9739f1;
-  font-size: 15px;
-  margin-left: 5px;
-}
-
-.company-logo-review {
+.company-logo-interview {
   width: 55px;
   height: 55px;
   background: #f1f2f2;
@@ -54,7 +49,7 @@ span {
   font-family: sans-serif;
   font-size: 15px;
   color: #505863;
-  margin-right: 40px;
+  margin-right: 100px;
 }
 .box {
   height: 15px;
@@ -89,14 +84,15 @@ span {
 
 .multiple-links {
   padding-left: 25px;
+  color: #0e52ac;
 }
 
 .single-link {
   font-weight: normal;
   padding: 15px;
-  color: #1861bf;
+  color: #0e52ac;
   font-size: 15px;
-  font-style: sans-serif;
+  font-family: "Lato", sans-serif;
   border-right: 1px solid #eaeaea;
 }
 

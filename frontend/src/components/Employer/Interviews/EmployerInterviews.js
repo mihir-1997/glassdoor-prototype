@@ -2,14 +2,14 @@ import React, { Component } from 'react'
 import { Redirect } from 'react-router'
 
 
-import './EmployerReviews.css'
+import './EmployerInterviews.css'
 import cover from '../../../Images/employer.png'
 import logo from '../../../Images/linkedin-logo.png'
 import SEO from '../../SEO/SEO'
 
 
 
-class EmployerProfile extends Component {
+class EmployerInterviews extends Component {
 
     // constructor( props ) {
     //     super( props )
@@ -17,7 +17,7 @@ class EmployerProfile extends Component {
 
     componentDidMount () {
         SEO( {
-            title: "Reviews | Glassdoor"
+            title: "Interviews | Glassdoor"
         } )
         // if ( this.props ) {
         //     if ( this.props.location.section ) {
@@ -58,7 +58,7 @@ class EmployerProfile extends Component {
                          
                         </div>
                         <div className="row multiple-links">
-                            <div className="col-1.2 single-link icon-bullseye-select"><a href="/employer/profile">Overview</a> </div> 
+                            <div className="col-1.2 single-link"><a href="/employer/profile">Overview</a> </div> 
                             <div className="col-1.2 single-link"><a href="/employer/reviews">Reviews</a> </div>
                             <div className="col-1.2 single-link"><a href="/employer/jobs">Jobs</a> </div>
                             <div className="col-1.2 single-link"><a href="/employer/salaries">Salaries</a> </div>
@@ -72,27 +72,26 @@ class EmployerProfile extends Component {
                     </div>   
                     <div className="info-wrapper">
                     
-                    <p style={{fontSize:"20px", lineHeight:"27px"}}>LinkedIn Reviews</p>
+                    <p style={{fontSize:"20px", lineHeight:"27px"}}>LinkedIn Interviews</p>
 
                     <hr/>
 
-                    <div className="review-wrapper">
+                    <div className="interview-wrapper">
 
                         <p style={{color:"#7F7F7F", fontSize:"14px", fontWeight:"normal" , marginTop:"0px",marginBottom:"8px"}}>November 15, 2020</p>
 
-                        <img className="company-logo-review" src={logo} alt="logo"/>
                         
-                        <div className="review">
+                        <div className="interview">
 
-                        <p className="review-string">"Great company!"</p>
-                        <p className="star-string"> 5.0 ★★★★★</p>
+                        <p className="interview-string">Site Reliability Engineer Interview</p>
+                        
                         <br/>
                         <div className="box"></div>
-                        <span >Recommends</span>
+                        <span >Offer</span>
                         <span className="box"></span>
-                        <span>Positive Outlook</span>
+                        <span> Positive Experience</span>
                         <span className="box"></span>
-                        <span>Approves CEO</span>
+                        <span>Easy Interview</span>
                         <br/>
                             <div className="pros-cons">
                                 <p >Worked for the company for 5 years</p>
@@ -107,16 +106,16 @@ class EmployerProfile extends Component {
                         <hr/>
                     </div>
 
-                    <div className="review-wrapper">
+                    <div className="interview-wrapper">
 
                         <p style={{color:"#7F7F7F", fontSize:"14px"}}>November 15, 2020</p>
-                        <svg style={{width: "20px", height: "20px"}} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M20.37 4.65a5.57 5.57 0 00-7.91 0l-.46.46-.46-.46a5.57 5.57 0 00-7.91 0 5.63 5.63 0 000 7.92L12 21l8.37-8.43a5.63 5.63 0 000-7.92z" fill="currentColor" fill-rule="evenodd"></path></svg>
-                        <img className="company-logo-review" src={logo} alt="logo"/>
 
-                        <div className="review">
+                        <img className="company-logo-interview" src={logo} alt="logo"/>
 
-                        <p className="review-string">"Great company!"</p>
-                        <p className="star-string"> 5.0 ★★★★★</p>
+                        <div className="interview">
+
+                        <p className="interview-string">"Great company!"</p>
+                      
                         <span>Recommends</span>
                         <span>Positive Outlook</span>
                         <span>Approves CEO</span>
@@ -135,4 +134,4 @@ class EmployerProfile extends Component {
         )
     }
 }
-export default EmployerProfile;
+export default EmployerInterviews;
