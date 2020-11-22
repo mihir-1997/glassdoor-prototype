@@ -42,9 +42,12 @@ var contributions_markReviewAsFavourite = require( './services/contributions/mar
 var contributions_markReviewAsFeatured = require( './services/contributions/markReviewAsFeatured' )
 
 var contributions_addPhotos = require( './services/contributions/addPhotos' )
-var contributions_addSalary = require( './services/contributions/addSalaries' )
 
+var contributions_addSalary = require( './services/contributions/addSalaries' )
 var contributions_getSalariesByEmployer = require( './services/contributions/getSalariesByEmployer' )
+
+var contributions_addInterview = require( './services/contributions/addInterview' )
+var contributions_getInterviewsByEmployer = require( './services/contributions/getInterviewByEmployers' )
 
 
 //jobs
@@ -134,6 +137,9 @@ handleTopicRequest( "contributions_addPhotos", contributions_addPhotos )
 handleTopicRequest( "contributions_addSalary", contributions_addSalary )
 handleTopicRequest( "contributions_getSalariesByEmployer", contributions_getSalariesByEmployer )
 
+//interviews
+handleTopicRequest( "contributions_addInterview", contributions_addInterview )
+handleTopicRequest( "contributions_getInterviewsByEmployer", contributions_getInterviewsByEmployer )
 
 //jobs
 handleTopicRequest( "job_createJob", job_createJob )

@@ -258,4 +258,40 @@ router.get( '/getSalaries/:employerName', ( req, res ) => {
     } );
 } )
 
+//add interview
+router.post( '/addInterview', ( req, res ) => {
+
+    kafka.make_request( 'contributions_addInterview', req.body, function ( err, results ) {
+        if ( err ) {
+            console.log( "Inside err", err );
+            res.status( 404 ).send( "Failed" )
+
+
+        } else {
+            console.log( "Inside else", results );
+            res.status( 200 ).send( results )
+
+        }
+
+    } );
+} )
+
+//get interviews by employer
+router.get( '/getInterviews/:employerName', ( req, res ) => {
+
+    kafka.make_request( 'contributions_getInterviewsByEmployer', req.params, function ( err, results ) {
+        if ( err ) {
+            console.log( "Inside err", err );
+            res.status( 404 ).send( "Failed" )
+
+
+        } else {
+            console.log( "Inside else", results );
+            res.status( 200 ).send( results )
+
+        }
+
+    } );
+} )
+
 module.exports = router;
