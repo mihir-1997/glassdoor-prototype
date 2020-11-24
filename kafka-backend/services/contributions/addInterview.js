@@ -15,7 +15,8 @@ function handle_request ( msg, callback ) {
         description: req.body.description,
         difficulty: req.body.difficulty,
         offerStatus: req.body.offerStatus,
-        questionAnswers: req.body.questionAnswers
+        questionAnswers: req.body.questionAnswers,
+        interviewDate: Date.now()
     } )
 
     newInterview.save().then( doc => {

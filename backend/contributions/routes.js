@@ -221,6 +221,42 @@ router.post( '/uploadPhotos/:employerID', checkAuth, ( req, res ) => {
     } );
 } );
 
+//get photos by employer
+router.get( '/getPhotosByEmployer/:employerID', ( req, res ) => {
+
+    kafka.make_request( 'contributions_getPhotosByEmployer', req.params, function ( err, results ) {
+        if ( err ) {
+            console.log( "Inside err", err );
+            res.status( 404 ).send( "Failed" )
+
+
+        } else {
+            console.log( "Inside else", results );
+            res.status( 200 ).send( results )
+
+        }
+
+    } );
+} )
+
+//get photos by student
+router.get( '/getPhotosByStudent/:studentID', ( req, res ) => {
+
+    kafka.make_request( 'contributions_getPhotosByStudent', req.params, function ( err, results ) {
+        if ( err ) {
+            console.log( "Inside err", err );
+            res.status( 404 ).send( "Failed" )
+
+
+        } else {
+            console.log( "Inside else", results );
+            res.status( 200 ).send( results )
+
+        }
+
+    } );
+} )
+
 
 //add salary
 router.post( '/addSalary', ( req, res ) => {
@@ -241,9 +277,27 @@ router.post( '/addSalary', ( req, res ) => {
 } )
 
 //get salary by employer
-router.get( '/getSalaries/:employerName', ( req, res ) => {
+router.get( '/getSalariesByEmployer/:employerName', ( req, res ) => {
 
     kafka.make_request( 'contributions_getSalariesByEmployer', req.params, function ( err, results ) {
+        if ( err ) {
+            console.log( "Inside err", err );
+            res.status( 404 ).send( "Failed" )
+
+
+        } else {
+            console.log( "Inside else", results );
+            res.status( 200 ).send( results )
+
+        }
+
+    } );
+} )
+
+//get salary by student
+router.get( '/getSalariesByStudent/:studentID', ( req, res ) => {
+
+    kafka.make_request( 'contributions_getSalariesByStudent', req.params, function ( err, results ) {
         if ( err ) {
             console.log( "Inside err", err );
             res.status( 404 ).send( "Failed" )
@@ -277,9 +331,45 @@ router.post( '/addInterview', ( req, res ) => {
 } )
 
 //get interviews by employer
-router.get( '/getInterviews/:employerName', ( req, res ) => {
+router.get( '/getInterviewsByEmployer/:employerName', ( req, res ) => {
 
     kafka.make_request( 'contributions_getInterviewsByEmployer', req.params, function ( err, results ) {
+        if ( err ) {
+            console.log( "Inside err", err );
+            res.status( 404 ).send( "Failed" )
+
+
+        } else {
+            console.log( "Inside else", results );
+            res.status( 200 ).send( results )
+
+        }
+
+    } );
+} )
+
+//get interviews by student
+router.get( '/getInterviewsByStudent/:studentID', ( req, res ) => {
+
+    kafka.make_request( 'contributions_getInterviewsByStudent', req.params, function ( err, results ) {
+        if ( err ) {
+            console.log( "Inside err", err );
+            res.status( 404 ).send( "Failed" )
+
+
+        } else {
+            console.log( "Inside else", results );
+            res.status( 200 ).send( results )
+
+        }
+
+    } );
+} )
+
+//update photo status
+router.put( '/updatePhotoStatus/:employerID', ( req, res ) => {
+    req.body.params = req.params
+    kafka.make_request( 'contributions_updatePhotoStatus', req.body, function ( err, results ) {
         if ( err ) {
             console.log( "Inside err", err );
             res.status( 404 ).send( "Failed" )

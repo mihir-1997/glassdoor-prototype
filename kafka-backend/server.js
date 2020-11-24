@@ -42,12 +42,18 @@ var contributions_markReviewAsFavourite = require( './services/contributions/mar
 var contributions_markReviewAsFeatured = require( './services/contributions/markReviewAsFeatured' )
 
 var contributions_addPhotos = require( './services/contributions/addPhotos' )
+var contributions_updatePhotoStatus = require( './services/contributions/updatePhotoStatus' )
+var contributions_getPhotosByEmployer = require( './services/contributions/getPhotosByEmployers' )
+var contributions_getPhotosByStudent = require( './services/contributions/getPhotosbyStudents' )
+
 
 var contributions_addSalary = require( './services/contributions/addSalaries' )
 var contributions_getSalariesByEmployer = require( './services/contributions/getSalariesByEmployer' )
+var contributions_getSalariesByStudent = require( './services/contributions/getSalariesByStudent' )
 
 var contributions_addInterview = require( './services/contributions/addInterview' )
 var contributions_getInterviewsByEmployer = require( './services/contributions/getInterviewByEmployers' )
+var contributions_getInterviewsByStudent = require( './services/contributions/getInterviewByStudent' )
 
 
 //jobs
@@ -132,14 +138,19 @@ handleTopicRequest( "contributions_markReviewAsFavourite", contributions_markRev
 
 //photos
 handleTopicRequest( "contributions_addPhotos", contributions_addPhotos )
+handleTopicRequest( "contributions_updatePhotoStatus", contributions_updatePhotoStatus )
+handleTopicRequest( "contributions_getPhotosByStudent", contributions_getPhotosByStudent )
+handleTopicRequest( "contributions_getPhotosByEmployer", contributions_getPhotosByEmployer )
 
 //salaries
 handleTopicRequest( "contributions_addSalary", contributions_addSalary )
 handleTopicRequest( "contributions_getSalariesByEmployer", contributions_getSalariesByEmployer )
+handleTopicRequest( "contributions_getSalariesByStudent", contributions_getSalariesByStudent )
 
 //interviews
 handleTopicRequest( "contributions_addInterview", contributions_addInterview )
 handleTopicRequest( "contributions_getInterviewsByEmployer", contributions_getInterviewsByEmployer )
+handleTopicRequest( "contributions_getInterviewsByStudent", contributions_getInterviewsByStudent )
 
 //jobs
 handleTopicRequest( "job_createJob", job_createJob )

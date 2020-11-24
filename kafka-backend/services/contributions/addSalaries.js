@@ -15,6 +15,8 @@ function handle_request ( msg, callback ) {
         jobTitle: req.body.jobTitle,
         yearsOfExperience: req.body.yearsOfExperience,
         location: req.body.location,
+        salaryDate: Date.now(),
+        employeeStatus: req.body.employeeStatus
 
     } )
 
