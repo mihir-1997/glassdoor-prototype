@@ -49,7 +49,7 @@ router.get( '/getJobsForEmployer/:employerID', checkAuth,( req, res ) => {
 } )
 
 //get all jobs 
-router.get( '/getAllJobs',checkAuth, ( req, res ) => {
+router.get( '/getAllJobs', checkAuth,( req, res ) => {
     console.log("inside getAllJobs")
     kafka.make_request( 'job_getAllJobs', req.params, function ( err, results ) {
         if ( err ) {
@@ -83,6 +83,24 @@ router.get( '/getJobsBasedOnTitle/:title', checkAuth, ( req, res ) => {
 
     } );
 } )
+
+//apply for a job
+router.post( '/applyForJob/:jobID',  ( req, res ) => {
+    console.log("Apply for Job");
+    req.body.params = req.params
+    kafka.make_request( 'job_applyForJob', req.body, function ( err, results ) {
+        if ( err ) {
+            console.log( "Inside err", err );
+            res.status( 400 ).send( err )
+        } else {
+            console.log( "Inside else", results );
+            res.status( 200 ).send( results )
+
+        }
+
+    } );
+} )
+
 //sample post
 router.post( '/', ( req, res ) => {
 

@@ -2,15 +2,13 @@ const mongoose = require( 'mongoose' )
 var Schema = mongoose.Schema;
 
 var applicantSchema = new Schema( {
-    user_id: String,
-    resume:Object,
+    studentID: String,
+    resumeID:String,
+    resumeName:String,
     name:String,
     status: String,
-    application_date:String,
-    jobDate:String,
-    salary:String,
-    description:String,
-    qualifications:String
+    application_date:Date,
+
 } )
 
 var jobsSchema = new Schema( {
@@ -24,6 +22,10 @@ var jobsSchema = new Schema( {
     city:String,
     state:String,
     zip:String,
+    salary:String,
+    description:String,
+    qualifications:String,
+    date:Date,
     applicants:[applicantSchema]
 }
     , { collection: 'jobs' }

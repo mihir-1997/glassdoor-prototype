@@ -17,6 +17,7 @@ function handle_request ( msg, callback ) {
         city:req.body.city,
         state:req.body.state,
         zip:req.body.zip,
+        date:Date.now(),
         applicants:[]
     } )
 

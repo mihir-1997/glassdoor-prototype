@@ -61,6 +61,7 @@ var job_createJob = require( './services/jobs/job_createJob' )
 var job_getJobsForEmployer = require( './services/jobs/job_getJobsForEmployer' )
 var job_getAllJobs = require( './services/jobs/job_getAllJobs' )
 var job_getJobsBasedOnTitle = require('./services/jobs/job_getJobsBasedOnTitle')
+var job_applyForJob = require('./services/jobs/job_applyForJob')
 
 function handleTopicRequest ( topic_name, fname ) {
     //var topic_name = 'root_topic';
@@ -158,3 +159,4 @@ handleTopicRequest( "job_createJob", job_createJob )
 handleTopicRequest( "job_getJobsForEmployer", job_getJobsForEmployer )
 handleTopicRequest( "job_getAllJobs", job_getAllJobs )
 handleTopicRequest("job_getJobsBasedOnTitle",job_getJobsBasedOnTitle)
+handleTopicRequest("job_applyForJob",job_applyForJob)
