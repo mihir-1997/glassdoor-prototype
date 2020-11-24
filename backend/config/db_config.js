@@ -7,7 +7,7 @@ var connection = mysql.createConnection( {
     user: mysql_username,
     password: mysql_password,
     database: mysql_database,
-    connectionLimit: 14
+    // connectionLimit: 10
 } )
 
 //establishing connecting to database
@@ -23,7 +23,7 @@ connection.connect( ( error ) => {
 
 
 mongoose.connect( mongodb_string, {
-    poolSize: 10,
+    poolSize: 15,
     useNewUrlParser: true,
     useUnifiedTopology: true
     // useMongoClient: true

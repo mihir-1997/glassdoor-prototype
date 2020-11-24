@@ -242,7 +242,7 @@ router.post( '/updateUserProfilePicture/:studentID', checkAuth, ( req, res ) => 
                     console.log( "Inside err" );
                     res.status( 400 ).send( "Error Fetching users", err )
                 } else {
-                    console.log( "Inside else", results );
+                    // console.log( "Inside else", results );
                     res.status( 200 ).send( JSON.stringify( results ) )
 
                 }
@@ -270,7 +270,7 @@ router.post( '/addUserResume/:studentID', checkAuth, ( req, res ) => {
                     console.log( "Inside err" );
                     res.status( 400 ).send( "Error Fetching users", err )
                 } else {
-                    console.log( "Inside else", results );
+                    // console.log( "Inside else", results );
                     res.status( 200 ).send( JSON.stringify( results ) )
 
                 }
@@ -286,6 +286,24 @@ router.post( '/addUserResume/:studentID', checkAuth, ( req, res ) => {
 router.delete( '/removeUserResume/:studentID', checkAuth, ( req, res ) => {
     req.body.params = req.params
     kafka.make_request( 'remove_resume', req.body, function ( err, results ) {
+        if ( err ) {
+            console.log( "Inside err", err );
+            res.status( 404 ).send( "No student found" )
+
+
+        } else {
+            console.log( "Inside else", results );
+            res.status( 200 ).send( results )
+
+        }
+
+    } );
+} )
+
+//update student primary resume
+router.put( '/updateUserPrimaryResume/:studentID', checkAuth, ( req, res ) => {
+    req.body.params = req.params
+    kafka.make_request( 'updatePrimary_resume', req.body, function ( err, results ) {
         if ( err ) {
             console.log( "Inside err", err );
             res.status( 404 ).send( "No student found" )

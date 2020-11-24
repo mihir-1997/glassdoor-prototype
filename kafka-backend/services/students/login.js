@@ -17,30 +17,35 @@ function handle_request ( msg, callback ) {
             console.log( "error:", err );
         } else {
             if ( results.length > 0 ) {
-                if ( bcrypt.compare( req.body.password, results[ 0 ].password ) ) {
-                    let payload = {
-                        id: results[ 0 ].mongoID,
-                        email: results[ 0 ].email,
-                        name: results[ 0 ].name,
-                        type: "students"
-                    }
+                bcrypt.compare( req.body.password, results[ 0 ].password ).then( res => {
+                    console.log( "res", res )
 
-                    let token = jwt.sign( payload, secret, {
-                        expiresIn: 1008000
-                    } )
-                    console.log( "Login Successfull", token )
-                    callback( null, "Bearer " + token )
-                    // res.status( 200 ).send( "Bearer " + token )
-                } else {
-                    console.log( "Invalid Credentials" )
-                    // res.status( 401 ).send( "Invalid Credentials" )
-                    callback( "401", null )
-                }
+                    if ( res ) {
+                        let payload = {
+                            id: results[ 0 ].mongoID,
+                            email: results[ 0 ].email,
+                            name: results[ 0 ].name,
+                            type: "students"
+                        }
+
+                        let token = jwt.sign( payload, secret, {
+                            expiresIn: 1008000
+                        } )
+                        console.log( "Login Successfull", token )
+                        callback( null, "Bearer " + token )
+                        // res.status( 200 ).send( "Bearer " + token )
+                    } else {
+                        console.log( "Invalid Credentials" )
+                        // res.status( 401 ).send( "Invalid Credentials" )
+                        callback( "401", null )
+                    }
+                } )
 
 
             } else {
                 callback( "404", null )
             }
+
         }
     } );
 

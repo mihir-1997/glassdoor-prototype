@@ -10,100 +10,366 @@ var faker = require( 'faker' )
 var redis = require( 'redis' )
 var { auth, checkAuth } = require( '../config/passport' )
 auth();
-var redis = require( 'redis' );
-var redisClient = redis.createClient();
+// var redis = require( 'redis' );
+// var redisClient = redis.createClient();
 
-redisClient.on( 'connect', function () {
-    console.log( 'Redis client connected' );
-} );
+// redisClient.on( 'connect', function () {
+//     console.log( 'Redis client connected' );
+// } );
 
-redisClient.on( 'error', function ( err ) {
-    console.log( 'Something went wrong while connecting redis' + err );
-} );
+// redisClient.on( 'error', function ( err ) {
+//     console.log( 'Something went wrong while connecting redis' + err );
+// } );
 
-//get review
-router.get( '/getReviews/:studentID', checkAuth, ( req, res ) => {
+//get review by students
+router.get( '/getReviewsbyStudent/:studentID', ( req, res ) => {
     const RedisKey = req.params.studentID;
-    redisClient.get( RedisKey, ( err, data ) => {
-        if ( data != null ) {
-            res.status( 200 ).send( JSON.parse( data ) )
+    // redisClient.get( RedisKey, ( err, data ) => {
+    //     if ( data != null ) {
+    //         console.log( "from redis" )
+    //         res.status( 200 ).send( JSON.parse( data ) )
+    //     } else {
+    kafka.make_request( 'contributions_getReview', req.params, function ( err, results ) {
+        if ( err ) {
+            console.log( "Inside err", err );
+            res.status( 404 ).send( "Failed" )
+
+
         } else {
-            contributionsSchema.findOne( { "studentID": req.params.studentID } ).then( doc => {
-                console.log( RedisKey, doc )
-                // redisClient.setex( RedisKey, 600, doc )
-                res.status( 200 ).send( doc );
-            } ).catch( error => {
-                res.status( 400 ).send( "Error getting" + error );
-            } )
+            console.log( "Inside else", results );
+            res.status( 200 ).send( results )
+
         }
     } )
 
+} )
 
+//get review by Employers
+router.get( '/getReviewsbyEmployer/:employerName', ( req, res ) => {
+    // redisClient.get( RedisKey, ( err, data ) => {
+    //     if ( data != null ) {
+    //         console.log( "from redis" )
+    //         res.status( 200 ).send( JSON.parse( data ) )
+    //     } else {
+    kafka.make_request( 'contributions_getReviewByEmployer', req.params, function ( err, results ) {
+        if ( err ) {
+            console.log( "Inside err", err );
+            res.status( 404 ).send( "Failed" )
+
+
+        } else {
+            console.log( "Inside else", results );
+            res.status( 200 ).send( results )
+
+        }
+    } )
 
 } )
 
 //add review
 router.post( '/addReview', ( req, res ) => {
-    // let newReview = {
-    //     type: "review",
-    //     studentID: req.body.studentID,
-    //     employerID: req.body.employerID,
-    //     ratingOverall: req.body.ratingOverall,
-    //     ratingRTF: req.body.ratingRTF,
-    //     ratingCEO: req.body.ratingCEO,
-    //     headline: req.body.headline,
-    //     pros: req.body.pros,
-    //     cons: req.body.cons,
-    //     description: req.body.description,
-    //     helpful: req.body.helpful
-    // }
-    console.log( "in" )
-    let reviews = []
-    for ( let i = 0; i < 10000; i++ ) {
-        let newReview = {
-            type: "review",
-            studentID: faker.random.uuid(),
-            employerID: faker.random.uuid(),
-            ratingOverall: faker.random.number(),
-            ratingRTF: faker.random.number(),
-            ratingCEO: faker.random.number(),
-            headline: faker.lorem.sentence(),
-            pros: faker.lorem.words(),
-            cons: faker.lorem.words(),
-            description: faker.lorem.sentences(),
-            helpful: faker.random.number()
+
+    kafka.make_request( 'contributions_addReview', req.body, function ( err, results ) {
+        if ( err ) {
+            console.log( "Inside err", err );
+            res.status( 404 ).send( "Failed" )
+
+
+        } else {
+            console.log( "Inside else", results );
+            res.status( 200 ).send( results )
+
         }
-        reviews.push( newReview )
-    }
-    contributionsSchema.insertMany( reviews )
-        .then( doc => {
-            console.log( "Review Added" )
-            // callback( null, doc )
-            res.status( 200 ).send( doc );
-        } ).catch( error => {
-            console.log( "error", error );
-            // callback( error, null )
-            res.status( 400 ).send( "Error following" );
-        } )
-    // kafka.make_request( 'contributions_addReview', req.body, function ( err, results ) {
-    //     if ( err ) {
-    //         console.log( "Inside err", err );
-    //         res.status( 404 ).send( "Failed" )
+
+    } );
+} )
+
+//update review status
+router.put( '/reviewStatus/:reviewID', ( req, res ) => {
+    req.body.params = req.params
+    kafka.make_request( 'contributions_updateReviewStatus', req.body, function ( err, results ) {
+        if ( err ) {
+            console.log( "Inside err", err );
+            res.status( 404 ).send( "Failed" )
 
 
-    //     } else {
-    //         console.log( "Inside else", results );
-    //         res.status( 200 ).send( results )
+        } else {
+            console.log( "Inside else", results );
+            res.status( 200 ).send( results )
 
-    //     }
+        }
 
-    // } );
+    } );
+} )
+
+//mark review as favourite
+router.put( '/favouriteReview/:reviewID', ( req, res ) => {
+    req.body.params = req.params
+    kafka.make_request( 'contributions_markReviewAsFavourite', req.body, function ( err, results ) {
+        if ( err ) {
+            console.log( "Inside err", err );
+            res.status( 404 ).send( "Failed" )
+
+
+        } else {
+            console.log( "Inside else", results );
+            res.status( 200 ).send( results )
+
+        }
+
+    } );
+} )
+
+//mark review as featured
+router.put( '/featureReview/:reviewID', ( req, res ) => {
+    req.body.params = req.params
+    kafka.make_request( 'contributions_markReviewAsFeatured', req.body, function ( err, results ) {
+        if ( err ) {
+            console.log( "Inside err", err );
+            res.status( 404 ).send( "Failed" )
+
+
+        } else {
+            console.log( "Inside else", results );
+            res.status( 200 ).send( results )
+
+        }
+
+    } );
+} )
+
+
+//reply to review
+router.put( '/reply/:reviewID', ( req, res ) => {
+    req.body.params = req.params
+    kafka.make_request( 'contributions_replyToReview', req.body, function ( err, results ) {
+        if ( err ) {
+            console.log( "Inside err", err );
+            res.status( 404 ).send( "Failed" )
+
+
+        } else {
+            console.log( "Inside else", results );
+            res.status( 200 ).send( results )
+
+        }
+
+    } );
 } )
 
 //remove review
 router.delete( '/removeReview/:reviewID', checkAuth, ( req, res ) => {
 
     kafka.make_request( 'contributions_removeReview', req.params, function ( err, results ) {
+        if ( err ) {
+            console.log( "Inside err", err );
+            res.status( 404 ).send( "Failed" )
+
+
+        } else {
+            console.log( "Inside else", results );
+            res.status( 200 ).send( results )
+
+        }
+
+    } );
+} )
+
+//add helpful vote
+router.put( '/helpfulReview/:reviewID', ( req, res ) => {
+
+    kafka.make_request( 'contributions_helpfulReview', req.params, function ( err, results ) {
+        if ( err ) {
+            console.log( "Inside err", err );
+            res.status( 404 ).send( "Failed" )
+
+
+        } else {
+            console.log( "Inside else", results );
+            res.status( 200 ).send( results )
+
+        }
+
+    } );
+} )
+
+//upload office photos
+router.post( '/uploadPhotos/:employerID', checkAuth, ( req, res ) => {
+    let upload = req.app.get( 'upload_officePhotos' );
+    upload( req, res, err => {
+        if ( err ) {
+            console.log( "Error uploading officePhotos", err );
+            res.status( 400 ).end( 'Issue with uploading' )
+        } else {
+            console.log( "Inside upload", req.file, req.body );
+            req.body.file = req.files
+            req.body.params = req.params
+            kafka.make_request( 'contributions_addPhotos', req.body, function ( err, results ) {
+                if ( err ) {
+                    console.log( "Inside err" );
+                    res.status( 400 ).send( "Error Fetching users", err )
+                } else {
+                    // console.log( "Inside else", results );
+                    res.status( 200 ).send( JSON.stringify( results ) )
+
+                }
+
+            } );
+
+
+        }
+    } );
+} );
+
+//get photos by employer
+router.get( '/getPhotosByEmployer/:employerID', ( req, res ) => {
+
+    kafka.make_request( 'contributions_getPhotosByEmployer', req.params, function ( err, results ) {
+        if ( err ) {
+            console.log( "Inside err", err );
+            res.status( 404 ).send( "Failed" )
+
+
+        } else {
+            console.log( "Inside else", results );
+            res.status( 200 ).send( results )
+
+        }
+
+    } );
+} )
+
+//get photos by student
+router.get( '/getPhotosByStudent/:studentID', ( req, res ) => {
+
+    kafka.make_request( 'contributions_getPhotosByStudent', req.params, function ( err, results ) {
+        if ( err ) {
+            console.log( "Inside err", err );
+            res.status( 404 ).send( "Failed" )
+
+
+        } else {
+            console.log( "Inside else", results );
+            res.status( 200 ).send( results )
+
+        }
+
+    } );
+} )
+
+
+//add salary
+router.post( '/addSalary', ( req, res ) => {
+
+    kafka.make_request( 'contributions_addSalary', req.body, function ( err, results ) {
+        if ( err ) {
+            console.log( "Inside err", err );
+            res.status( 404 ).send( "Failed" )
+
+
+        } else {
+            console.log( "Inside else", results );
+            res.status( 200 ).send( results )
+
+        }
+
+    } );
+} )
+
+//get salary by employer
+router.get( '/getSalariesByEmployer/:employerName', ( req, res ) => {
+
+    kafka.make_request( 'contributions_getSalariesByEmployer', req.params, function ( err, results ) {
+        if ( err ) {
+            console.log( "Inside err", err );
+            res.status( 404 ).send( "Failed" )
+
+
+        } else {
+            console.log( "Inside else", results );
+            res.status( 200 ).send( results )
+
+        }
+
+    } );
+} )
+
+//get salary by student
+router.get( '/getSalariesByStudent/:studentID', ( req, res ) => {
+
+    kafka.make_request( 'contributions_getSalariesByStudent', req.params, function ( err, results ) {
+        if ( err ) {
+            console.log( "Inside err", err );
+            res.status( 404 ).send( "Failed" )
+
+
+        } else {
+            console.log( "Inside else", results );
+            res.status( 200 ).send( results )
+
+        }
+
+    } );
+} )
+
+//add interview
+router.post( '/addInterview', ( req, res ) => {
+
+    kafka.make_request( 'contributions_addInterview', req.body, function ( err, results ) {
+        if ( err ) {
+            console.log( "Inside err", err );
+            res.status( 404 ).send( "Failed" )
+
+
+        } else {
+            console.log( "Inside else", results );
+            res.status( 200 ).send( results )
+
+        }
+
+    } );
+} )
+
+//get interviews by employer
+router.get( '/getInterviewsByEmployer/:employerName', ( req, res ) => {
+
+    kafka.make_request( 'contributions_getInterviewsByEmployer', req.params, function ( err, results ) {
+        if ( err ) {
+            console.log( "Inside err", err );
+            res.status( 404 ).send( "Failed" )
+
+
+        } else {
+            console.log( "Inside else", results );
+            res.status( 200 ).send( results )
+
+        }
+
+    } );
+} )
+
+//get interviews by student
+router.get( '/getInterviewsByStudent/:studentID', ( req, res ) => {
+
+    kafka.make_request( 'contributions_getInterviewsByStudent', req.params, function ( err, results ) {
+        if ( err ) {
+            console.log( "Inside err", err );
+            res.status( 404 ).send( "Failed" )
+
+
+        } else {
+            console.log( "Inside else", results );
+            res.status( 200 ).send( results )
+
+        }
+
+    } );
+} )
+
+//update photo status
+router.put( '/updatePhotoStatus/:employerID', ( req, res ) => {
+    req.body.params = req.params
+    kafka.make_request( 'contributions_updatePhotoStatus', req.body, function ( err, results ) {
         if ( err ) {
             console.log( "Inside err", err );
             res.status( 404 ).send( "Failed" )

@@ -6,7 +6,7 @@ function handle_request ( msg, callback ) {
     }
     studentSchema.findOneAndUpdate( { _id: req.body.params.studentID },
         {
-            $set: {
+            $push: {
                 skills: req.body.skills,
             }
         }, { new: true }

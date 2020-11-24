@@ -9,15 +9,22 @@ function handle_request ( msg, callback ) {
     let newReview = new contributionsSchema( {
         type: "review",
         studentID: req.body.studentID,
-        employerID: req.body.employerID,
-        ratingOverall: req.body.ratingOverall,
-        ratingRTF: req.body.ratingRTF,
-        ratingCEO: req.body.ratingCEO,
+        employerName: req.body.employerName,
+        employeeStatus: req.body.employeeStatus,
+        rating: req.body.rating,
+        isPositive: req.body.isPositive,
+        recommended: req.body.recommended,
+        approveCEO: req.body.approveCEO,
         headline: req.body.headline,
         pros: req.body.pros,
         cons: req.body.cons,
         description: req.body.description,
-        helpful: req.body.helpful
+        helpful: req.body.helpful,
+        reviewStatus: "Pending",
+        reviewDate: Date.now(),
+        featured: false,
+        favourite: false,
+        replies: [],
     } )
 
     newReview.save().then( doc => {
