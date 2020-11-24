@@ -78,7 +78,59 @@ class EmployerProfile extends Component {
 
                     <div className="review-wrapper">
 
-                        <p style={{color:"#7F7F7F", fontSize:"14px", fontWeight:"normal" , marginTop:"0px",marginBottom:"8px"}}>November 15, 2020</p>
+                        <div className="favourite-review">
+                        <span style={{color:"#7F7F7F", fontSize:"14px", fontWeight:"normal" , marginTop:"0px",marginBottom:"0px",display:"inline-block"}}>
+                            
+                            November 15, 2020
+                            <span style={{marginLeft:"470px"}}>
+                                
+                            </span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path  d="M20.37 4.65a5.57 5.57 0 00-7.91 0l-.46.46-.46-.46a5.57 5.57 0 00-7.91 0 5.63 5.63 0 000 7.92L12 21l8.37-8.43a5.63 5.63 0 000-7.92z" fill="currentColor" fill-rule="evenodd"></path></svg> 
+                        </span>
+                            
+                            
+                        </div>
+                       
+
+                        <img className="company-logo-review" src={logo} alt="logo"/>
+                        
+                        <div className="review">
+
+                        <p className="review-string">"Great company!"</p>
+                        <p className="star-string"> 5.0 ★★★★★</p>
+                        <br/>
+                        <div className="box"></div>
+                        <span >Recommends</span>
+                        <span className="box"></span>
+                        <span>Positive Outlook</span>
+                        <span className="box"></span>
+                        <span>Approves CEO</span>
+                        <br/>
+                        <p >Worked for the company for 5 years</p>
+                            <div className="pros-cons">
+                                <p style={{fontWeight: "bold"}}>Pros</p>
+                                <p>Good work life balance</p>
+                                <p style={{fontWeight: "bold"}}>Cons</p>
+                                <p>Stagnant growth</p>
+
+                            </div>
+                        </div>
+                        <hr/>
+                    </div>  
+
+                    <div className="review-wrapper">
+
+                        <div className="favourite-review">
+                        <span style={{color:"#7F7F7F", fontSize:"14px", fontWeight:"normal" , marginTop:"0px",marginBottom:"0px",display:"inline-block"}}>
+                            
+                            November 15, 2020
+                            <span style={{marginLeft:"470px"}}>{"                                                                        "}</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M20.37 4.65a5.57 5.57 0 00-7.91 0l-.46.46-.46-.46a5.57 5.57 0 00-7.91 0 5.63 5.63 0 000 7.92L12 21l8.37-8.43a5.63 5.63 0 000-7.92z" fill="currentColor" fill-rule="evenodd"></path></svg> 
+                        </span>
+                            
+                            
+                        </div>
+                       
 
                         <img className="company-logo-review" src={logo} alt="logo"/>
                         
@@ -105,23 +157,6 @@ class EmployerProfile extends Component {
                             </div>
                         </div>
                         <hr/>
-                    </div>
-
-                    <div className="review-wrapper">
-
-                        <p style={{color:"#7F7F7F", fontSize:"14px"}}>November 15, 2020</p>
-                        <svg style={{width: "20px", height: "20px"}} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M20.37 4.65a5.57 5.57 0 00-7.91 0l-.46.46-.46-.46a5.57 5.57 0 00-7.91 0 5.63 5.63 0 000 7.92L12 21l8.37-8.43a5.63 5.63 0 000-7.92z" fill="currentColor" fill-rule="evenodd"></path></svg>
-                        <img className="company-logo-review" src={logo} alt="logo"/>
-
-                        <div className="review">
-
-                        <p className="review-string">"Great company!"</p>
-                        <p className="star-string"> 5.0 ★★★★★</p>
-                        <span>Recommends</span>
-                        <span>Positive Outlook</span>
-                        <span>Approves CEO</span>
-                        </div>
-
                     </div>
                        
                     </div> 

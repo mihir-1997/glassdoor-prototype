@@ -128,7 +128,7 @@ class Navbar extends Component {
                                             <div className="user-icon-dropdown" >
                                                 <Link to="/employer/profile" style={ { textDecoration: 'none' } }><button className="dropdown-item" type="button" value="Profile">Profile</button></Link>
                                                 <Link to="/employer/reviews" style={ { textDecoration: 'none' } }><button className="dropdown-item" type="button" value="Profile">Reviews</button></Link>
-                                                <Link to="/employer/jobs" style={ { textDecoration: 'none' } }><button className="dropdown-item" type="button" value="Profile">Jobs</button></Link>
+                                                <Link to="/employer/jobs" style={ { textDecoration: 'none' } }><button className="dropdown-item" type="button" value="Profile">Jobs</button></Link>    
                                                 <Link to="/employer/salaries" style={ { textDecoration: 'none' } }><button className="dropdown-item" type="button" value="Profile">Salaries</button></Link>
                                                 <Link to="/employer/interviews" style={ { textDecoration: 'none' } }><button className="dropdown-item" type="button" value="Profile">Interviews</button></Link>
                                                 <Link to="/employer/photos" style={ { textDecoration: 'none' } }><button className="dropdown-item" type="button" value="Profile">Photos</button></Link>
