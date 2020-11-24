@@ -49,7 +49,7 @@ router.post( '/loginEmployer', ( req, res ) => {
 } )
 
 //upload profile pic employer
-router.post( '/updateEmployerProfilePicture/:employerID',  checkAuth, ( req, res ) => {
+router.post( '/updateEmployerProfilePicture/:employerID', checkAuth,  ( req, res ) => {
     let upload = req.app.get( 'upload_profileImage' );
     upload( req, res, err => {
         if ( err ) {
@@ -132,7 +132,7 @@ router.get( '/getEmployerById/:employerId', checkAuth,  ( req, res ) => {
 } )
 
 //update student basic info
-router.put( '/updateEmployerBasicInfo/:employerId',checkAuth,  ( req, res ) => {
+router.put( '/updateEmployerBasicInfo/:employerId', checkAuth, ( req, res ) => {
     req.body.params = req.params
     kafka.make_request( 'employer_updateEmployerBasicInfo', req.body, function ( err, results ) {
         if ( err ) {

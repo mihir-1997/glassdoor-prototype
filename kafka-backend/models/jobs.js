@@ -6,12 +6,16 @@ var applicantSchema = new Schema( {
     resume:Object,
     name:String,
     status: String,
-    application_date:String
+    application_date:String,
+    jobDate:String,
+    salary:String,
+    description:String,
+    qualifications:String
 } )
 
 var jobsSchema = new Schema( {
     employerID:String,
-    name:String,
+    employerName:String,
     title:String,
     industry:String,
     country:String,

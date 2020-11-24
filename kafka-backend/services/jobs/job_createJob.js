@@ -8,7 +8,7 @@ function handle_request ( msg, callback ) {
 
     let job = new jobSchema( {
         employerID:req.body.employerID,
-        name:req.body.name,
+        employerName:req.body.employerName,
         title:req.body.title,
         industry:req.body.industry,
         country:req.body.country,

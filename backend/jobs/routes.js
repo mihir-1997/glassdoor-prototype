@@ -65,6 +65,24 @@ router.get( '/getAllJobs',checkAuth, ( req, res ) => {
 
     } );
 } )
+
+//get jobs based on job title
+router.get( '/getJobsBasedOnTitle/:title', checkAuth, ( req, res ) => {
+    console.log("inside getJobsBasedOnTitle")
+    kafka.make_request( 'job_getJobsBasedOnTitle', req.params, function ( err, results ) {
+        if ( err ) {
+            console.log( "Inside err", err );
+            res.status( 404 ).send( "No jobs found" )
+
+
+        } else {
+            console.log( "Inside else", results );
+            res.status( 200 ).send( results )
+
+        }
+
+    } );
+} )
 //sample post
 router.post( '/', ( req, res ) => {
 
