@@ -9,6 +9,13 @@
   height: 100%;
   width: 100%;
 }
+.button {
+  transition-duration: 0.4s;
+}
+
+.button:hover {
+  color: #4b7dbd; /* Green */
+}
 
 .details-wrapper {
   font-weight: bold;
@@ -58,7 +65,7 @@
   height: 100%;
 }
 
-.form-wrapper-side {
+.form-wrapper-jobs {
   position: absolute;
   top: 66.2%;
   right: 12%;

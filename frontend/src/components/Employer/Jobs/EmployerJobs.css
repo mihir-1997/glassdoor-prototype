@@ -22,6 +22,12 @@
   margin-left: 15px;
   display: inline-block;
 }
+.basic-job-info {
+  margin-left: 65px;
+  margin-right: 25px;
+  text-align: justify;
+  text-justify: inter-word;
+}
 
 .job-address {
   margin-left: 65px;
@@ -133,7 +139,7 @@ span {
   height: 100%;
 }
 
-.form-wrapper {
+.form-wrapper-jobs {
   position: absolute;
   top: 66.2%;
   right: 12%;

@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Redirect } from 'react-router'
 
 import './EmployerProfile.css'
+import EditProfile from './EditProfile'
 import cover from '../../../Images/employer.png'
 import logo from '../../../Images/linkedin-logo.png'
 import SEO from '../../SEO/SEO'
@@ -28,6 +29,15 @@ class EmployerProfile extends Component {
         //         }
         //     }
         // }
+    }
+
+    editProfile = ( e ) => {
+        e.preventDefault()
+        //console.log("Popup called")
+        let popup = document.getElementById( "edit-profile-popup" )
+        let modal = document.getElementById( "modal" )
+        modal.appendChild( popup )
+        popup.classList.add( "popup-wrapper-show" )
     }
 
     render() {
@@ -118,7 +128,8 @@ class EmployerProfile extends Component {
                     </div> 
 
                     <div className="form-wrapper-side">
-                    form
+                    <button onClick={this.editProfile} className = "emp-profile-btn btn btn-primary d-flex justify-content-center align-items-center" style={{marginLeft:"20px", marginBottom:"15px", marginTop:"15px", color:"rgb(24, 97, 191)", background:"white",fontWeight:"bold" ,border:"1px solid rgb(24, 97, 191),",  }}>+ Edit Profile</button>
+                    <EditProfile/>
                     </div>     
                 </div>
                 

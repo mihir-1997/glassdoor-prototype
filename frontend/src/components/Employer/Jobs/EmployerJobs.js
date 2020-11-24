@@ -3,6 +3,7 @@ import { Redirect } from 'react-router'
 
 
 import './EmployerJobs.css'
+import AddJob from './AddJob'
 import cover from '../../../Images/employer.png'
 import logo from '../../../Images/linkedin-logo.png'
 import SEO from '../../SEO/SEO'
@@ -30,6 +31,15 @@ class EmployerJobs extends Component {
         //         }
         //     }
         // }
+    }
+
+    addJob = ( e ) => {
+        e.preventDefault()
+        
+        let popup = document.getElementById( "add-job-popup" )
+        let modal = document.getElementById( "modal" )
+        modal.appendChild( popup )
+        popup.classList.add( "popup-wrapper-show" )
     }
 
     render() {
@@ -70,7 +80,7 @@ class EmployerJobs extends Component {
 
                         </div>
                     </div>   
-                    <div className="info-wrapper">
+                    <div className="info-wrapper overflow-auto">
                     
                     <p style={{fontSize:"20px", lineHeight:"27px"}}>Jobs at LinkedIn</p>
 
@@ -89,11 +99,20 @@ class EmployerJobs extends Component {
                         <span className="job-title-employer">Site Reliability Engineer</span>
                         <span style={{display:"inline-block",  marginLeft:"55px"}}>Remote</span>
                         <span style={{display:"inline-block", marginLeft:"65px"}}>Industry: Software Engineering</span> 
-
+                        
                         <div className="basic-job-info">
-                           
+                           <span style={{fontWeight:"bold"}}>Description</span>
+                           <br/>
+                           <span>LinkedIn was built to help professionals achieve more in their careers, and every day millions of people use our products to make connections, discover opportunities and gain insights.</span>
+                            <br/>
+                           <span style={{fontWeight:"bold"}}>Qualifications</span>
+                           <br/>
+                           <span>Experience with Automation, Shell Scripting, Docker, Kubernetes</span>
+
                         </div >
                         <div className="job-address">
+                        <span style={{fontWeight:"bold"}}>Location</span>
+                        <br/>    
                         <span>📍 11th Market St. San Jose, CA, USA, 95112</span>             
                         </div>
                         </div>
@@ -113,11 +132,20 @@ class EmployerJobs extends Component {
                         <span className="job-title-employer">Site Reliability Engineer</span>
                         <span style={{display:"inline-block",  marginLeft:"55px"}}>Remote</span>
                         <span style={{display:"inline-block", marginLeft:"65px"}}>Industry: Software Engineering</span> 
-
+                        
                         <div className="basic-job-info">
-                           
+                           <span style={{fontWeight:"bold"}}>Description</span>
+                           <br/>
+                           <span>LinkedIn was built to help professionals achieve more in their careers, and every day millions of people use our products to make connections, discover opportunities and gain insights.</span>
+                            <br/>
+                           <span style={{fontWeight:"bold"}}>Qualifications</span>
+                           <br/>
+                           <span>Experience with Automation, Shell Scripting, Docker, Kubernetes</span>
+
                         </div >
                         <div className="job-address">
+                        <span style={{fontWeight:"bold"}}>Location</span>
+                        <br/>    
                         <span>📍 11th Market St. San Jose, CA, USA, 95112</span>             
                         </div>
                         </div>
@@ -125,8 +153,9 @@ class EmployerJobs extends Component {
                        
                     </div> 
 
-                    <div className="form-wrapper">
-                    form
+                    <div className="form-wrapper-jobs">
+                    <button onClick={this.addJob} className = "emp-profile-btn btn btn-primary d-flex justify-content-center align-items-center" style={{marginLeft:"75px", marginBottom:"15px", marginTop:"15px", color:"rgb(24, 97, 191)", background:"white",fontWeight:"bold" ,border:"1px solid rgb(24, 97, 191),",  }}>+ Add Job</button>
+                    <AddJob/>
                     </div>     
                 </div>
                 
