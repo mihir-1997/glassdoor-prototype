@@ -85,7 +85,7 @@ router.get( '/getJobsBasedOnTitle/:title', checkAuth, ( req, res ) => {
 } )
 
 //apply for a job
-router.post( '/applyForJob/:jobID',  ( req, res ) => {
+router.put( '/applyForJob/:jobID', checkAuth, ( req, res ) => {
     console.log("Apply for Job");
     req.body.params = req.params
     kafka.make_request( 'job_applyForJob', req.body, function ( err, results ) {
@@ -101,6 +101,75 @@ router.post( '/applyForJob/:jobID',  ( req, res ) => {
     } );
 } )
 
+//get all applications status for students
+router.get( '/getApplicationStatus/:studentID', checkAuth,( req, res ) => {
+    console.log("inside getApplicationStatus")
+    kafka.make_request( 'job_getApplicationStatus', req.params, function ( err, results ) {
+        if ( err ) {
+            console.log( "Inside err", err );
+            res.status( 404 ).send( "No applications found" )
+
+
+        } else {
+            console.log( "Inside else", results );
+            res.status( 200 ).send( results )
+
+        }
+
+    } );
+} )
+
+//withdraw an application
+router.put( '/withdrawApplication/:applicationID',checkAuth, ( req, res ) => {
+    console.log("withdraw application");
+    req.body.params = req.params
+    kafka.make_request( 'job_withdrawApplication', req.body, function ( err, results ) {
+        if ( err ) {
+            console.log( "Inside err", err );
+            res.status( 400 ).send( err )
+        } else {
+            console.log( "Inside else", results );
+            res.status( 200 ).send( results )
+
+        }
+
+    } );
+} )
+
+//get list of applicants for an employer
+router.get( '/getListofApplicants/:jobID', checkAuth,( req, res ) => {
+    console.log("inside getApplicationStatus")
+    kafka.make_request( 'job_getListofApplicants', req.params, function ( err, results ) {
+        if ( err ) {
+            console.log( "Inside err", err );
+            res.status( 404 ).send( "No applications found" )
+
+
+        } else {
+            console.log( "Inside else", results );
+            res.status( 200 ).send( results )
+
+        }
+
+    } );
+} )
+
+//change status of an application
+router.put( '/applicationStatusChange/:applicationID',checkAuth, ( req, res ) => {
+    console.log("applicationStatusChange");
+    req.body.params = req.params
+    kafka.make_request( 'job_applicationStatusChange', req.body, function ( err, results ) {
+        if ( err ) {
+            console.log( "Inside err", err );
+            res.status( 400 ).send( err )
+        } else {
+            console.log( "Inside else", results );
+            res.status( 200 ).send( results )
+
+        }
+
+    } );
+} )
 //sample post
 router.post( '/', ( req, res ) => {
 

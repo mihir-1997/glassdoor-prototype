@@ -5,7 +5,7 @@ function handle_request ( msg, callback ) {
         params: msg
     }
 
-    jobSchema.find( { title: req.params.title } ).sort('employerName').then( doc => {
+    jobSchema.find( { title: new RegExp(req.params.title, 'i')  } ).sort('employerName').then( doc => {
 
         // console.log( "User", doc )
         callback( null, doc )

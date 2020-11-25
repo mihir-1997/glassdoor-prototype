@@ -1,11 +1,11 @@
-const employerSchema = require( '../../models/employers' );
+const jobSchema = require( '../../models/jobs' );
 
 function handle_request ( msg, callback ) {
     let req = {
         params: msg
     }
 
-    employerSchema.findOne( { name: new RegExp(req.params.name, 'i') } ).then( doc => {
+    jobSchema.find( {_id:req.params.jobID } ).select('applicants').then( doc => {
 
         // console.log( "User", doc )
         callback( null, doc )
@@ -13,7 +13,7 @@ function handle_request ( msg, callback ) {
 
 
     } ).catch( error => {
-        console.log( "Error fetching employer by name ", error )
+        console.log( "Error fetching jobs by employer id ", error )
         callback( error, null )
         // res.status( 400 ).send( "Error fetching user about" )
     } )
