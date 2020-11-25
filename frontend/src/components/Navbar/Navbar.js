@@ -90,6 +90,7 @@ class Navbar extends Component {
                                                     <Link to={ { pathname: "/students/profile", section: "job-preference" } } style={ { textDecoration: 'none' } }><button className="dropdown-item" type="button" value="Job Preferences">Job Preferences</button></Link>
                                                     <Link to={ { pathname: "/students/profile", section: "demographics" } } style={ { textDecoration: 'none' } }><button className="dropdown-item" type="button" value="Demographics">Demographics</button></Link>
                                                     <Link to={ { pathname: "/students/contributions" } } style={ { textDecoration: 'none' } }><button className="dropdown-item" type="button" value="Contributions">Contributions</button></Link>
+                                                    <Link to={ { pathname: "/students/applications" } } style={ { textDecoration: 'none' } }><button className="dropdown-item" type="button" value="My Jobs">My Jobs</button></Link>
                                                     <button className="dropdown-item sign-out" type="button" onClick={ this.signOut } value="Sign Out">Sign Out</button>
                                                 </div>
                                             </div>
