@@ -384,4 +384,21 @@ router.put( '/updatePhotoStatus/:employerID', ( req, res ) => {
     } );
 } )
 
+//update photo status
+router.get( '/reviewsPerDay', ( req, res ) => {
+    kafka.make_request( 'analytics_reviewsperday', req.body, function ( err, results ) {
+        if ( err ) {
+            console.log( "Inside err", err );
+            res.status( 404 ).send( "Failed" )
+
+
+        } else {
+            console.log( "Inside else", results );
+            res.status( 200 ).send( results )
+
+        }
+
+    } );
+} )
+
 module.exports = router;

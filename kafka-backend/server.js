@@ -62,6 +62,15 @@ var job_getJobsForEmployer = require( './services/jobs/job_getJobsForEmployer' )
 var job_getAllJobs = require( './services/jobs/job_getAllJobs' )
 var job_getJobsBasedOnTitle = require('./services/jobs/job_getJobsBasedOnTitle')
 var job_applyForJob = require('./services/jobs/job_applyForJob')
+var job_getApplicationStatus = require('./services/jobs/job_getApplicationStatus')
+var job_withdrawApplication = require('./services/jobs/job_withdrawApplication')
+var job_getListofApplicants = require('./services/jobs/job_getListofApplicants')
+var job_applicationStatusChange = require('./services/jobs/job_applicationStatusChange')
+
+
+//analytics
+var analytics_reviewsperday = require( './services/analytics/numberReviewPerDay' )
+
 
 function handleTopicRequest ( topic_name, fname ) {
     //var topic_name = 'root_topic';
@@ -160,3 +169,11 @@ handleTopicRequest( "job_getJobsForEmployer", job_getJobsForEmployer )
 handleTopicRequest( "job_getAllJobs", job_getAllJobs )
 handleTopicRequest("job_getJobsBasedOnTitle",job_getJobsBasedOnTitle)
 handleTopicRequest("job_applyForJob",job_applyForJob)
+handleTopicRequest("job_getApplicationStatus",job_getApplicationStatus)
+handleTopicRequest("job_withdrawApplication",job_withdrawApplication)
+handleTopicRequest("job_getListofApplicants",job_getListofApplicants)
+handleTopicRequest("job_applicationStatusChange",job_applicationStatusChange)
+
+
+//analytics
+handleTopicRequest( "analytics_reviewsperday", analytics_reviewsperday )
