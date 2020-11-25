@@ -18,6 +18,7 @@ var students = require( './students/routes' )
 var employers = require( './employers/routes' )
 var contributions = require( './contributions/routes' )
 var jobs = require( './jobs/routes' )
+var analytics = require( './analytics/routes' )
 
 
 //Session management
@@ -100,6 +101,7 @@ app.set( "upload_officePhotos", upload_officePhotos );
 app.use( '/students', students );
 app.use( '/employers', employers );
 app.use( '/contributions', contributions );
+app.use( '/analytics', analytics );
 app.use( '/jobs', jobs );
 app.use( '/public/images/resumes', express.static( path.join( __dirname, '/public/images/resumes' ) ) );
 app.use( '/public/images/profilepics', express.static( path.join( __dirname, '/public/images/profilepics' ) ) );
