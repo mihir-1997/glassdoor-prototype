@@ -30,6 +30,7 @@ var employer_getEmployerById = require( './services/employers/employer_getEmploy
 var employer_updateEmployerBasicInfo = require( './services/employers/employer_updateEmployerBasicInfo' )
 var employer_updateEmployerProfilePicture = require( './services/employers/employer_updateEmployerProfilePicture' )
 var employer_getAllEmployers = require( './services/employers/employer_getAllEmployers' )
+var employer_updateEmployerLogo = require('./services/employers/employer_updateEmployerLogo')
 //contrubutions
 var contributions_addReview = require( './services/contributions/addReview' )
 var contributions_removeReview = require( './services/contributions/removeReview' )
@@ -66,6 +67,7 @@ var job_getApplicationStatus = require('./services/jobs/job_getApplicationStatus
 var job_withdrawApplication = require('./services/jobs/job_withdrawApplication')
 var job_getListofApplicants = require('./services/jobs/job_getListofApplicants')
 var job_applicationStatusChange = require('./services/jobs/job_applicationStatusChange')
+var job_getJobsReport = require('./services/jobs/job_getJobsReport')
 
 
 //analytics
@@ -135,6 +137,7 @@ handleTopicRequest( "employer_getEmployerById", employer_getEmployerById )
 handleTopicRequest( "employer_updateEmployerBasicInfo", employer_updateEmployerBasicInfo )
 handleTopicRequest( "employer_updateEmployerProfilePicture", employer_updateEmployerProfilePicture )
 handleTopicRequest( "employer_getAllEmployers", employer_getAllEmployers )
+handleTopicRequest("employer_updateEmployerLogo",employer_updateEmployerLogo)
 //contributions
 //reviews
 handleTopicRequest( "contributions_addReview", contributions_addReview )
@@ -173,7 +176,7 @@ handleTopicRequest("job_getApplicationStatus",job_getApplicationStatus)
 handleTopicRequest("job_withdrawApplication",job_withdrawApplication)
 handleTopicRequest("job_getListofApplicants",job_getListofApplicants)
 handleTopicRequest("job_applicationStatusChange",job_applicationStatusChange)
-
+handleTopicRequest("job_getJobsReport",job_getJobsReport)
 
 //analytics
 handleTopicRequest( "analytics_reviewsperday", analytics_reviewsperday )

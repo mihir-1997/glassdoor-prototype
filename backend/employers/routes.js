@@ -76,6 +76,34 @@ router.post( '/updateEmployerProfilePicture/:employerID', checkAuth,  ( req, res
     } );
 } );
 
+//upload logo image of  employer
+router.post( '/updateEmployerLogo/:employerID',   checkAuth, ( req, res ) => {
+    let upload = req.app.get( 'upload_profileImage' );
+    upload( req, res, err => {
+        if ( err ) {
+            console.log( "Error uploading logo image", err );
+            res.status( 400 ).end( 'Issue with uploading' )
+        } else {
+            console.log( "Inside upload", req.file, req.body );
+            req.body.file = req.file
+            req.body.params = req.params
+            kafka.make_request( 'employer_updateEmployerLogo', req.body, function ( err, results ) {
+                if ( err ) {
+                    console.log( "Inside err" );
+                    res.status( 400 ).send( "Error uploading logo", err )
+                } else {
+                    // console.log( "Inside else", results );
+                    res.status( 200 ).send( JSON.stringify( results ) )
+
+                }
+
+            } );
+
+
+        }
+    } );
+} );
+
 //get employer by name
 router.get( '/getEmployerByName/:name', checkAuth, ( req, res ) => {
     console.log("inside getEmployerByName")
