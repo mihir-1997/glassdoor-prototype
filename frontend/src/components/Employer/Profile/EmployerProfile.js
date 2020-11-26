@@ -139,10 +139,7 @@ class EmployerProfile extends Component {
             redirectVar = <Redirect to="/login" />
             return redirectVar
         }
-        // let redirectToProfile = null
-        // if ( this.state.updateProfileButton ) {
-        //     redirectToProfile = <Redirect to="/students/profile" />
-        // }
+
         return (
             <div className="employer-profile-wrapper">
                 {redirectVar}
@@ -157,9 +154,6 @@ class EmployerProfile extends Component {
                             </div>
                         <div className="details">
                             <h3 style={{marginTop:"10px"}}> {this.state.name } </h3>
-                            {/* <h3>{this.state.name}</h3> */}
-                            {/* <h6 color="#404040">Part of <a href="microsoft.com">Microsoft</a></h6> */}
-                            {/* <h6 color="#404040">Part of <a href="microsoft.com">{this.state.parentCompany}</a></h6> */}
                             <br/>
                             <br/>
                         </div>

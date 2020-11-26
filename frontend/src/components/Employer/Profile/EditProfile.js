@@ -56,6 +56,7 @@ class EditProfile extends Component {
         if(data){
             let id = localStorage.getItem( "id" )
             if ( id ){
+                axios.defaults.headers.common[ 'authorization' ] = localStorage.getItem( 'token' )
                 axios.put(BACKEND_URL + ":" + BACKEND_PORT + "/employers/updateEmployerBasicInfo/"+id , data)
                 .then((res)=>{
                         if(res.status === 200)
