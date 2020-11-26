@@ -51,7 +51,8 @@ router.get( '/getReviewsbyEmployer/:employerName', ( req, res ) => {
     //         console.log( "from redis" )
     //         res.status( 200 ).send( JSON.parse( data ) )
     //     } else {
-    kafka.make_request( 'contributions_getReviewByEmployer', req.params, function ( err, results ) {
+    req.body.params = req.params
+    kafka.make_request( 'contributions_getReviewByEmployer', req.body, function ( err, results ) {
         if ( err ) {
             console.log( "Inside err", err );
             res.status( 404 ).send( "Failed" )
@@ -222,9 +223,9 @@ router.post( '/uploadPhotos/:employerID', checkAuth, ( req, res ) => {
 } );
 
 //get photos by employer
-router.get( '/getPhotosByEmployer/:employerID', ( req, res ) => {
-
-    kafka.make_request( 'contributions_getPhotosByEmployer', req.params, function ( err, results ) {
+router.get( '/getPhotosByEmployer/:employerName', ( req, res ) => {
+    req.body.params = req.params
+    kafka.make_request( 'contributions_getPhotosByEmployer', req.body, function ( err, results ) {
         if ( err ) {
             console.log( "Inside err", err );
             res.status( 404 ).send( "Failed" )
@@ -278,8 +279,8 @@ router.post( '/addSalary', ( req, res ) => {
 
 //get salary by employer
 router.get( '/getSalariesByEmployer/:employerName', ( req, res ) => {
-
-    kafka.make_request( 'contributions_getSalariesByEmployer', req.params, function ( err, results ) {
+    req.body.params = req.params
+    kafka.make_request( 'contributions_getSalariesByEmployer', req.body, function ( err, results ) {
         if ( err ) {
             console.log( "Inside err", err );
             res.status( 404 ).send( "Failed" )
@@ -332,8 +333,8 @@ router.post( '/addInterview', ( req, res ) => {
 
 //get interviews by employer
 router.get( '/getInterviewsByEmployer/:employerName', ( req, res ) => {
-
-    kafka.make_request( 'contributions_getInterviewsByEmployer', req.params, function ( err, results ) {
+    req.body.params = req.params
+    kafka.make_request( 'contributions_getInterviewsByEmployer', req.body, function ( err, results ) {
         if ( err ) {
             console.log( "Inside err", err );
             res.status( 404 ).send( "Failed" )

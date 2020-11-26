@@ -3,15 +3,29 @@ const contributionsSchema = require( '../../models/contributions' );
 
 function handle_request ( msg, callback ) {
     let req = {
-        params: msg
+        body: msg
     }
+    if ( req.body.firstTime ) {
+        contributionsSchema.count( { $and: [ { "employerName": req.body.params.employerName }, { "type": "photos" } ] } ).then( photos => {
+            console.log( photos.length )
+            contributionsSchema.find( { $and: [ { "employerName": req.body.params.employerName }, { "type": "photos" } ] } ).skip( 0 ).limit( req.body.pageSize ).then( doc => {
 
-    contributionsSchema.find( { $and: [ { "employerID": req.params.employerID }, { "type": "photos" } ] } ).then( doc => {
+                callback( null, JSON.stringify( { totalcount: photos.length, photos: doc } ) )
+            } ).catch( error => {
+                callback( error, null )
+            } )
 
-        callback( null, JSON.stringify( doc ) )
-    } ).catch( error => {
-        callback( error, null )
-    } )
+        } ).catch( error => {
+            callback( error, null )
+        } )
+    } else {
+        contributionsSchema.find( { $and: [ { "employerName": req.body.params.employerName }, { "type": "photos" } ] } ).skip( ( req.body.pageNumber - 1 ) * req.body.pageSize ).limit( req.body.pageSize ).then( doc => {
+
+            callback( null, JSON.stringify( { totalcount: {}, photos: doc } ) )
+        } ).catch( error => {
+            callback( error, null )
+        } )
+    }
 
 
 
