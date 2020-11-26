@@ -14,7 +14,7 @@ router.get( '/', ( req, res ) => {
 } )
 
 //Create Jobs
-router.post( '/createJob', ( req, res ) => {
+router.post( '/createJob',  checkAuth,( req, res ) => {
     console.log("register Employer");
     kafka.make_request( 'job_createJob', req.body, function ( err, results ) {
         if ( err ) {
@@ -162,6 +162,24 @@ router.put( '/applicationStatusChange/:applicationID',checkAuth, ( req, res ) =>
         if ( err ) {
             console.log( "Inside err", err );
             res.status( 400 ).send( err )
+        } else {
+            console.log( "Inside else", results );
+            res.status( 200 ).send( results )
+
+        }
+
+    } );
+} )
+
+//get report of jobs for a employer
+router.get( '/getJobsReport/:employerID', checkAuth,( req, res ) => {
+    console.log("inside getJobsReport")
+    kafka.make_request( 'job_getJobsReport', req.params, function ( err, results ) {
+        if ( err ) {
+            console.log( "Inside err", err );
+            res.status( 404 ).send( "No stats found" )
+
+
         } else {
             console.log( "Inside else", results );
             res.status( 200 ).send( results )

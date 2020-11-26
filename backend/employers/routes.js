@@ -77,7 +77,7 @@ router.post( '/updateEmployerProfilePicture/:employerID', checkAuth,  ( req, res
 } );
 
 //upload logo image of  employer
-router.post( '/updateEmployerLogo/:employerID',   ( req, res ) => {
+router.post( '/updateEmployerLogo/:employerID',   checkAuth, ( req, res ) => {
     let upload = req.app.get( 'upload_profileImage' );
     upload( req, res, err => {
         if ( err ) {
