@@ -3,7 +3,7 @@ const contributionsSchema = require( '../../models/contributions' );
 
 function handle_request ( msg, callback ) {
     let req = {
-        params: msg
+        body: msg
     }
     if ( req.body.firstTime ) {
         contributionsSchema.find( { $and: [ { "employerName": req.body.params.employerName }, { "type": "interview" } ] } ).then( doc => {

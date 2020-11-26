@@ -6,11 +6,11 @@ function handle_request ( msg, callback ) {
         body: msg
     }
     if ( req.body.firstTime ) {
-        contributionsSchema.count( { $and: [ { "employerName": req.body.params.employerName }, { "type": "photos" } ] } ).then( photos => {
-            console.log( photos.length )
+        contributionsSchema.count( { $and: [ { "employerName": req.body.params.employerName }, { "type": "photos" } ] } ).then( ph => {
+            console.log( ph )
             contributionsSchema.find( { $and: [ { "employerName": req.body.params.employerName }, { "type": "photos" } ] } ).skip( 0 ).limit( req.body.pageSize ).then( doc => {
 
-                callback( null, JSON.stringify( { totalcount: photos.length, photos: doc } ) )
+                callback( null, JSON.stringify( { totalcount: ph, photos: doc } ) )
             } ).catch( error => {
                 callback( error, null )
             } )
