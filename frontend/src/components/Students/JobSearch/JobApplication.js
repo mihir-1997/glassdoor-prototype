@@ -1,8 +1,11 @@
 import React, { Component } from 'react'
+import axios from 'axios'
 
 import Header from '../../Popup/Header'
 import Footer from '../../Popup/Footer'
 import SEO from '../../SEO/SEO'
+
+import { BACKEND_URL, BACKEND_PORT } from '../../Config/Config'
 
 class JobApplication extends Component {
 
@@ -11,13 +14,10 @@ class JobApplication extends Component {
         this.state = {
             firstName: "",
             lastName: "",
-            email: "",
-            resume: "",
-            phoneNo: "",
-            address: "",
-            city: "",
-            state: "",
-            postal: ""
+            resumes: [],
+            selectedResume: "",
+            coverletter: "",
+            employerName: this.props.employerName
         }
     }
 
@@ -25,11 +25,40 @@ class JobApplication extends Component {
         SEO( {
             title: "Jobs"
         } )
+        let id = localStorage.getItem( "id" )
+        if ( id ) {
+            axios.defaults.withCredentials = true
+            axios.defaults.headers.common[ 'authorization' ] = localStorage.getItem( 'token' )
+            axios.get( BACKEND_URL + ":" + BACKEND_PORT + "/students/getUser/" + id )
+                .then( ( res ) => {
+                    if ( res.status === 200 ) {
+                        this.setState( {
+                            resumes: res.data.resume
+                        } )
+                    }
+                } )
+                .catch( ( err ) => {
+                    console.log( err )
+                    if ( err.response ) {
+                        if ( err.response.status === 404 ) {
+                            console.log( err.response.message )
+                        } else if ( err.response.status === 400 ) {
+                            console.log( err.response.message )
+                        }
+                    }
+                } )
+        }
     }
 
     onChange = ( e ) => {
         this.setState( {
             [ e.target.name ]: e.target.value
+        } )
+    }
+
+    changeCoverLetter = ( e ) => {
+        this.setState( {
+            [ e.target.name ]: e.target.files[ 0 ]
         } )
     }
 
@@ -47,8 +76,7 @@ class JobApplication extends Component {
             <div>
                 <div id="job-application-popup" className="popup-container">
                     <div className="popup-wrapper">
-                        <Header closePopup={ this.closePopup } headerText="Intel" />
-                        {/* <Header closePopup={ this.closePopup } headerText={job.company_name} /> */ }
+                        <Header closePopup={ this.closePopup } headerText={ this.state.employerName } />
                         <div className="popup-body">
                             <form className="popup-form">
                                 <div className="form-row">
@@ -65,44 +93,21 @@ class JobApplication extends Component {
                                 </div>
                                 <div className="form-row">
                                     <div className="form-group col-md">
-                                        <label htmlFor="JobStudentEmail">Email</label>
-                                        <input type="text" className="form-control" id="JobStudentEmail" placeholder="Email" name="email" onChange={ this.onChange } />
-                                    </div>
-                                </div>
-                                <div className="form-row">
-                                    <div className="form-group col-md">
                                         <label htmlFor="jobStudentResume">Select Resume</label>
-                                        <input type="text" className="form-control" id="jobStudentResume" placeholder="Select Resume" name="resume" onChange={ this.onChange } />
+                                        <select id="jobStudentResume" className="form-control" name="selectedResume" onChange={ this.onChange }>
+                                            <option value="">Select Resume</option>
+                                            { this.state.resumes ?
+                                                this.state.resumes.map( ( resume, index ) => {
+                                                    return <option value={ resume.resumeName }>{ resume.resumeName }</option>
+                                                } )
+                                                : null }
+                                        </select>
                                     </div>
                                 </div>
                                 <div className="form-row">
                                     <div className="form-group col-md">
-                                        <label htmlFor="jobStudentPhone">Phone No</label>
-                                        <input type="text" className="form-control" id="jobStudentPhone" placeholder="Phone No" name="phoneNo" onChange={ this.onChange } />
-                                    </div>
-                                </div>
-                                <div className="form-row">
-                                    <div className="form-group col-md">
-                                        <label htmlFor="jobStudentAddress">Address</label>
-                                        <input type="text" className="form-control" id="jobStudentAddress" placeholder="Address" name="address" onChange={ this.onChange } />
-                                    </div>
-                                </div>
-                                <div className="form-row">
-                                    <div className="form-group col-md">
-                                        <label htmlFor="jobStudentCity">City</label>
-                                        <input type="text" className="form-control" id="jobStudentCity" placeholder="City" name="city" onChange={ this.onChange } />
-                                    </div>
-                                </div>
-                                <div className="form-row">
-                                    <div className="form-group col-md">
-                                        <label htmlFor="jobStudentState">State</label>
-                                        <input type="text" className="form-control" id="jobStudentState" placeholder="State" name="state" onChange={ this.onChange } />
-                                    </div>
-                                </div>
-                                <div className="form-row">
-                                    <div className="form-group col-md">
-                                        <label htmlFor="jobStudentPostal">Postal</label>
-                                        <input type="text" className="form-control" id="jobStudentPostal" placeholder="Postal" name="postal" onChange={ this.onChange } />
+                                        <label htmlFor="jobStudentCoverLetter">Select Cover Letter</label>
+                                        <input type="file" className="form-control" accept="application/pdf" id="jobStudentCoverLetter" placeholder="Select Cover Letter" name="coverletter" onChange={ this.changeCoverLetter } />
                                     </div>
                                 </div>
                             </form>

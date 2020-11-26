@@ -10,13 +10,13 @@ class AddReview extends Component {
     constructor( props ) {
         super( props )
         this.state = {
-            rating: "",
-            isPositive: "",
+            rating: 0,
+            isPositive: false,
             employerName: "",
             employeeStatus: "",
-            recommended: "",
+            recommended: false,
             headline: "",
-            approveCEO: "",
+            approveCEO: false,
             pros: "",
             cons: "",
             description: "",
@@ -52,8 +52,26 @@ class AddReview extends Component {
     }
 
     onChange = ( e ) => {
+        if ( e.target.name === "rating" ) {
+            if ( parseInt( e.target.value ) < 0 || parseInt( e.target.value ) > 5 ) {
+                this.setState( {
+                    error: "Ratings must be between 0 and 5"
+                } )
+                return
+            }
+            this.setState( {
+                [ e.target.name ]: parseInt( e.target.value )
+            } )
+        } else {
+            this.setState( {
+                [ e.target.name ]: e.target.value
+            } )
+        }
+    }
+
+    radioChange = ( e ) => {
         this.setState( {
-            [ e.target.name ]: e.target.value
+            [ e.target.name ]: !this.state[ e.target.name ]
         } )
     }
 
@@ -65,7 +83,7 @@ class AddReview extends Component {
 
     addReview = ( e ) => {
         e.preventDefault()
-        if ( this.state.employerName && this.state.rating && this.state.headline && this.state.pros && this.state.cons && this.state.isPositive && this.state.description ) {
+        if ( this.state.employerName && this.state.rating && this.state.headline && this.state.pros && this.state.cons && this.state.isPositive && this.state.recommended && this.state.approveCEO && this.state.description && !this.state.error ) {
             let id = localStorage.getItem( "id" )
             if ( id ) {
                 let review = {
@@ -126,7 +144,7 @@ class AddReview extends Component {
                     <div className="form-group row">
                         <label htmlFor="rating" className="col-4">Overall Ratings*</label>
                         <div className="col-8">
-                            <input type="number" name="rating" className="form-control" id="rating" placeholder="Ratings" min="1" max="5" onChange={ this.onChange } />
+                            <input type="number" name="rating" className="form-control" id="rating" placeholder="Ratings" min={ 0 } max={ 5 } onChange={ this.onChange } />
                         </div>
                     </div>
                     <div className="form-group row">
@@ -160,22 +178,22 @@ class AddReview extends Component {
                     <div className="form-group row">
                         <label htmlFor="isPositive" className="col-4">How's experience?*</label>
                         <div className="col-8">
-                            <input type="radio" name="isPositive" value={ true } onChange={ this.onChange } />&nbsp;Positive
-                            &nbsp;&nbsp;&nbsp;<input type="radio" name="isPositive" value={ false } onChange={ this.onChange } />&nbsp;Negative
+                            <input type="radio" name="isPositive" value={ true } onChange={ this.radioChange } checked={ this.state.isPositive === true } />&nbsp;Positive
+                            &nbsp;&nbsp;&nbsp;<input type="radio" name="isPositive" value={ false } onChange={ this.radioChange } checked={ this.state.isPositive === false } />&nbsp;Negative
                         </div>
                     </div>
                     <div className="form-group row">
-                        <label htmlFor="recommended" className="col-4">Do you recommend?</label>
+                        <label htmlFor="recommended" className="col-4">Do you recommend?*</label>
                         <div className="col-8">
-                            <input type="radio" name="recommended" value={ true } onChange={ this.onChange } />&nbsp;Yes
-                            &nbsp;&nbsp;&nbsp;<input type="radio" name="recommended" value={ false } onChange={ this.onChange } />&nbsp;No
+                            <input type="radio" name="recommended" value={ true } onChange={ this.radioChange } checked={ this.state.recommended === true } />&nbsp;Yes
+                            &nbsp;&nbsp;&nbsp;<input type="radio" name="recommended" value={ false } onChange={ this.radioChange } checked={ this.state.recommended === false } />&nbsp;No
                         </div>
                     </div>
                     <div className="form-group row">
-                        <label htmlFor="approveCEO" className="col-4">Do you approve CEO?</label>
+                        <label htmlFor="approveCEO" className="col-4">Do you approve CEO?*</label>
                         <div className="col-8">
-                            <input type="radio" name="approveCEO" value={ true } onChange={ this.onChange } />&nbsp;Yes
-                            &nbsp;&nbsp;&nbsp;<input type="radio" name="approveCEO" value={ false } onChange={ this.onChange } />&nbsp;No
+                            <input type="radio" name="approveCEO" value={ true } onChange={ this.radioChange } checked={ this.state.approveCEO === true } />&nbsp;Yes
+                            &nbsp;&nbsp;&nbsp;<input type="radio" name="approveCEO" value={ false } onChange={ this.radioChange } checked={ this.state.approveCEO === false } />&nbsp;No
                         </div>
                     </div>
                     <div className="form-group row">

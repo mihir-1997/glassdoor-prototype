@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-// import { Redirect } from 'react-router'
+import { Redirect } from 'react-router'
 import { Link } from 'react-router-dom'
 
 import Glassdoor_logo from '../../Images/glassdoor-logo.svg'
@@ -10,8 +10,26 @@ class Navbar extends Component {
     constructor( props ) {
         super( props )
         this.state = {
+            searchTerm: "",
+            location: "",
+            redirectToJobs: false,
             dropDownValue: "Jobs"
         }
+    }
+
+    componentDidMount () {
+        this.setState( {
+            searchTerm: "",
+            location: "",
+            redirectToJobs: false,
+            dropDownValue: "Jobs"
+        } )
+    }
+
+    onChange = ( e ) => {
+        this.setState( {
+            [ e.target.name ]: e.target.value
+        } )
     }
 
     dropDownClick = ( e ) => {
@@ -19,6 +37,15 @@ class Navbar extends Component {
         this.setState( {
             dropDownValue: e.target.value
         } )
+    }
+
+    searchJobs = ( e ) => {
+        e.preventDefault()
+        if ( this.state.searchTerm ) {
+            this.setState( {
+                redirectToJobs: !this.state.redirectToJobs
+            } )
+        }
     }
 
     signOut = ( e ) => {
@@ -32,8 +59,22 @@ class Navbar extends Component {
     }
 
     render () {
+        let redirect = null
+        if ( this.state.redirectToJobs ) {
+            this.setState( {
+                searchTerm: "",
+                location: "",
+                redirectToJobs: false,
+                dropDownValue: "Jobs"
+            } )
+            redirect = <Redirect to={ {
+                pathname: "/students/jobs",
+                state: { searchTerm: this.state.searchTerm }
+            } } />
+        }
         return (
             <div className="navbar-container-wrapper">
+                { redirect }
                 <div className="manual-container">
                     <nav className="navbar navbar-expand-lg">
                         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
@@ -48,7 +89,7 @@ class Navbar extends Component {
                                 <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
                                     <li className="nav-item navbar-search-wrapper">
                                         <svg viewBox="0 0 15 15" fill="none" className="navbar-search-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18"><path d="M14.5 14.5l-4-4m-4 2a6 6 0 110-12 6 6 0 010 12z" stroke="#056b27"></path></svg>
-                                        <input type="text" className="form-control navbar-search" name="search" onChange={ this.onChange } placeholder="Job Title, Keywords, or Company" />
+                                        <input type="text" name="searchTerm" className="form-control navbar-search" onChange={ this.onChange } value={ this.state.searchTerm } placeholder="Job Title, Keywords, or Company" />
                                     </li>
                                     <li className="navbar-item">
                                         <div className="dropdown">
@@ -64,10 +105,10 @@ class Navbar extends Component {
                                         </div>
                                     </li>
                                     <li className="nav-item navbar-search-location">
-                                        <input type="text" className="form-control" name="search" onChange={ this.onChange } placeholder="Location" />
+                                        <input type="text" name="location" className="form-control" onChange={ this.onChange } placeholder="Location" />
                                     </li>
                                     <li className="nav-item">
-                                        <button type="button" className="green-button">Search</button>
+                                        <button type="button" className="green-button" onClick={ this.searchJobs }>Search</button>
                                     </li>
                                     <li className="nav-item">
                                         <div className="notification-icon">

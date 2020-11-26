@@ -1,0 +1,11 @@
+.recharts-responsive-container {
+    display: inline-block;
+}
+
+.chart-rectangles {
+    display: inline-block;
+}
+
+.small-font {
+    font-size: small;
+}
