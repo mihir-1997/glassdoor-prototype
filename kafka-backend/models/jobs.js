@@ -25,6 +25,7 @@ var jobsSchema = new Schema( {
     salary:String,
     description:String,
     qualifications:String,
+    responsibilities:String,
     date:Date,
     applicants:[applicantSchema]
 }

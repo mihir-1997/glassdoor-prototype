@@ -14,7 +14,7 @@ router.get( '/', ( req, res ) => {
 } )
 
 //Create Jobs
-router.post( '/createJob', checkAuth, ( req, res ) => {
+router.post( '/createJob', ( req, res ) => {
     console.log("register Employer");
     kafka.make_request( 'job_createJob', req.body, function ( err, results ) {
         if ( err ) {

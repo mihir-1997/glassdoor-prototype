@@ -17,6 +17,10 @@ function handle_request ( msg, callback ) {
         city:req.body.city,
         state:req.body.state,
         zip:req.body.zip,
+        salary:req.body.salary,
+        description:req.body.description,
+        qualifications:req.body.qualifications,
+        responsibilities:req.body.responsibilities,
         date:Date.now(),
         applicants:[]
     } )
