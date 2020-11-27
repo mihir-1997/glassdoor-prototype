@@ -22,8 +22,28 @@ auth();
 // } );
 
 
+//students login
+router.post( '/loginAdmin', ( req, res ) => {
+    kafka.make_request( 'admin_login', req.body, function ( err, results ) {
+        if ( err ) {
+            console.log( "Inside err", err );
+            if ( err === "401" ) {
+                res.status( 401 ).send( "Wrong Credentials" )
+            } else {
+                res.status( 404 ).send( "No user found" )
+            }
+
+        } else {
+            console.log( "Inside else", results );
+            res.status( 200 ).send( results )
+
+        }
+
+    } );
+} )
+
 //reviews stats
-router.get( '/reviewsPerDay', ( req, res ) => {
+router.get( '/reviewsPerDay', checkAuth, ( req, res ) => {
     kafka.make_request( 'analytics_reviewsperday', req.body, function ( err, results ) {
         if ( err ) {
             console.log( "Inside err", err );

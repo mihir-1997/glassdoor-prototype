@@ -30,7 +30,7 @@ var employer_getEmployerById = require( './services/employers/employer_getEmploy
 var employer_updateEmployerBasicInfo = require( './services/employers/employer_updateEmployerBasicInfo' )
 var employer_updateEmployerProfilePicture = require( './services/employers/employer_updateEmployerProfilePicture' )
 var employer_getAllEmployers = require( './services/employers/employer_getAllEmployers' )
-var employer_updateEmployerLogo = require('./services/employers/employer_updateEmployerLogo')
+var employer_updateEmployerLogo = require( './services/employers/employer_updateEmployerLogo' )
 //contrubutions
 var contributions_addReview = require( './services/contributions/addReview' )
 var contributions_removeReview = require( './services/contributions/removeReview' )
@@ -61,16 +61,17 @@ var contributions_getInterviewsByStudent = require( './services/contributions/ge
 var job_createJob = require( './services/jobs/job_createJob' )
 var job_getJobsForEmployer = require( './services/jobs/job_getJobsForEmployer' )
 var job_getAllJobs = require( './services/jobs/job_getAllJobs' )
-var job_getJobsBasedOnTitle = require('./services/jobs/job_getJobsBasedOnTitle')
-var job_applyForJob = require('./services/jobs/job_applyForJob')
-var job_getApplicationStatus = require('./services/jobs/job_getApplicationStatus')
-var job_withdrawApplication = require('./services/jobs/job_withdrawApplication')
-var job_getListofApplicants = require('./services/jobs/job_getListofApplicants')
-var job_applicationStatusChange = require('./services/jobs/job_applicationStatusChange')
-var job_getJobsReport = require('./services/jobs/job_getJobsReport')
+var job_getJobsBasedOnTitle = require( './services/jobs/job_getJobsBasedOnTitle' )
+var job_applyForJob = require( './services/jobs/job_applyForJob' )
+var job_getApplicationStatus = require( './services/jobs/job_getApplicationStatus' )
+var job_withdrawApplication = require( './services/jobs/job_withdrawApplication' )
+var job_getListofApplicants = require( './services/jobs/job_getListofApplicants' )
+var job_applicationStatusChange = require( './services/jobs/job_applicationStatusChange' )
+var job_getJobsReport = require( './services/jobs/job_getJobsReport' )
 
 
 //analytics
+var admin_login = require( './services/analytics/adminLogin' )
 var analytics_reviewsperday = require( './services/analytics/numberReviewPerDay' )
 
 
@@ -137,7 +138,7 @@ handleTopicRequest( "employer_getEmployerById", employer_getEmployerById )
 handleTopicRequest( "employer_updateEmployerBasicInfo", employer_updateEmployerBasicInfo )
 handleTopicRequest( "employer_updateEmployerProfilePicture", employer_updateEmployerProfilePicture )
 handleTopicRequest( "employer_getAllEmployers", employer_getAllEmployers )
-handleTopicRequest("employer_updateEmployerLogo",employer_updateEmployerLogo)
+handleTopicRequest( "employer_updateEmployerLogo", employer_updateEmployerLogo )
 //contributions
 //reviews
 handleTopicRequest( "contributions_addReview", contributions_addReview )
@@ -170,13 +171,14 @@ handleTopicRequest( "contributions_getInterviewsByStudent", contributions_getInt
 handleTopicRequest( "job_createJob", job_createJob )
 handleTopicRequest( "job_getJobsForEmployer", job_getJobsForEmployer )
 handleTopicRequest( "job_getAllJobs", job_getAllJobs )
-handleTopicRequest("job_getJobsBasedOnTitle",job_getJobsBasedOnTitle)
-handleTopicRequest("job_applyForJob",job_applyForJob)
-handleTopicRequest("job_getApplicationStatus",job_getApplicationStatus)
-handleTopicRequest("job_withdrawApplication",job_withdrawApplication)
-handleTopicRequest("job_getListofApplicants",job_getListofApplicants)
-handleTopicRequest("job_applicationStatusChange",job_applicationStatusChange)
-handleTopicRequest("job_getJobsReport",job_getJobsReport)
+handleTopicRequest( "job_getJobsBasedOnTitle", job_getJobsBasedOnTitle )
+handleTopicRequest( "job_applyForJob", job_applyForJob )
+handleTopicRequest( "job_getApplicationStatus", job_getApplicationStatus )
+handleTopicRequest( "job_withdrawApplication", job_withdrawApplication )
+handleTopicRequest( "job_getListofApplicants", job_getListofApplicants )
+handleTopicRequest( "job_applicationStatusChange", job_applicationStatusChange )
+handleTopicRequest( "job_getJobsReport", job_getJobsReport )
 
 //analytics
+handleTopicRequest( "admin_login", admin_login )
 handleTopicRequest( "analytics_reviewsperday", analytics_reviewsperday )

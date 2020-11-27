@@ -45,9 +45,25 @@ function auth () {
                 }
 
             } );
+        } else if ( jwt_payload.type == "admin" ) {
+            var sql = `select * from admin where userName="${ jwt_payload.userName }"`;
+            connection.query( sql, ( err, results ) => {
+                if ( err ) {
+                    console.log( "Error in passport" + err )
+                    return callback( err, false );
+                } else {
+                    if ( results ) {
+                        callback( null, results );
+                    } else {
+                        callback( null, false );
+                    }
+                }
+
+            } );
         }
     } ) );
 };
+
 
 
 exports.auth = auth;
