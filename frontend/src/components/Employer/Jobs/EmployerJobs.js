@@ -73,7 +73,7 @@ class EmployerJobs extends Component {
         return (
             <IndividualJob
                key={Math.random()}
-              data={eachJob}
+               data={eachJob}
             ></IndividualJob>
           );
         })
@@ -107,7 +107,7 @@ class EmployerJobs extends Component {
 
                         </div>
                     </div>   
-                    <div className="info-wrapper overflow-auto">
+                    <div className="info-wrapper overflow-auto" style={{ height:"480px"}}>
                     
                     <p style={{fontSize:"20px", lineHeight:"27px"}}>Jobs at {localStorage.getItem("name")}</p>
 

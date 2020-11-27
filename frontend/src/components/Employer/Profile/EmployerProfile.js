@@ -4,8 +4,8 @@ import axios from "axios";
 
 import './EmployerProfile.css'
 import EditProfile from './EditProfile'
-import cover from '../../../Images/employer.png'
-import logo from '../../../Images/linkedin-logo.png'
+// import cover from '../../../Images/employer.png'
+//import logo from '../../../Images/linkedin-logo.png'
 import SEO from '../../SEO/SEO'
 
 
@@ -23,6 +23,7 @@ class EmployerProfile extends Component {
             email:"",
             address:"",
             profileImageUrl:"",
+            logoImageUrl:"",
             website:"",
             companySize:"",
             companyType:"",
@@ -70,6 +71,42 @@ class EmployerProfile extends Component {
         }
     }
 
+    changeLogoPicture = (e) =>{
+        e.preventDefault()
+        let id = localStorage.getItem( "id" )
+        if ( id ) {
+            const formData = new FormData()
+            formData.append( 'myImage', e.target.files[ 0 ] )
+            const config = {
+                headers: {
+                    'content-type': 'multipart/form-data'
+                }
+            }
+            console.log("logo called")
+            axios.defaults.withCredentials = true
+            axios.defaults.headers.common[ 'authorization' ] = localStorage.getItem( 'token' )
+            axios.post( BACKEND_URL + ":" + BACKEND_PORT + "/employers/updateEmployerLogo/" + id, formData, config )
+                .then( ( res ) => {
+                    console.log(res)
+                    if ( res.status === 200 ) {
+                        this.setState( {
+                            logoImageUrl: res.data.logoImageUrl
+                        } )
+                        console.log( res.data )
+                    }
+                } )
+                .catch( ( err ) => {
+                    if ( err.response ) {
+                        if ( err.response.status === 404 ) {
+                            console.log( err.response.message )
+                        } else if ( err.response.status === 400 ) {
+                            console.log( err.response.message +"")
+                        }
+                    }
+                } )
+        }
+    }
+
     clickProfileButton = (e) =>{
         e.preventDefault();
         console.log("button clicked")
@@ -78,6 +115,15 @@ class EmployerProfile extends Component {
         console.log(inp)
         inp.click()
         
+    }
+
+    clickLogoButton = (e) =>{
+        e.preventDefault();
+        console.log("logo button clicked")
+        
+        let inp = document.getElementById('employer-logo-picture')
+        console.log(inp)
+        inp.click()
     }
 
     componentDidMount () {
@@ -98,6 +144,7 @@ class EmployerProfile extends Component {
                             email:  res.data.email,
                             address: res.data.address,
                             profileImageUrl: res.data.profileImageUrl,
+                            logoImageUrl: res.data.logoImageUrl,
                             website: res.data.website,
                             companySize: res.data.companySize,
                             companyType:res.data.companyType,
@@ -150,7 +197,7 @@ class EmployerProfile extends Component {
                     </div>
                     <div className="details-wrapper">
                             <div className="employer-company-logo">
-                                <img className="logo" src={logo} alt="logo"/>
+                            <img className="logo" src={  BACKEND_URL + ":" + BACKEND_PORT + "/public/images/profilepics/" + this.state.logoImageUrl} alt="logo"/>
                             </div>
                         <div className="details">
                             <h3 style={{marginTop:"10px"}}> {this.state.name } </h3>
@@ -163,7 +210,7 @@ class EmployerProfile extends Component {
                             <div className="col-1.2 single-link"><a href="/employer/jobs">Jobs</a> </div>
                             <div className="col-1.2 single-link"><a href="/employer/salaries">Salaries</a> </div>
                             <div className="col-1.2 single-link"><a href="/employer/interviews">Interviews</a> </div>
-                            <div className="col-1.2 single-link"><a href="/employer/photos">Photos</a> </div>
+                            <div className="col-1.2 single-link"><a href="/employer/photos">Photos</a></div>
                             
                             <div >
                             <button onClick={this.clickProfileButton} className="col-1.2 btn btn-primary d-flex justify-content-center align-items-center" style={{marginLeft:"280px", marginBottom:"15px", marginTop:"15px", color:"rgb(24, 97, 191)", background:"white",fontWeight:"bold" ,border:"1px solid rgb(24, 97, 191)"}}>+ Profile Picture
@@ -172,7 +219,12 @@ class EmployerProfile extends Component {
                             <input type="file" className="hide" id="employer-profile-picture" style={{display:"none"}} onChange={this.changeProfilePicture} />
                             </div>
                             
-                            <button className="col-1.2 btn btn-primary d-flex justify-content-center align-items-center" style={{marginLeft:"10px", marginBottom:"15px", marginTop:"15px", color:"rgb(24, 97, 191)", background:"white",fontWeight:"bold" ,border:"1px solid rgb(24, 97, 191)"}}> + Add Logo</button>
+                            <div>
+                            
+                            <button onClick={this.clickLogoButton} className="col-1.2 btn btn-primary d-flex justify-content-center align-items-center" style={{marginLeft:"10px", marginBottom:"15px", marginTop:"15px", color:"rgb(24, 97, 191)", background:"white",fontWeight:"bold" ,border:"1px solid rgb(24, 97, 191)"}}> + Add Logo</button>
+                            <input type="file" className="hide" id="employer-logo-picture" style={{display:"none"}} onChange={this.changeLogoPicture} />
+                            </div>
+                            
                         </div>
                     </div>   
                     <div className="info-wrapper">
