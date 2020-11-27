@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Redirect } from 'react-router'
 import { Link } from 'react-router-dom'
+import { withRouter } from "react-router"
 
 import Glassdoor_logo from '../../Images/glassdoor-logo.svg'
 import './Navbar.css'
@@ -13,6 +14,7 @@ class Navbar extends Component {
             searchTerm: "",
             location: "",
             redirectToJobs: false,
+            redirectToCompanies: false,
             dropDownValue: "Jobs"
         }
     }
@@ -41,9 +43,13 @@ class Navbar extends Component {
 
     searchJobs = ( e ) => {
         e.preventDefault()
-        if ( this.state.searchTerm ) {
+        if ( this.state.searchTerm && this.state.dropDownValue === "Jobs" ) {
             this.setState( {
                 redirectToJobs: !this.state.redirectToJobs
+            } )
+        } else if ( this.state.searchTerm && this.state.dropDownValue === "Companies" ) {
+            this.setState( {
+                redirectToCompanies: !this.state.redirectToCompanies
             } )
         }
     }
@@ -69,6 +75,17 @@ class Navbar extends Component {
             } )
             redirect = <Redirect to={ {
                 pathname: "/students/jobs",
+                state: { searchTerm: this.state.searchTerm }
+            } } />
+        }
+        else if ( this.state.redirectToCompanies ) {
+            this.setState( {
+                searchTerm: "",
+                location: "",
+                redirectToCompanies: false
+            } )
+            redirect = <Redirect to={ {
+                pathname: "/students/companies",
                 state: { searchTerm: this.state.searchTerm }
             } } />
         }
@@ -155,4 +172,4 @@ class Navbar extends Component {
     }
 }
 
-export default Navbar;
+export default withRouter( Navbar );

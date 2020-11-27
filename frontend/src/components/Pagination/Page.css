@@ -1,0 +1,22 @@
+.pages {
+    margin: 2% auto;
+}
+
+.page-numbers {
+    padding: 2% 0 0 10%; 
+}
+
+.pages-wrapper button:focus {
+    outline: none;
+}
+
+.MuiPaginationItem-outlinedSecondary.Mui-selected {
+    background-color: #00A2DE !important;
+    border: 1px solid lightgray !important;
+    color: white !important
+} 
+.pages nav li,
+.pages nav li button{
+    margin: 0;
+    border-radius: 0;
+}

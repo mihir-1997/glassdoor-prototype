@@ -14,10 +14,15 @@ class JobDescription extends Component {
 
     applyForJob = ( e ) => {
         e.preventDefault()
-        let popup = document.getElementById( "job-application-popup" )
+        let popup = document.getElementById( "job-application-popup-" + this.state._id )
         let modal = document.getElementById( "modal" )
         modal.appendChild( popup )
         popup.classList.add( "popup-wrapper-show" )
+    }
+
+    applyToJob = () => {
+        // this.componentDidMount()
+        window.location.reload()
     }
 
     render () {
@@ -34,8 +39,8 @@ class JobDescription extends Component {
                             <span className="job-description-ratings">
                                     { this.state.avgRatings ?
                                         <span>
-                                            this.state.avgRatings
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24">
+                                            { this.state.avgRatings }
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24">
                                                 <path fill="#0CA941" d="M12 .288l2.833 8.718h9.167l-7.417 5.389 2.833 8.718-7.416-5.388-7.417 5.388 2.833-8.718-7.416-5.389h9.167z" />
                                             </svg>
                                         </span>
@@ -55,7 +60,11 @@ class JobDescription extends Component {
                             </div>
                         </div>
                         <div className="company-right-pane col-4">
-                            <button type="button" className="btn reverse-update-proflie" onClick={ this.applyForJob }>Apply Now</button>
+                            { this.state.applicants.find( applicant => applicant.studentID === localStorage.getItem( "id" ) ) ?
+                                <button type="button" className="btn reverse-update-proflie" disabled={ true }>Applied</button>
+                                : <button type="button" className="btn reverse-update-proflie" onClick={ this.applyForJob }>Apply Now</button>
+                            }
+
                         </div>
                     </div>
                 </div>
@@ -81,7 +90,7 @@ class JobDescription extends Component {
                         </span>
                         : null }
                 </div>
-                <JobApplication employerName={ this.state.employerName } />
+                <JobApplication key={ Math.random() } employerName={ this.state.employerName } jobId={ this.state._id } applyToJob={ this.applyToJob } />
             </div>
         )
     }

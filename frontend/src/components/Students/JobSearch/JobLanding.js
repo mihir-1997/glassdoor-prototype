@@ -2,14 +2,17 @@ import React, { Component } from 'react'
 import { Redirect } from 'react-router'
 import axios from 'axios'
 import { Typeahead } from 'react-bootstrap-typeahead'
+import { withRouter } from "react-router"
+import $ from 'jquery'
 
 import './JobLanding.css'
 import JobDescription from './JobDescription'
 import Page from '../../Pagination/Page'
 
 import { BACKEND_URL, BACKEND_PORT } from '../../Config/Config'
+import IndividualJobCard from './IndividualJobCard'
 
-export default class JobLanding extends Component {
+class JobLanding extends Component {
 
     constructor( props ) {
         super( props )
@@ -38,10 +41,13 @@ export default class JobLanding extends Component {
                     axios.get( BACKEND_URL + ":" + BACKEND_PORT + "/jobs/getJobsBasedOnTitle/" + this.props.location.state.searchTerm )
                         .then( ( res ) => {
                             if ( res.status === 200 ) {
-                                console.log( res.data )
                                 this.setState( {
-                                    allJobs: res.data,
-                                    filteredJobs: res.data,
+                                    allJobs: res.data.sort( ( a, b ) => {
+                                        return new Date( b.date ) - new Date( a.date )
+                                    } ),
+                                    filteredJobs: res.data.sort( ( a, b ) => {
+                                        return new Date( b.date ) - new Date( a.date )
+                                    } ),
                                     allLocations: Array.from( new Set( res.data.map( data => data.city ) ) )
                                 } )
                             }
@@ -55,12 +61,33 @@ export default class JobLanding extends Component {
                                 }
                             }
                         } )
+                    // axios.get( BACKEND_URL + ":" + BACKEND_PORT + "/jobs/getApplicationStatus/" + id )
+                    //     .then( ( res ) => {
+                    //         if ( res.status === 200 ) {
+                    //             console.log( "getapplicationstatus", res.data )
+                    //         }
+                    //     } )
+                    //     .catch( ( err ) => {
+                    //         if ( err.response ) {
+                    //             if ( err.response.status === 404 ) {
+                    //                 console.log( err.response.message )
+                    //             } else if ( err.response.status === 400 ) {
+                    //                 console.log( err.response.message )
+                    //             }
+                    //         }
+                    //     } )
                 }
             }
         }
     }
 
-    showJobDescription = ( job, index ) => {
+    componentDidUpdate ( prevProps ) {
+        if ( prevProps.location.state.searchTerm !== this.props.location.state.searchTerm ) {
+            this.componentDidMount()
+        }
+    }
+
+    showJobDescription = ( job ) => {
         if ( this.state.currActiveJob ) {
             let activeJob = document.getElementById( this.state.currActiveJob )
             if ( activeJob ) {
@@ -85,6 +112,19 @@ export default class JobLanding extends Component {
         } )
     }
 
+    saveAvgRatings = ( jobId, avgRatings ) => {
+        this.state.allJobs.forEach( job => {
+            if ( jobId === job._id ) {
+                job.avgRatings = avgRatings
+            }
+        } )
+        this.state.filteredJobs.forEach( job => {
+            if ( jobId === job._id ) {
+                job.avgRatings = avgRatings
+            }
+        } )
+    }
+
     changeJobType = ( e ) => {
         e.preventDefault()
         this.setState( {
@@ -92,11 +132,13 @@ export default class JobLanding extends Component {
         }, () => {
             if ( this.state.selectedJobType === "All Job Types" ) {
                 this.setState( {
-                    filteredJobs: this.state.allJobs
+                    filteredJobs: this.state.allJobs,
+                    avgRatings: []
                 } )
             } else {
                 this.setState( {
-                    filteredJobs: this.state.allJobs.filter( job => job.type.toUpperCase() === this.state.selectedJobType.toUpperCase() )
+                    filteredJobs: this.state.allJobs.filter( job => job.type.toUpperCase() === this.state.selectedJobType.toUpperCase() ),
+                    avgRatings: []
                 } )
             }
         } )
@@ -109,12 +151,14 @@ export default class JobLanding extends Component {
         }, () => {
             if ( this.state.selectedSalary === "Select salary range" ) {
                 this.setState( {
-                    filteredJobs: this.state.allJobs
+                    filteredJobs: this.state.allJobs,
+                    avgRatings: []
                 } )
                 return
             }
             this.setState( {
-                filteredJobs: this.state.allJobs.filter( job => job.salary >= parseInt( this.state.selectedSalary.split( "-" )[ 0 ] ) && job.salary <= parseInt( this.state.selectedSalary.split( "-" )[ 1 ] ) )
+                filteredJobs: this.state.allJobs.filter( job => job.salary >= parseInt( this.state.selectedSalary.split( "-" )[ 0 ] ) && job.salary <= parseInt( this.state.selectedSalary.split( "-" )[ 1 ] ) ),
+                avgRatings: []
             } )
         } )
     }
@@ -132,11 +176,13 @@ export default class JobLanding extends Component {
         }, () => {
             if ( this.state.selectedLocation ) {
                 this.setState( {
-                    filteredJobs: this.state.allJobs.filter( job => job.city === this.state.selectedLocation )
+                    filteredJobs: this.state.allJobs.filter( job => job.city === this.state.selectedLocation ),
+                    avgRatings: []
                 } )
             } else {
                 this.setState( {
-                    filteredJobs: this.state.allJobs
+                    filteredJobs: this.state.allJobs,
+                    avgRatings: []
                 } )
             }
         } )
@@ -154,18 +200,37 @@ export default class JobLanding extends Component {
     sortJobs = ( e ) => {
         e.preventDefault()
         if ( e.target.value === "recent" ) {
-
+            console.log( "insde recent sort" )
+            this.setState( {
+                filteredJobs: this.state.filteredJobs.sort( ( a, b ) => {
+                    console.log( a.date, new Date( b.date ) )
+                    return new Date( b.date ) - new Date( a.date )
+                } ),
+                selectedSort: "Most Recent",
+                activeJobDescription: ""
+            } )
         } else if ( e.target.value === "ratings" ) {
-
+            this.setState( {
+                selectedSort: "Most Rated",
+                activeJobDescription: "",
+                filteredJobs: this.state.filteredJobs.sort( ( a, b ) => {
+                    if ( a.avgRatings !== undefined && b.avgRatings !== undefined ) {
+                        console.log( a.avgRatings, b.avgRatings )
+                        return b.avgRatings - a.avgRatings
+                    } return 5
+                } )
+            } )
         }
+        this.sortClick()
     }
 
     handlePageChange = ( value ) => {
+        console.log( "handle page change" )
         this.setState( {
             currPage: value,
-            activeJobDescription: this.state.filteredJobs[ value * this.state.eachPageSize - this.state.eachPageSize ]
+            activeJobDescription: ""
         }, () => {
-            document.getElementById( this.state.filteredJobs[ value * this.state.eachPageSize - this.state.eachPageSize ]._id ).classList.add( "active-job" )
+            $( ".each-job" ).removeClass( "active-job" )
         } )
     }
 
@@ -174,10 +239,6 @@ export default class JobLanding extends Component {
         if ( !localStorage.getItem( "active" ) ) {
             redirectVar = <Redirect to="/login" />
             return redirectVar
-        }
-        let getDate = ( date ) => {
-            let formattedDate = new Date( parseInt( date ) )
-            return ( formattedDate.getMonth() + 1 ) + "/" + formattedDate.getDate() + "/" + formattedDate.getFullYear()
         }
         return (
             <div>
@@ -247,48 +308,7 @@ export default class JobLanding extends Component {
                                 </div>
                                 { this.state.filteredJobs ?
                                     this.state.filteredJobs.slice( this.state.currPage * this.state.eachPageSize - this.state.eachPageSize, this.state.currPage * this.state.eachPageSize ).map( ( job, index ) => {
-                                        return <div className="clear-float" key={ index }>
-                                            <div id={ job._id } className="each-job" onClick={ () => this.showJobDescription( job, index ) }>
-                                                <div className="each-job-left-pane left-pane">
-                                                    <div className="each-job-company-logo">
-                                                        <div className="company-logo-wrapper">
-                                                            {/* <img className="company-logo" src={ intel_logo } alt="company_logo" /> */ }
-                                                        </div>
-                                                    </div>
-                                                    <div className="each-job-company-ratings">
-                                                        {/* <span>
-                                                        4.1
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24">
-                                                            <path fill="#0CA941" d="M12 .288l2.833 8.718h9.167l-7.417 5.389 2.833 8.718-7.416-5.388-7.417 5.388 2.833-8.718-7.416-5.389h9.167z" />
-                                                        </svg>
-                                                    </span> */}
-                                                    </div>
-                                                </div>
-                                                <div className="each-job-right-pane right-pane">
-                                                    <div className="each-job-company-name">
-                                                        { job.employerName }
-                                                    </div>
-                                                    <div className="each-job-title">
-                                                        { job.title }
-                                                    </div>
-                                                    <div className="each-job-location">
-                                                        { job.city }
-                                                    </div>
-                                                    <div className="each-job-salary">
-                                                        { job.salary ?
-                                                            <span>${ job.salary }</span>
-                                                            : null }
-                                                    </div>
-                                                    <div className="each-job-date-wrapper">
-                                                        <div className="each-job-date">
-                                                            { job.date ?
-                                                                getDate( job.date )
-                                                                : null }
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        return <IndividualJobCard jobDetails={ job } key={ index + job._id } showJobDescription={ this.showJobDescription } saveAvgRatings={ this.saveAvgRatings } />
                                     } )
                                     : null }
                                 { this.state.filteredJobs.length > 0 ?
@@ -307,3 +327,5 @@ export default class JobLanding extends Component {
         )
     }
 }
+
+export default withRouter( JobLanding );

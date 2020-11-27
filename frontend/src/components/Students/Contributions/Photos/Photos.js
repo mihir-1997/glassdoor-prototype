@@ -97,8 +97,8 @@ class Photos extends Component {
                                     </div>
                                 </div>
                                 <div className="col-3 contributions-stat-column">
-                                    { photo.photoDate ?
-                                        getDate( photo.photoDate )
+                                    { photo.photos[ 0 ].photoDate ?
+                                        getDate( photo.photos[ 0 ].photoDate )
                                         : null }
                                 </div>
                                 <div className="col-4 contributions-stat-column">

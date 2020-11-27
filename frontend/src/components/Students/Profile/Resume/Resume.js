@@ -118,7 +118,7 @@ class Resume extends Component {
         e.preventDefault()
         this.state.resumes.forEach( ( resume, index ) => {
             let checkbox = document.getElementById( "isprimary-input" + index )
-            checkbox.removeAttribute( "checked" )
+            checkbox.removeAttribute( "defaultChecked" )
             checkbox.removeAttribute( "disabled" )
             checkbox.setAttribute( "value", resume.resumeID )
         } )
@@ -187,7 +187,7 @@ class Resume extends Component {
                             return <div className="each-resume" key={ index }>
                                 <div className="row">
                                     <div className="col-1">
-                                        <input type="checkbox" id={ "isprimary-input" + index } name="isprimary-input" defaultChecked={ resume.isPrimary } disabled={ !resume.isPrimary } onChange={ this.updatePrimaryResume } />
+                                        <input type="checkbox" id={ "isprimary-input" + index } name="isprimary-input" checked={ resume.isPrimary } disabled={ !resume.isPrimary } onChange={ this.updatePrimaryResume } />
                                     </div>
                                     <div className="col-1">
                                         <div className="pdf-icon">
