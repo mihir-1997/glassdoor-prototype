@@ -5,7 +5,7 @@ function handle_request ( msg, callback ) {
         params: msg
     }
 
-    jobSchema.find( { "applicants.studentID": req.params.studentID }  ,  { 'applicants.$': 1 }).then( doc => {
+    jobSchema.find( { "applicants.studentID": req.params.studentID }  ,  { 'applicants.$': 1,'employerName':1, 'employerID':1,'title':1,'description':1,'date':1 }).then( doc => {
 
         // console.log( "User", doc )
         callback( null, doc )
