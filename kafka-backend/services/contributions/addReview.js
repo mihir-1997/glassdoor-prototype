@@ -11,6 +11,7 @@ function handle_request ( msg, callback ) {
         studentID: req.body.studentID,
         studentName: req.body.studentName,
         employerName: req.body.employerName,
+        ceoname: req.body.ceoName,
         employeeStatus: req.body.employeeStatus,
         rating: req.body.rating,
         isPositive: req.body.isPositive,
