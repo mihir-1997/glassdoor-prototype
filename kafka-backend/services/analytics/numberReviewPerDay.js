@@ -31,13 +31,20 @@ function handle_request ( msg, callback ) {
             let review = JSON.parse( JSON.stringify( rev ) )
             reviews_per_day[ Math.floor( ( today - review.reviewDate ) / 86400000 ) ] += 1
             if ( review.employerName in reviews_by_companies ) {
-                reviews_by_companies[ review.employerName ] += 1
+                reviews_by_companies[ review.employerName ].total += 1
+                reviews_by_companies[ review.employerName ].total_rating += review.rating
+                reviews_by_companies[ review.employerName ].average_rating = reviews_by_companies[ review.employerName ].total_rating / reviews_by_companies[ review.employerName ].total
 
             } else {
-                reviews_by_companies[ review.employerName ] = 1
+                reviews_by_companies[ review.employerName ] = {
+                    average_rating: review.rating,
+                    total_rating: review.rating,
+                    total: 1
+                }
 
 
             }
+
 
             if ( review.employerName in ceo_rating ) {
                 if ( review.approveCEO == true ) {
@@ -52,7 +59,7 @@ function handle_request ( msg, callback ) {
                 }
 
             }
-            console.log( "ceo", ceo_rating )
+            console.log( "company", reviews_by_companies )
 
 
             if ( review.studentID in reviews_by_students ) {
