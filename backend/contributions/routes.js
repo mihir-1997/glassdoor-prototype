@@ -45,13 +45,14 @@ router.get( '/getReviewsbyStudent/:studentID', ( req, res ) => {
 } )
 
 //get review by Employers
-router.get( '/getReviewsbyEmployer/:employerName', ( req, res ) => {
+router.post( '/getReviewsbyEmployer/:employerName', ( req, res ) => {
     // redisClient.get( RedisKey, ( err, data ) => {
     //     if ( data != null ) {
     //         console.log( "from redis" )
     //         res.status( 200 ).send( JSON.parse( data ) )
     //     } else {
-    kafka.make_request( 'contributions_getReviewByEmployer', req.params, function ( err, results ) {
+    req.body.params = req.params
+    kafka.make_request( 'contributions_getReviewByEmployer', req.body, function ( err, results ) {
         if ( err ) {
             console.log( "Inside err", err );
             res.status( 404 ).send( "Failed" )
@@ -222,9 +223,9 @@ router.post( '/uploadPhotos/:employerID', checkAuth, ( req, res ) => {
 } );
 
 //get photos by employer
-router.get( '/getPhotosByEmployer/:employerID', ( req, res ) => {
-
-    kafka.make_request( 'contributions_getPhotosByEmployer', req.params, function ( err, results ) {
+router.post( '/getPhotosByEmployer/:employerName', ( req, res ) => {
+    req.body.params = req.params
+    kafka.make_request( 'contributions_getPhotosByEmployer', req.body, function ( err, results ) {
         if ( err ) {
             console.log( "Inside err", err );
             res.status( 404 ).send( "Failed" )
@@ -277,9 +278,9 @@ router.post( '/addSalary', ( req, res ) => {
 } )
 
 //get salary by employer
-router.get( '/getSalariesByEmployer/:employerName', ( req, res ) => {
-
-    kafka.make_request( 'contributions_getSalariesByEmployer', req.params, function ( err, results ) {
+router.post( '/getSalariesByEmployer/:employerName', ( req, res ) => {
+    req.body.params = req.params
+    kafka.make_request( 'contributions_getSalariesByEmployer', req.body, function ( err, results ) {
         if ( err ) {
             console.log( "Inside err", err );
             res.status( 404 ).send( "Failed" )
@@ -331,9 +332,9 @@ router.post( '/addInterview', ( req, res ) => {
 } )
 
 //get interviews by employer
-router.get( '/getInterviewsByEmployer/:employerName', ( req, res ) => {
-
-    kafka.make_request( 'contributions_getInterviewsByEmployer', req.params, function ( err, results ) {
+router.post( '/getInterviewsByEmployer/:employerName', ( req, res ) => {
+    req.body.params = req.params
+    kafka.make_request( 'contributions_getInterviewsByEmployer', req.body, function ( err, results ) {
         if ( err ) {
             console.log( "Inside err", err );
             res.status( 404 ).send( "Failed" )
@@ -385,7 +386,7 @@ router.put( '/updatePhotoStatus/:employerID', ( req, res ) => {
 } )
 
 //update photo status
-router.get( '/reviewsPerDay', ( req, res ) => {
+router.post( '/reviewsPerDay', ( req, res ) => {
     kafka.make_request( 'analytics_reviewsperday', req.body, function ( err, results ) {
         if ( err ) {
             console.log( "Inside err", err );
