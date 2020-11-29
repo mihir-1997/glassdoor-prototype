@@ -7,6 +7,7 @@ var applicantSchema = new Schema( {
     resumeName:String,
     name:String,
     status: String,
+    imageName:String,
     application_date:Date,
 
 } )
