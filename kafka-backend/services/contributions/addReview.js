@@ -9,7 +9,9 @@ function handle_request ( msg, callback ) {
     let newReview = new contributionsSchema( {
         type: "review",
         studentID: req.body.studentID,
+        studentName: req.body.studentName,
         employerName: req.body.employerName,
+        ceoname: req.body.ceoName,
         employeeStatus: req.body.employeeStatus,
         rating: req.body.rating,
         isPositive: req.body.isPositive,

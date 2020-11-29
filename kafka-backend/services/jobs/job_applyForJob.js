@@ -12,6 +12,7 @@ function handle_request ( msg, callback ) {
         resumeName:req.body.resumeName,
         name:req.body.name,
         status: "Submitted",
+        imageName:req.body.imageName,
         application_date:Date.now()
 
     }
