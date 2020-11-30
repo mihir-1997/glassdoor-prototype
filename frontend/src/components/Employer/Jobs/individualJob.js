@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
 import { Redirect } from 'react-router'
-import axios from "axios";
-
 
 import './EmployerJobs.css'
+import JobApplicants from './jobApplicants'
 import logo from '../../../Images/linkedin-logo.png'
 
 
@@ -21,12 +20,20 @@ class IndividualJob extends Component {
         return format_date;
 
     }
+    getApplicants = (e) => {
+        e.preventDefault();
+        let popup = document.getElementById( "job-applicant-popup-"+ this.props.data._id)
+        let modal = document.getElementById( "modal" )
+        modal.appendChild( popup )
+        popup.classList.add( "popup-wrapper-show" )
+       
+    }
 
     render(){
         
         return(    
                 <div>
-                     {console.log(this.props.data)}
+                     
                      <div className="job-wrapper">
 
                          <img className="company-logo-job" src={logo} alt="logo"/>
@@ -62,7 +69,9 @@ class IndividualJob extends Component {
                         <span>📍 {this.props.data.address}, {this.props.data.city}, {this.props.data.state}, {this.props.data.country}, {this.props.data.zip}</span>
                          <br/>
                          <span style={{display:"inline-block"}}>
-                         <button onClick={this.getApplicants} className="btn btn-primary d-flex justify-content-center align-items-center" style={{marginLeft:"210px",marginTop:"10px", height:"30px", color:"rgb(24, 97, 191)", background:"white",fontWeight:"bold" ,border:"1px solid rgb(24, 97, 191)"}}>View Applicants</button>
+                        <button onClick={this.getApplicants} className="btn btn-primary d-flex justify-content-center align-items-center" style={{marginLeft:"210px",marginTop:"10px", height:"30px", color:"rgb(24, 97, 191)", background:"white",fontWeight:"bold" ,border:"1px solid rgb(24, 97, 191)"}}>View Applicants</button>
+                        <JobApplicants jobId ={this.props.data._id}  title={this.props.data.title}/>
+                        
                          </span>
                         
                          </div>

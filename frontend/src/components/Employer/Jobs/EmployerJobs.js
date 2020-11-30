@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { Redirect } from 'react-router'
 import axios from "axios";
 
-
 import './EmployerJobs.css'
 import AddJob from './AddJob'
 import IndividualJob from './individualJob'
@@ -33,12 +32,12 @@ class EmployerJobs extends Component {
             axios.defaults.headers.common[ 'authorization' ] = localStorage.getItem( 'token' )
             axios.get( BACKEND_URL + ":" + BACKEND_PORT + "/jobs/getJobsForEmployer/" + id )
                 .then( ( res ) => {
-                    console.log(res.data)
+                    //console.log(res.data)
                     if ( res.status === 200 ) {
                         this.setState( {
                             jobs:res.data
                         } )
-                        console.log(this.state.jobs)
+                        //console.log(this.state.jobs)
                     }
                 } )
                 .catch( ( err ) => {
@@ -109,55 +108,10 @@ class EmployerJobs extends Component {
                     </div>   
                     <div className="info-wrapper overflow-auto" style={{ height:"480px"}}>
                     
-                    <p style={{fontSize:"20px", lineHeight:"27px"}}>Jobs at {localStorage.getItem("name")}</p>
+                    <p style={{fontSize:"20px", lineHeight:"27px", marginLeft:"1px"}}>Jobs at {localStorage.getItem("name")}</p>
 
                     <hr/>
-                    {allJobs}
-                    {/* <div className="job-wrapper">
-
-                        <img className="company-logo-job" src={logo} alt="logo"/>
-
-                        <div className="job">
-                        <span className="employer-name">Linkedin</span>
-                        
-                        
-                        <span style={{color:"#7F7F7F", fontSize:"14px", fontWeight:"normal" , marginTop:"0px",marginBottom:"2px", marginLeft: "320px", display:"inline-block"}}>Posted on: November 15, 2020</span>
-                         <br/>
-                        <span className="job-title-employer">Site Reliability Engineer</span>
-                        <span style={{display:"inline-block",  marginLeft:"55px"}}>Remote</span>
-                        <span style={{display:"inline-block", marginLeft:"65px"}}> <span style={{fontWeight:"bold", display:"inline-block", margin:"0px"}}>Industry:</span> Software Engineering</span> 
-                        
-                        <div className="basic-job-info">
-                           <span style={{fontWeight:"bold"}}>Description</span>
-                           <br/>
-                           <span>LinkedIn was built to help professionals achieve more in their careers, and every day millions of people use our products to make connections, discover opportunities and gain insights.</span>
-                            <br/>
-                           <span style={{fontWeight:"bold"}}>Qualifications</span>
-                           <br/>
-                           <span>Experience with Automation, Shell Scripting, Docker, Kubernetes</span>
-                           <br/>
-                           <span style={{fontWeight:"bold"}}>Responsibilities</span>
-                           <br/>
-                           <span>Deploy and Spin the architecture of the applications from dev team</span>
-
-                        </div >
-                        <div className="job-address">
-                        <span style={{fontWeight:"bold"}}>Location</span>
-                        <span style={{display:"inline-block", marginLeft:"385px"}}> <span style={{fontWeight:"bold", display:"inline-block", margin:"0px"}}>Salary : $</span>120K</span>              
-                        <br/>    
-                        <span>📍 11th Market St. San Jose, CA, USA, 95112</span>
-                        <br/>
-                        <span style={{display:"inline-block"}}>
-                        <button className="btn btn-primary d-flex justify-content-center align-items-center" style={{marginLeft:"210px",marginTop:"10px", height:"30px", color:"rgb(24, 97, 191)", background:"white",fontWeight:"bold" ,border:"1px solid rgb(24, 97, 191)"}}>View Applicants</button>
-                        </span>
-                        
-                        </div>
-                        </div>
-                    </div> */}
-
-
-                     
-                       
+                    {allJobs}                     
                     </div> 
 
                     <div className="form-wrapper-jobs">

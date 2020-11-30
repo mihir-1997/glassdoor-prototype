@@ -4,8 +4,6 @@ import axios from "axios";
 
 
 import './EmployerReviews.css'
-import logo from '../../../Images/linkedin-logo.png'
-
 
 import { BACKEND_URL, BACKEND_PORT } from '../../Config/Config'
 
@@ -72,9 +70,6 @@ class IndividualReview extends Component {
             } )
     }
 
-    addReply = (e) => {
-
-    }
 
     convertDate = (old) => {
         let date = new Date(old) 
@@ -125,11 +120,9 @@ class IndividualReview extends Component {
 
     }
 
-
-
     render(){
         let favIcon = (val) =>{
-            // console.log("favourite: "+val)
+          
             if(!val){
                 return <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path stroke="black" fill="#fff" d="M20.37 4.65a5.57 5.57 0 00-7.91 0l-.46.46-.46-.46a5.57 5.57 0 00-7.91 0 5.63 5.63 0 000 7.92L12 21l8.37-8.43a5.63 5.63 0 000-7.92z" fill-rule="evenodd"></path></svg> 
             }
@@ -185,7 +178,7 @@ class IndividualReview extends Component {
                                 <p>{this.props.data.cons}</p>
                                 <p style={{fontWeight: "bold"}}>Replies</p>
                                 {this.props.data.replies.map((reply) => {
-                                    return <p>↪ {reply}</p>
+                                    return <p>↳ {reply}</p>
                                 })}
 
                             </div>

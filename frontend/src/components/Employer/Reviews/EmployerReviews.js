@@ -50,7 +50,7 @@ class EmployerProfile extends Component {
         if ( name ) {
             axios.defaults.withCredentials = true
             axios.defaults.headers.common[ 'authorization' ] = localStorage.getItem( 'token' )
-            axios.get( BACKEND_URL + ":" + BACKEND_PORT + "/contributions/getReviewsbyEmployer/" + name )
+            axios.post( BACKEND_URL + ":" + BACKEND_PORT + "/contributions/getReviewsbyEmployer/" + name,{firstTime:true, pageSize:5,pageNumber:1} )
                 .then( ( res ) => {
                      //console.log(res.data)
                     if ( res.status === 200 ) {
@@ -93,7 +93,7 @@ class EmployerProfile extends Component {
             }
             })
 
-        let featuredReviews =  this.state.reviews.map((featuredReview) => {
+        let featuredReviews =  this.state.reviews.map((featuredReview) =>{
             if(featuredReview.reviewStatus === "Approved" && featuredReview.featured){
                 return (
                     <IndividualReview
@@ -129,107 +129,21 @@ class EmployerProfile extends Component {
                             <div className="col-1.2 single-link"><a href="/employer/interviews">Interviews</a> </div>
                             <div className="col-1.2 single-link"><a href="/employer/photos">Photos</a> </div>
                             
-                            {/* <button className="col-1.2 btn btn-primary d-flex justify-content-center align-items-center" style={{marginLeft:"320px", marginBottom:"15px", marginTop:"15px", color:"rgb(24, 97, 191)", background:"white",fontWeight:"bold" ,border:"1px solid rgb(24, 97, 191)"}}>Follow</button> */}
-                            {/* <button className="col-1.2 btn btn-primary d-flex justify-content-center align-items-center" style={{marginLeft:"10px", marginBottom:"15px", marginTop:"15px", color:"rgb(24, 97, 191)", background:"white",fontWeight:"bold" ,border:"1px solid rgb(24, 97, 191)"}}> + Add Review</button> */}
-
                         </div>
                     </div>   
-                    <div className="info-wrapper">
-
-                    <p style={{fontSize:"20px", lineHeight:"27px"}}>Featured Reviews</p>
+                    <div className="review-info-wrapper">
+                    <p style={{fontSize:"20px", lineHeight:"27px", marginLeft:"1px"}}>Featured Reviews</p>
+                    <hr/>
                     {featuredReviews}
                     <br/>
-                    <p style={{fontSize:"20px", lineHeight:"27px"}}>LinkedIn Reviews</p>
+                    <p style={{fontSize:"20px", lineHeight:"27px",marginLeft:"1px"}}>LinkedIn Reviews</p>
                     {allReviews}
                     <hr/>
-                    
-                    {/* <div className="review-wrapper">
-
-                        <div className="favourite-review">
-                        <span style={{color:"#7F7F7F", fontSize:"14px", fontWeight:"normal" , marginTop:"0px",marginBottom:"0px",display:"inline-block"}}>
-                            
-                            November 15, 2020
-                            <span style={{marginLeft:"470px"}}>
-                                
-                            </span>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path  d="M20.37 4.65a5.57 5.57 0 00-7.91 0l-.46.46-.46-.46a5.57 5.57 0 00-7.91 0 5.63 5.63 0 000 7.92L12 21l8.37-8.43a5.63 5.63 0 000-7.92z" fill="currentColor" fill-rule="evenodd"></path></svg> 
-                        </span>
-                            
-                            
-                        </div>
-                       
-
-                        <img className="company-logo-review" src={logo} alt="logo"/>
-                        
-                        <div className="review">
-
-                        <p className="review-string">"Great company!"</p>
-                        <p className="star-string"> 5.0 ★★★★★</p>
-                        <br/>
-                        <div className="box"></div>
-                        <span >Recommends</span>
-                        <span className="box"></span>
-                        <span>Positive Outlook</span>
-                        <span className="box"></span>
-                        <span>Approves CEO</span>
-                        <br/>
-                        <p >Worked for the company for 5 years</p>
-                            <div className="pros-cons">
-                                <p style={{fontWeight: "bold"}}>Pros</p>
-                                <p>Good work life balance</p>
-                                <p style={{fontWeight: "bold"}}>Cons</p>
-                                <p>Stagnant growth</p>
-
-                            </div>
-                        </div>
-                        <hr/>
-                    </div>  
-
-                    <div className="review-wrapper">
-
-                        <div className="favourite-review">
-                        <span style={{color:"#7F7F7F", fontSize:"14px", fontWeight:"normal" , marginTop:"0px",marginBottom:"0px",display:"inline-block"}}>
-                            
-                            November 15, 2020
-                            <span style={{marginLeft:"470px"}}>{"                                                                        "}</span>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M20.37 4.65a5.57 5.57 0 00-7.91 0l-.46.46-.46-.46a5.57 5.57 0 00-7.91 0 5.63 5.63 0 000 7.92L12 21l8.37-8.43a5.63 5.63 0 000-7.92z" fill="currentColor" fill-rule="evenodd"></path></svg> 
-                        </span>
-                            
-                            
-                        </div>
-                       
-
-                        <img className="company-logo-review" src={logo} alt="logo"/>
-                        
-                        <div className="review">
-
-                        <p className="review-string">"Great company!"</p>
-                        <p className="star-string"> 5.0 ★★★★★</p>
-                        <br/>
-                        <div className="box"></div>
-                        <span >Recommends</span>
-                        <span className="box"></span>
-                        <span>Positive Outlook</span>
-                        <span className="box"></span>
-                        <span>Approves CEO</span>
-                        <br/>
-                            <div className="pros-cons">
-                                <p >Worked for the company for 5 years</p>
-                                
-                                <p style={{fontWeight: "bold"}}>Pros</p>
-                                <p>Good work life balance</p>
-                                <p style={{fontWeight: "bold"}}>Cons</p>
-                                <p>Stagnant growth</p>
-
-                            </div>
-                        </div>
-                        <hr/>
-                    </div> */}
                        
                     </div> 
 
                     <div className="form-wrapper">
-                    form
+                    Fixed image here
                     </div>     
                 </div>
                 
