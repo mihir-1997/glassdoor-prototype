@@ -31,9 +31,10 @@ router.post( '/createJob',  checkAuth,( req, res ) => {
 
 
 //get jobs for a employer
-router.get( '/getJobsForEmployer/:employerID', checkAuth,( req, res ) => {
+router.get( '/getJobsForEmployer/:employerID', ( req, res ) => {
     console.log("inside getJobsForEmployer")
-    kafka.make_request( 'job_getJobsForEmployer', req.params, function ( err, results ) {
+    req.body.params = req.params
+    kafka.make_request( 'job_getJobsForEmployer', req.body, function ( err, results ) {
         if ( err ) {
             console.log( "Inside err", err );
             res.status( 404 ).send( "No jobs found" )
@@ -172,7 +173,7 @@ router.put( '/applicationStatusChange/:applicationID',checkAuth, ( req, res ) =>
 } )
 
 //get report of jobs for a employer
-router.get( '/getJobsReport/:employerID', checkAuth,( req, res ) => {
+router.get( '/getJobsReport/:employerID', ( req, res ) => {
     console.log("inside getJobsReport")
     kafka.make_request( 'job_getJobsReport', req.params, function ( err, results ) {
         if ( err ) {
