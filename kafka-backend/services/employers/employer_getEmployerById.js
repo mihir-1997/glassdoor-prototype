@@ -6,6 +6,13 @@ function handle_request ( msg, callback ) {
     }
 
     employerSchema.findOne( { _id: req.params.employerId } ).then( doc => {
+       var count= doc.views+1
+       doc.views=count
+        employerSchema.findByIdAndUpdate( { _id: req.params.employerId },
+            { $set: {  views: count } }, { new: true }
+        ).then(response => {
+           console.log(response)
+        } )
 
         // console.log( "User", doc )
         callback( null, doc )

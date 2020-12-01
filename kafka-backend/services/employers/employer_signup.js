@@ -17,6 +17,7 @@ function handle_request ( msg, callback ) {
             address: "",
           profileImageUrl: "",
           logoImageUrl:"",
+            views:0,
             website: "",
             companySize: "",
             companyType: "",

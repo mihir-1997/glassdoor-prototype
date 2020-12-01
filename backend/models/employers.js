@@ -7,6 +7,7 @@ var employerSchema = new Schema({
     address: String,
     profileImageUrl: String,
     logoImageUrl:String,
+    views:Number,
     website: String,
     companySize: String,
     companyType: String,
