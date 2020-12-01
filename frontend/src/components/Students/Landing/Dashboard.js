@@ -5,6 +5,7 @@ import { Redirect } from 'react-router'
 import './Dashboard.css'
 import SEO from '../../SEO/SEO'
 import { BACKEND_URL, BACKEND_PORT } from '../../Config/Config'
+import DonutChart from '../../Charts/Donutchart/Donutchart'
 
 class Dashboard extends Component {
 
@@ -12,7 +13,9 @@ class Dashboard extends Component {
         super( props )
         this.state = {
             name: "",
-            updateProfileButton: false
+            city: "",
+            profilePicture: "",
+            updateProfileButton: false,
         }
     }
 
@@ -29,7 +32,9 @@ class Dashboard extends Component {
                     console.log( res )
                     if ( res.status === 200 ) {
                         this.setState( {
-                            name: res.data.name
+                            name: res.data.name,
+                            city: res.data.city,
+                            profilePicture: res.data.profilePicture
                         } )
                     }
                 } )
@@ -67,6 +72,25 @@ class Dashboard extends Component {
         if ( this.state.updateProfileButton ) {
             redirectToProfile = <Redirect to="/students/profile" />
         }
+        const data01 = [
+            {
+                "name": "Positive",
+                "value": 61
+            },
+            {
+                "name": "Neutral",
+                "value": 23
+            },
+            {
+                "name": "Negative",
+                "value": 16
+            },
+        ];
+        const colors = [
+            "#94DA66",
+            "#194383",
+            "#0CA941"
+        ]
         return (
             <div className="userdashboard-wrapper">
                 {redirectVar }
@@ -142,17 +166,19 @@ class Dashboard extends Component {
                                 <div className="row">
                                     <div className="col-10">
                                         <div className="userinfo-profile-picture">
-                                            {/* <img className="userinfo-profile" src="" alt="profile"></img> */ }
-                                            <svg className="userinfo-profile" xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
-                                                <g fill="none" fillRule="evenodd">
-                                                    <path d="M0 0h48v48H0z"></path>
-                                                    <g fill="#C4C7CC" transform="translate(3.5 3.21)">
-                                                        <path id="prefix__avatar-a" d="M20.5 40.79c-11.046 0-20-8.954-20-20 0-11.045 8.954-20 20-20s20 8.955 20 20c0 11.046-8.954 20-20 20z"></path>
+                                            { this.state.profilePicture ?
+                                                <img className="dashboard-profile" src={ BACKEND_URL + ":" + BACKEND_PORT + "/public/images/profilepics/" + this.state.profilePicture } alt="profile"></img>
+                                                :
+                                                <svg className="dashboard-profile" xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
+                                                    <g fill="none" fillRule="evenodd">
+                                                        <path d="M0 0h48v48H0z"></path>
+                                                        <g fill="#C4C7CC" transform="translate(3.5 3.21)">
+                                                            <path id="prefix__avatar-a" d="M20.5 40.79c-11.046 0-20-8.954-20-20 0-11.045 8.954-20 20-20s20 8.955 20 20c0 11.046-8.954 20-20 20z"></path>
+                                                        </g>
+                                                        <path fill="#FFF" fillRule="nonzero" d="M36.71 38.123A18.93 18.93 0 0124 43a18.93 18.93 0 01-12.71-4.877C13.51 33.327 18.367 30 24 30c5.633 0 10.489 3.327 12.71 8.123zM24 28a8 8 0 110-16 8 8 0 010 16z"></path>
                                                     </g>
-                                                    <path fill="#FFF" fillRule="nonzero" d="M36.71 38.123A18.93 18.93 0 0124 43a18.93 18.93 0 01-12.71-4.877C13.51 33.327 18.367 30 24 30c5.633 0 10.489 3.327 12.71 8.123zM24 28a8 8 0 110-16 8 8 0 010 16z">
-                                                    </path>
-                                                </g>
-                                            </svg>
+                                                </svg>
+                                            }
                                         </div>
                                     </div>
                                     <div className="col-2">
@@ -179,15 +205,16 @@ class Dashboard extends Component {
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                                         <path d="M19 10a7 7 0 00-14 0c0 3.484 2.298 7.071 7 10.741 4.702-3.67 7-7.257 7-10.741zm-7 12c-5.333-4-8-8-8-12a8 8 0 1116 0c0 4-2.667 8-8 12zm0-10a2 2 0 110-4 2 2 0 010 4zm0 1a3 3 0 100-6 3 3 0 000 6z" fill="#20262E" fillRule="evenodd"></path>
                                     </svg> &nbsp;
-                                    {/* { this.state.user_location } */ }
-                                    San Jose, CA
+                                    { this.state.city }
                                 </div>
                                 <div className="userinfo-update-button">
                                     <button type="button" className="btn update-profile" onClick={ this.updateProfile }>Update Your Profile</button>
                                 </div>
                             </div >
                         </div >
-                        <div className="col-8"></div>
+                        <div className="col-8">
+                            <DonutChart data={ data01 } colors={ colors } />
+                        </div>
                     </div >
                 </div >
             </div >

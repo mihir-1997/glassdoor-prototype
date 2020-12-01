@@ -1,45 +1,159 @@
 import React, { Component } from 'react'
 import { Redirect } from 'react-router'
+import axios from 'axios'
+import { Typeahead } from 'react-bootstrap-typeahead'
+import { withRouter } from "react-router"
+import $ from 'jquery'
 
 import './JobLanding.css'
-import intel_logo from '../../../Images/intel.png'
 import JobDescription from './JobDescription'
+import Page from '../../Pagination/Page'
 
-export default class JobLanding extends Component {
+import { BACKEND_URL, BACKEND_PORT } from '../../Config/Config'
+import IndividualJobCard from './IndividualJobCard'
+
+class JobLanding extends Component {
 
     constructor( props ) {
         super( props )
         this.state = {
+            allJobs: [],
+            filteredJobs: [],
+            allLocations: [],
             currActiveJob: "",
+            activeJobDescription: {},
             selectedJobType: "All Job Type",
             selectedSalary: "Select salary range",
             selectedLocation: "Location",
-            selectedSort: "Most Recent"
+            selectedSort: "Most Recent",
+            currPage: 1,
+            eachPageSize: 10
         }
     }
 
-    showJobDescription = ( jobId ) => {
+    componentDidMount () {
+        if ( this.props.location.state !== undefined ) {
+            if ( this.props.location.state.searchTerm !== undefined ) {
+                let id = localStorage.getItem( "id" )
+                if ( id ) {
+                    axios.defaults.withCredentials = true
+                    axios.defaults.headers.common[ 'authorization' ] = localStorage.getItem( 'token' )
+                    axios.get( BACKEND_URL + ":" + BACKEND_PORT + "/jobs/getJobsBasedOnTitle/" + this.props.location.state.searchTerm )
+                        .then( ( res ) => {
+                            if ( res.status === 200 ) {
+                                this.setState( {
+                                    allJobs: res.data.sort( ( a, b ) => {
+                                        return new Date( b.date ) - new Date( a.date )
+                                    } ),
+                                    filteredJobs: res.data.sort( ( a, b ) => {
+                                        return new Date( b.date ) - new Date( a.date )
+                                    } ),
+                                    allLocations: Array.from( new Set( res.data.map( data => data.city ) ) )
+                                } )
+                            }
+                        } )
+                        .catch( ( err ) => {
+                            if ( err.response ) {
+                                if ( err.response.status === 404 ) {
+                                    console.log( err.response.message )
+                                } else if ( err.response.status === 400 ) {
+                                    console.log( err.response.message )
+                                }
+                            }
+                        } )
+                }
+            }
+        } else {
+            let id = localStorage.getItem( "id" )
+            if ( id ) {
+                axios.get( BACKEND_URL + ":" + BACKEND_PORT + "/jobs/getApplicationStatus/" + id )
+                    .then( ( res ) => {
+                        if ( res.status === 200 ) {
+                            console.log( "getapplicationstatus", res.data )
+                            this.setState( {
+                                filteredJobs: res.data
+                            } )
+                        }
+                    } )
+                    .catch( ( err ) => {
+                        if ( err.response ) {
+                            if ( err.response.status === 404 ) {
+                                console.log( err.response.message )
+                            } else if ( err.response.status === 400 ) {
+                                console.log( err.response.message )
+                            }
+                        }
+                    } )
+            }
+        }
+    }
+
+    componentDidUpdate ( prevProps ) {
+        if ( this.props.location.state !== undefined ) {
+            if ( prevProps.location.state !== undefined ) {
+                if ( prevProps.location.state.searchTerm !== this.props.location.state.searchTerm ) {
+                    this.componentDidMount()
+                }
+            } else {
+                this.componentDidMount()
+            }
+        }
+    }
+
+    showJobDescription = ( job ) => {
         if ( this.state.currActiveJob ) {
             let activeJob = document.getElementById( this.state.currActiveJob )
-            activeJob.classList.remove( "active-job" )
-            let nextActiveJob = document.getElementById( jobId )
-            nextActiveJob.classList.add( "active-job" )
+            if ( activeJob ) {
+                activeJob.classList.remove( "active-job" )
+            }
+            let nextActiveJob = document.getElementById( job._id )
+            if ( nextActiveJob ) {
+                nextActiveJob.classList.add( "active-job" )
+            }
             this.setState( {
-                currActiveJob: jobId
+                currActiveJob: job._id
             } )
         } else {
-            let nextActiveJob = document.getElementById( jobId )
+            let nextActiveJob = document.getElementById( job._id )
             nextActiveJob.classList.add( "active-job" )
             this.setState( {
-                currActiveJob: jobId
+                currActiveJob: job._id
             } )
         }
+        this.setState( {
+            activeJobDescription: job
+        } )
+    }
+
+    saveAvgRatings = ( jobId, avgRatings ) => {
+        this.state.allJobs.forEach( job => {
+            if ( jobId === job._id ) {
+                job.avgRatings = avgRatings
+            }
+        } )
+        this.state.filteredJobs.forEach( job => {
+            if ( jobId === job._id ) {
+                job.avgRatings = avgRatings
+            }
+        } )
     }
 
     changeJobType = ( e ) => {
         e.preventDefault()
         this.setState( {
             selectedJobType: e.target.value
+        }, () => {
+            if ( this.state.selectedJobType === "All Job Types" ) {
+                this.setState( {
+                    filteredJobs: this.state.allJobs,
+                    avgRatings: []
+                } )
+            } else {
+                this.setState( {
+                    filteredJobs: this.state.allJobs.filter( job => job.type.toUpperCase() === this.state.selectedJobType.toUpperCase() ),
+                    avgRatings: []
+                } )
+            }
         } )
     }
 
@@ -47,6 +161,18 @@ export default class JobLanding extends Component {
         e.preventDefault()
         this.setState( {
             selectedSalary: e.target.value
+        }, () => {
+            if ( this.state.selectedSalary === "Select salary range" ) {
+                this.setState( {
+                    filteredJobs: this.state.allJobs,
+                    avgRatings: []
+                } )
+                return
+            }
+            this.setState( {
+                filteredJobs: this.state.allJobs.filter( job => job.salary >= parseInt( this.state.selectedSalary.split( "-" )[ 0 ] ) && job.salary <= parseInt( this.state.selectedSalary.split( "-" )[ 1 ] ) ),
+                avgRatings: []
+            } )
         } )
     }
 
@@ -54,6 +180,24 @@ export default class JobLanding extends Component {
         e.preventDefault()
         this.setState( {
             selectedLocation: e.target.value
+        } )
+    }
+
+    locationFilterChange = ( e ) => {
+        this.setState( {
+            selectedLocation: e[ 0 ]
+        }, () => {
+            if ( this.state.selectedLocation ) {
+                this.setState( {
+                    filteredJobs: this.state.allJobs.filter( job => job.city === this.state.selectedLocation ),
+                    avgRatings: []
+                } )
+            } else {
+                this.setState( {
+                    filteredJobs: this.state.allJobs,
+                    avgRatings: []
+                } )
+            }
         } )
     }
 
@@ -69,10 +213,38 @@ export default class JobLanding extends Component {
     sortJobs = ( e ) => {
         e.preventDefault()
         if ( e.target.value === "recent" ) {
-
+            console.log( "insde recent sort" )
+            this.setState( {
+                filteredJobs: this.state.filteredJobs.sort( ( a, b ) => {
+                    console.log( a.date, new Date( b.date ) )
+                    return new Date( b.date ) - new Date( a.date )
+                } ),
+                selectedSort: "Most Recent",
+                activeJobDescription: ""
+            } )
         } else if ( e.target.value === "ratings" ) {
-
+            this.setState( {
+                selectedSort: "Most Rated",
+                activeJobDescription: "",
+                filteredJobs: this.state.filteredJobs.sort( ( a, b ) => {
+                    if ( a.avgRatings !== undefined && b.avgRatings !== undefined ) {
+                        console.log( a.avgRatings, b.avgRatings )
+                        return b.avgRatings - a.avgRatings
+                    } return 5
+                } )
+            } )
         }
+        this.sortClick()
+    }
+
+    handlePageChange = ( value ) => {
+        console.log( "handle page change" )
+        this.setState( {
+            currPage: value,
+            activeJobDescription: ""
+        }, () => {
+            $( ".each-job" ).removeClass( "active-job" )
+        } )
     }
 
     render () {
@@ -81,59 +253,49 @@ export default class JobLanding extends Component {
             redirectVar = <Redirect to="/login" />
             return redirectVar
         }
-        let jobs = [ "intel", "intel1" ]
         return (
             <div>
                 {redirectVar }
                 <div className="job-search-wrapper">
                     <div className="job-search">
-                        <div className="job-search-filters">
-                            <div className="row">
-                                <div className="col-2">
-                                    <div className="dropdown">
-                                        <button className="btn dropdown-toggle navbar-dropdown-button job-type-filter" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            { this.state.selectedJobType }
-                                        </button>
-                                        <div className="dropdown-menu" aria-labelledby="dropdownMenu2">
-                                            <button className="dropdown-item" type="button" onClick={ this.changeJobType } value="All Job Types">All Job Types</button>
-                                            <button className="dropdown-item" type="button" onClick={ this.changeJobType } value="Full-time">Full-time</button>
-                                            <button className="dropdown-item" type="button" onClick={ this.changeJobType } value="Part-time">Part-time</button>
-                                            <button className="dropdown-item" type="button" onClick={ this.changeJobType } value="Contract">Contract</button>
-                                            <button className="dropdown-item" type="button" onClick={ this.changeJobType } value="Internship">Internship</button>
-                                            <button className="dropdown-item" type="button" onClick={ this.changeJobType } value="Temporary">Temporary</button>
-                                            <button className="dropdown-item" type="button" onClick={ this.changeJobType } value="Entry Level">Entry Level</button>
+                        { this.props.location.state ?
+                            <div className="job-search-filters">
+                                <div className="row">
+                                    <div className="col-2">
+                                        <div className="dropdown">
+                                            <button className="btn dropdown-toggle navbar-dropdown-button job-type-filter" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                { this.state.selectedJobType }
+                                            </button>
+                                            <div className="dropdown-menu" aria-labelledby="dropdownMenu2">
+                                                <button className="dropdown-item" type="button" onClick={ this.changeJobType } value="All Job Types">All Job Types</button>
+                                                <button className="dropdown-item" type="button" onClick={ this.changeJobType } value="Remote">Remote</button>
+                                                <button className="dropdown-item" type="button" onClick={ this.changeJobType } value="In-person">In-person</button>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div className="col-2">
-                                    <div className="dropdown">
-                                        <button className="btn dropdown-toggle navbar-dropdown-button salary-filter" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            { this.state.selectedSalary }
-                                        </button>
-                                        <div className="dropdown-menu" aria-labelledby="dropdownMenu2">
-                                            <button className="dropdown-item" type="button" onClick={ this.changeSalary } value="Select salary range">Select salary range</button>
-                                            <button className="dropdown-item" type="button" onClick={ this.changeSalary } value="$10K-$50K">$10K-$50K</button>
-                                            <button className="dropdown-item" type="button" onClick={ this.changeSalary } value="$51K-$100K">$51K-$100K</button>
-                                            <button className="dropdown-item" type="button" onClick={ this.changeSalary } value="$101K-$200K">$101K-$200K</button>
-                                            <button className="dropdown-item" type="button" onClick={ this.changeSalary } value="> $201K">&gt; $201K</button>
+                                    <div className="col-2">
+                                        <div className="dropdown">
+                                            <button className="btn dropdown-toggle navbar-dropdown-button salary-filter" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                { this.state.selectedSalary }
+                                            </button>
+                                            <div className="dropdown-menu" aria-labelledby="dropdownMenu2">
+                                                <button className="dropdown-item" type="button" onClick={ this.changeSalary } value="Select salary range">Select salary range</button>
+                                                <button className="dropdown-item" type="button" onClick={ this.changeSalary } value="10000-50000">$10K-$50K</button>
+                                                <button className="dropdown-item" type="button" onClick={ this.changeSalary } value="51000-100000">$51K-$100K</button>
+                                                <button className="dropdown-item" type="button" onClick={ this.changeSalary } value="101000-200000">$101K-$200K</button>
+                                                <button className="dropdown-item" type="button" onClick={ this.changeSalary } value="201000-300000">&gt; $201K</button>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div className="col-2">
-                                    <div className="dropdown">
-                                        <button className="btn dropdown-toggle navbar-dropdown-button location-filter" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            { this.state.selectedLocation }
-                                        </button>
-                                        <div className="dropdown-menu" aria-labelledby="dropdownMenu2">
-                                            <button className="dropdown-item" type="button" onClick={ this.changeLocation } value="Location">Location</button>
-                                            <button className="dropdown-item" type="button" onClick={ this.changeLocation } value="San Jose">San Jose</button>
-                                            <button className="dropdown-item" type="button" onClick={ this.changeLocation } value="Santa Francisco">Santa Francisco</button>
+                                    <div className="col-2">
+                                        <div className="dropdown">
+                                            <Typeahead id="locationFilter" name="locationFilter" options={ this.state.allLocations } paginate={ false } placeholder="Location" onChange={ this.locationFilterChange } />
                                         </div>
                                     </div>
+                                    <div className="col-2"></div>
                                 </div>
-                                <div className="col-2"></div>
                             </div>
-                        </div>
+                            : null }
                         <div className="job-search-display clear-float">
                             <div className="job-search-display-left left-pane">
                                 <div className="job-search-sort-wrapper clear-float">
@@ -153,63 +315,28 @@ export default class JobLanding extends Component {
                                         </button>
                                         </div>
                                     </div>
-                                    <div className="right-pane">
-                                        <div className="job-search-total-jobs-wrapper">
-                                            {/* {this.state.totalJobs} {this.props.searchTerm} Jobs */ }
-                                            534 Intel Jobs
+                                    { this.props.location.state ?
+                                        <div className="right-pane">
+                                            <div className="job-search-total-jobs-wrapper">
+                                                { this.state.filteredJobs.length } { this.props.location.state.searchTerm } Jobs
                                         </div>
-                                    </div>
+                                        </div>
+                                        : null }
                                 </div>
-                                { jobs.map( ( job, index ) => {
-                                    return <div className="clear-float" key={ index }>
-                                        <div id={ job + index } className="each-job" onClick={ () => this.showJobDescription( job + index ) }>
-                                            <div className="each-job-left-pane left-pane">
-                                                <div className="each-job-company-logo">
-                                                    <div className="company-logo-wrapper">
-                                                        <img className="company-logo" src={ intel_logo } alt="company_logo" />
-                                                    </div>
-                                                </div>
-                                                <div className="each-job-company-ratings">
-                                                    <span>
-                                                        4.1
-                                                {/* {job.avg_ratings} */ }
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24">
-                                                            <path fill="#0CA941" d="M12 .288l2.833 8.718h9.167l-7.417 5.389 2.833 8.718-7.416-5.388-7.417 5.388 2.833-8.718-7.416-5.389h9.167z" />
-                                                        </svg>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                            <div className="each-job-right-pane right-pane">
-                                                <div className="each-job-company-name">
-                                                    {/* {job.company_name} */ }
-                                                Intel
-                                            </div>
-                                                <div className="each-job-title">
-                                                    {/* {job.title} */ }
-                                                SW DevOps Engineer
-                                            </div>
-                                                <div className="each-job-location">
-                                                    {/* {job.location} */ }
-                                                Austin, TX
-                                            </div>
-                                                <div className="each-job-salary">
-                                                    {/* {job.salary} */ }
-                                                $59k-$99k
-                                            </div>
-                                                <div className="each-job-date-wrapper">
-                                                    <div className="each-job-date">
-                                                        {/* {job.date} */ }
-                                                11/10/2020
-                                            </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                } ) }
+                                { this.state.filteredJobs ?
+                                    this.state.filteredJobs.slice( this.state.currPage * this.state.eachPageSize - this.state.eachPageSize, this.state.currPage * this.state.eachPageSize ).map( ( job, index ) => {
+                                        return <IndividualJobCard jobDetails={ job } key={ index + job._id } showJobDescription={ this.showJobDescription } saveAvgRatings={ this.saveAvgRatings } />
+                                    } )
+                                    : null }
+                                { this.state.filteredJobs.length > 0 ?
+                                    <Page dataLength={ this.state.filteredJobs.length } eachPageSize={ this.state.eachPageSize } handlePageChange={ this.handlePageChange } />
+                                    : null }
                             </div>
-                            <div className="job-search-display-right right-pane">
-                                <JobDescription />
-                            </div>
+                            { this.state.activeJobDescription._id ?
+                                <div className="job-search-display-right right-pane">
+                                    <JobDescription key={ Math.random() } job={ this.state.activeJobDescription } />
+                                </div>
+                                : null }
                         </div>
                     </div>
                 </div>
@@ -217,3 +344,5 @@ export default class JobLanding extends Component {
         )
     }
 }
+
+export default withRouter( JobLanding );

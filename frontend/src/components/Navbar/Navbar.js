@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-// import { Redirect } from 'react-router'
+import { Redirect } from 'react-router'
 import { Link } from 'react-router-dom'
+import { withRouter } from "react-router"
 
 import Glassdoor_logo from '../../Images/glassdoor-logo.svg'
 import './Navbar.css'
@@ -10,8 +11,36 @@ class Navbar extends Component {
     constructor( props ) {
         super( props )
         this.state = {
+            searchTerm: "",
+            location: "",
+            redirectToJobs: false,
+            redirectToCompanies: false,
             dropDownValue: "Jobs"
         }
+    }
+
+    componentDidMount () {
+        if ( localStorage.getItem( "active" ) === "admin" ) {
+            this.setState( {
+                searchTerm: "",
+                location: "",
+                redirectToJobs: false,
+                dropDownValue: "Companies"
+            } )
+        } else if ( localStorage.getItem( "active" ) === "students" ) {
+            this.setState( {
+                searchTerm: "",
+                location: "",
+                redirectToJobs: false,
+                dropDownValue: "Jobs"
+            } )
+        }
+    }
+
+    onChange = ( e ) => {
+        this.setState( {
+            [ e.target.name ]: e.target.value
+        } )
     }
 
     dropDownClick = ( e ) => {
@@ -19,6 +48,27 @@ class Navbar extends Component {
         this.setState( {
             dropDownValue: e.target.value
         } )
+    }
+
+    searchJobs = ( e ) => {
+        e.preventDefault()
+        if ( localStorage.getItem( "active" ) === "admin" ) {
+            if ( this.state.searchTerm && this.state.dropDownValue === "Companies" ) {
+                this.setState( {
+                    redirectToCompanies: !this.state.redirectToCompanies
+                } )
+            }
+        } else if ( localStorage.getItem( "active" ) === "students" ) {
+            if ( this.state.searchTerm && this.state.dropDownValue === "Jobs" ) {
+                this.setState( {
+                    redirectToJobs: !this.state.redirectToJobs
+                } )
+            } else if ( this.state.searchTerm && this.state.dropDownValue === "Companies" ) {
+                this.setState( {
+                    redirectToCompanies: !this.state.redirectToCompanies
+                } )
+            }
+        }
     }
 
     signOut = ( e ) => {
@@ -32,8 +82,46 @@ class Navbar extends Component {
     }
 
     render () {
+        let redirect = null
+        if ( this.state.redirectToJobs ) {
+            this.setState( {
+                searchTerm: "",
+                location: "",
+                redirectToJobs: false,
+                dropDownValue: "Jobs"
+            } )
+            redirect = <Redirect to={ {
+                pathname: "/students/jobs",
+                state: { searchTerm: this.state.searchTerm }
+            } } />
+        }
+        else if ( this.state.redirectToCompanies ) {
+            this.setState( {
+                searchTerm: "",
+                location: "",
+                redirectToCompanies: false
+            } )
+            if ( localStorage.getItem( "active" ) === "admin" ) {
+                redirect = <Redirect to={ {
+                    pathname: "/admin/companies",
+                    state: {
+                        searchTerm: this.state.searchTerm,
+                        active: localStorage.getItem( "active" )
+                    }
+                } } />
+            } else if ( localStorage.getItem( "active" ) === "students" ) {
+                redirect = <Redirect to={ {
+                    pathname: "/students/companies",
+                    state: {
+                        searchTerm: this.state.searchTerm,
+                        active: localStorage.getItem( "active" )
+                    }
+                } } />
+            }
+        }
         return (
             <div className="navbar-container-wrapper">
+                { redirect }
                 <div className="manual-container">
                     <nav className="navbar navbar-expand-lg">
                         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
@@ -48,7 +136,7 @@ class Navbar extends Component {
                                 <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
                                     <li className="nav-item navbar-search-wrapper">
                                         <svg viewBox="0 0 15 15" fill="none" className="navbar-search-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18"><path d="M14.5 14.5l-4-4m-4 2a6 6 0 110-12 6 6 0 010 12z" stroke="#056b27"></path></svg>
-                                        <input type="text" className="form-control navbar-search" name="search" onChange={ this.onChange } placeholder="Job Title, Keywords, or Company" />
+                                        <input type="text" name="searchTerm" className="form-control navbar-search" onChange={ this.onChange } value={ this.state.searchTerm } placeholder="Job Title, Keywords, or Company" />
                                     </li>
                                     <li className="navbar-item">
                                         <div className="dropdown">
@@ -64,10 +152,10 @@ class Navbar extends Component {
                                         </div>
                                     </li>
                                     <li className="nav-item navbar-search-location">
-                                        <input type="text" className="form-control" name="search" onChange={ this.onChange } placeholder="Location" />
+                                        <input type="text" name="location" className="form-control" onChange={ this.onChange } placeholder="Location" />
                                     </li>
                                     <li className="nav-item">
-                                        <button type="button" className="green-button">Search</button>
+                                        <button type="button" className="green-button" onClick={ this.searchJobs }>Search</button>
                                     </li>
                                     <li className="nav-item">
                                         <div className="notification-icon">
@@ -90,6 +178,7 @@ class Navbar extends Component {
                                                     <Link to={ { pathname: "/students/profile", section: "job-preference" } } style={ { textDecoration: 'none' } }><button className="dropdown-item" type="button" value="Job Preferences">Job Preferences</button></Link>
                                                     <Link to={ { pathname: "/students/profile", section: "demographics" } } style={ { textDecoration: 'none' } }><button className="dropdown-item" type="button" value="Demographics">Demographics</button></Link>
                                                     <Link to={ { pathname: "/students/contributions" } } style={ { textDecoration: 'none' } }><button className="dropdown-item" type="button" value="Contributions">Contributions</button></Link>
+                                                    <Link to={ { pathname: "/students/applications", purpose: "jobApplications" } } style={ { textDecoration: 'none' } }><button className="dropdown-item" type="button" value="My Jobs">My Jobs</button></Link>
                                                     <button className="dropdown-item sign-out" type="button" onClick={ this.signOut } value="Sign Out">Sign Out</button>
                                                 </div>
                                             </div>
@@ -99,11 +188,54 @@ class Navbar extends Component {
                                 </ul>
                             </div>
                             :
-                            <div className="collapse navbar-collapse" id="navbarTogglerDemo01">
-                                <Link className="navbar-brand" to="/login">
-                                    <img src={ Glassdoor_logo } className="logo-image" alt="glassdoor-logo" />
-                                </Link>
-                            </div>
+                            localStorage.getItem( "active" ) === "admin" ?
+                                <div className="collapse navbar-collapse" id="navbarTogglerDemo01">
+                                    <Link className="navbar-brand" to="/admin/dashboard">
+                                        <img src={ Glassdoor_logo } className="logo-image" alt="glassdoor-logo" />
+                                    </Link>
+                                    <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
+                                        <li className="nav-item navbar-search-wrapper">
+                                            <svg viewBox="0 0 15 15" fill="none" className="navbar-search-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18"><path d="M14.5 14.5l-4-4m-4 2a6 6 0 110-12 6 6 0 010 12z" stroke="#056b27"></path></svg>
+                                            <input type="text" name="searchTerm" className="form-control navbar-search" onChange={ this.onChange } value={ this.state.searchTerm } placeholder="Company Name" />
+                                        </li>
+                                        <li className="navbar-item">
+                                            <div className="dropdown">
+                                                <button className="btn dropdown-toggle navbar-dropdown-button" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    { this.state.dropDownValue }
+                                                </button>
+                                                <div className="dropdown-menu" aria-labelledby="dropdownMenu2">
+                                                    <button className="dropdown-item" type="button" onClick={ this.dropDownClick } value="Companies">Companies</button>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li className="nav-item">
+                                            <button type="button" className="green-button" onClick={ this.searchJobs }>Search</button>
+                                        </li>
+                                    </ul>
+                                    <ul className="navbar-nav ml-auto mt-2 mt-lg-0">
+                                        <li className="nav-item">
+                                            <div className="user-icon-wrapper">
+                                                <div className="user-icon">
+                                                    <svg style={ { "width": "36px", "height": "36px" } } xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                                        <path className="normal-user-icon" d="M12 2a10 10 0 1010 10A10 10 0 0012 2zm0 19a8.91 8.91 0 01-5.33-1.75 6 6 0 0110.66 0A8.91 8.91 0 0112 21zm6.11-2.4a7 7 0 00-12.22 0 9 9 0 1112.22 0zM12 6a4 4 0 104 4 4 4 0 00-4-4zm0 7a3 3 0 113-3 3 3 0 01-3 3z" fill="currentColor" fillRule="evenodd"></path>
+                                                        <path className="user-icon-hover" d="M12 7a3 3 0 103 3 3 3 0 00-3-3zm0 9a6 6 0 00-5.33 3.25 9 9 0 0010.66 0A6 6 0 0012 16zm0-14A10 10 0 112 12 10 10 0 0112 2z" fill="currentColor" fillRule="evenodd"></path>
+                                                    </svg>
+                                                    <div className="user-icon-dropdown" >
+                                                        <Link to="/admin/companies" style={ { textDecoration: 'none' } }><button className="dropdown-item" type="button" value="All Companies">All Companies</button></Link>
+                                                        <button className="dropdown-item sign-out" type="button" onClick={ this.signOut } value="Sign Out">Sign Out</button>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                :
+                                <div className="collapse navbar-collapse" id="navbarTogglerDemo01">
+                                    <Link className="navbar-brand" to="/login">
+                                        <img src={ Glassdoor_logo } className="logo-image" alt="glassdoor-logo" />
+                                    </Link>
+                                </div>
                         }
                         { localStorage.getItem( "active" ) === "employers" ?
 
@@ -153,4 +285,4 @@ class Navbar extends Component {
     }
 }
 
-export default Navbar;
+export default withRouter( Navbar );

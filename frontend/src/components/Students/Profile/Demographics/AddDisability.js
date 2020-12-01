@@ -5,13 +5,34 @@ import Footer from '../../../Popup/Footer'
 
 class AddDisability extends Component {
 
+    constructor( props ) {
+        super( props )
+        this.state = {
+            disability: "",
+            error: ""
+        }
+    }
+
+    onChange = ( e ) => {
+        this.setState( {
+            disability: e.target.value
+        } )
+    }
+
     closePopup = () => {
         let popup = document.getElementById( "disability-popup" )
         popup.classList.remove( "popup-wrapper-show" )
     }
 
-    saveDisability = ( e ) => {
-        e.preventDefault()
+    saveDisability = () => {
+        if ( this.state.disability ) {
+            this.closePopup()
+            this.props.saveDisability( this.state.disability )
+        } else {
+            this.setState( {
+                error: "Please select one"
+            } )
+        }
     }
 
     render () {
@@ -26,13 +47,13 @@ class AddDisability extends Component {
                         <div>
                             <form>
                                 <div>
-                                    <input type="radio" name="disability" value="Yes" />&nbsp;&nbsp;Yes
+                                    <input type="radio" name="disability" value="Yes" onChange={ this.onChange } />&nbsp;&nbsp;Yes
                                 </div>
                                 <div>
-                                    <input type="radio" name="disability" value="No" />&nbsp;&nbsp;No
+                                    <input type="radio" name="disability" value="No" onChange={ this.onChange } />&nbsp;&nbsp;No
                                 </div>
                                 <div>
-                                    <input type="radio" name="disability" value="Prefer Not to Say" />&nbsp;&nbsp;Prefer Not to Say
+                                    <input type="radio" name="disability" value="Prefer Not to Say" onChange={ this.onChange } />&nbsp;&nbsp;Prefer Not to Say
                                 </div>
                             </form>
                         </div>

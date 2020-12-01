@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import axios from 'axios'
 
 import './Demographics.css'
 import Demographics_IMG from '../../../../Images/demographics.svg'
@@ -7,7 +8,76 @@ import AddGender from './AddGender'
 import AddDisability from './AddDisability'
 import AddVeteran from './AddVeteran'
 
+import { BACKEND_URL, BACKEND_PORT } from '../../../Config/Config'
+
 class Demographics extends Component {
+
+    constructor( props ) {
+        super( props )
+        this.state = {
+            ethnicity: "",
+            gender: "",
+            disability: "",
+            veteranStatus: "",
+        }
+    }
+
+    componentDidMount () {
+        let id = localStorage.getItem( "id" )
+        if ( id ) {
+            axios.defaults.withCredentials = true
+            axios.defaults.headers.common[ 'authorization' ] = localStorage.getItem( 'token' )
+            axios.get( BACKEND_URL + ":" + BACKEND_PORT + "/students/getUser/" + id )
+                .then( ( res ) => {
+                    if ( res.status === 200 ) {
+                        this.setState( {
+                            ethnicity: res.data.userDemographics.ethnicity,
+                            gender: res.data.userDemographics.gender,
+                            disability: res.data.userDemographics.disability,
+                            veteranStatus: res.data.userDemographics.veteranStatus,
+                        } )
+                    }
+                } )
+                .catch( ( err ) => {
+                    if ( err.response ) {
+                        if ( err.response.status === 404 ) {
+                            console.log( err.response.message )
+                        } else if ( err.response.status === 400 ) {
+                            console.log( err.response.message )
+                        }
+                    }
+                } )
+        }
+    }
+
+    sendDemographicsUpdate = () => {
+        let id = localStorage.getItem( "id" )
+        if ( id ) {
+            let demographics = {
+                ethnicity: this.state.ethnicity,
+                gender: this.state.gender,
+                disability: this.state.disability,
+                veteranStatus: this.state.veteranStatus,
+            }
+            axios.defaults.withCredentials = true
+            axios.defaults.headers.common[ 'authorization' ] = localStorage.getItem( 'token' )
+            axios.put( BACKEND_URL + ":" + BACKEND_PORT + "/students/updateUserDemographics/" + id, demographics )
+                .then( ( res ) => {
+                    if ( res.status === 200 ) {
+                        this.componentDidMount()
+                    }
+                } )
+                .catch( ( err ) => {
+                    if ( err.response ) {
+                        if ( err.response.status === 404 ) {
+                            console.log( err.response.message )
+                        } else if ( err.response.status === 400 ) {
+                            console.log( err.response.message )
+                        }
+                    }
+                } )
+        }
+    }
 
     addRace = ( e ) => {
         e.preventDefault()
@@ -15,6 +85,14 @@ class Demographics extends Component {
         let modal = document.getElementById( "modal" )
         modal.appendChild( popup )
         popup.classList.add( "popup-wrapper-show" )
+    }
+
+    saveRace = ( race ) => {
+        this.setState( {
+            ethnicity: race
+        }, () => {
+            this.sendDemographicsUpdate()
+        } )
     }
 
     addGender = ( e ) => {
@@ -25,6 +103,14 @@ class Demographics extends Component {
         popup.classList.add( "popup-wrapper-show" )
     }
 
+    saveGender = ( gender ) => {
+        this.setState( {
+            gender: gender
+        }, () => {
+            this.sendDemographicsUpdate()
+        } )
+    }
+
     addDisability = ( e ) => {
         e.preventDefault()
         let popup = document.getElementById( "disability-popup" )
@@ -33,12 +119,28 @@ class Demographics extends Component {
         popup.classList.add( "popup-wrapper-show" )
     }
 
+    saveDisability = ( disability ) => {
+        this.setState( {
+            disability: disability
+        }, () => {
+            this.sendDemographicsUpdate()
+        } )
+    }
+
     addVeteran = ( e ) => {
         e.preventDefault()
         let popup = document.getElementById( "veteran-popup" )
         let modal = document.getElementById( "modal" )
         modal.appendChild( popup )
         popup.classList.add( "popup-wrapper-show" )
+    }
+
+    saveVeteran = ( veteranStatus ) => {
+        this.setState( {
+            veteranStatus: veteranStatus
+        }, () => {
+            this.sendDemographicsUpdate()
+        } )
     }
 
     render () {
@@ -88,12 +190,15 @@ class Demographics extends Component {
                                     </span>
                                 </h3>
                                 <div className="demographics-each-section">
-                                    I identify my race or ethnicity as:
-                                    {/* &nbsp;<span className="demographics-answer">{this.state.race}</span> */ }
-                                    &nbsp;<span className="demographics-answer">Asian</span>
+                                    { this.state.ethnicity ?
+                                        <span>I identify my race or ethnicity as:
+                                        &nbsp;<span className="demographics-answer">{ this.state.ethnicity }</span>
+                                        </span>
+                                        : null
+                                    }
                                 </div>
                             </div>
-                            <AddRace />
+                            <AddRace saveRace={ this.saveRace } />
                         </div>
                         <div className="demographics-section">
                             <div className="gender">
@@ -114,12 +219,15 @@ class Demographics extends Component {
                                     </span>
                                 </h3>
                                 <div className="demographics-each-section">
-                                    I identify my gender as:
-                                    {/* &nbsp;<span className="demographics-answer">{this.state.gender}</span> */ }
-                                    &nbsp;<span className="demographics-answer">Male</span>
+                                    { this.state.gender ?
+                                        <span>I identify my gender as:
+                                        &nbsp;<span className="demographics-answer">{ this.state.gender }</span>
+                                        </span>
+                                        : null
+                                    }
                                 </div>
                             </div>
-                            <AddGender />
+                            <AddGender saveGender={ this.saveGender } />
                         </div>
                         <div className="demographics-section">
                             <div className="disability">
@@ -140,12 +248,15 @@ class Demographics extends Component {
                                     </span>
                                 </h3>
                                 <div className="demographics-each-section">
-                                    Disability:
-                                    {/* &nbsp;<span className="demographics-answer">{this.state.disability}</span> */ }
-                                    &nbsp;<span className="demographics-answer">No</span>
+                                    { this.state.disability ?
+                                        <span>Disability:
+                                        &nbsp;<span className="demographics-answer">{ this.state.disability }</span>
+                                        </span>
+                                        : null
+                                    }
                                 </div>
                             </div>
-                            <AddDisability />
+                            <AddDisability saveDisability={ this.saveDisability } />
                         </div>
                         <div className="demographics-section">
                             <div className="veteran">
@@ -166,12 +277,15 @@ class Demographics extends Component {
                                     </span>
                                 </h3>
                                 <div className="demographics-each-section">
-                                    Veteran Status:
-                                    {/* &nbsp;<span className="demographics-answer">{this.state.veteran}</span> */ }
-                                    &nbsp;<span className="demographics-answer">No</span>
+                                    { this.state.veteranStatus ?
+                                        <span>Veteran Status:
+                                        &nbsp;<span className="demographics-answer">{ this.state.veteranStatus }</span>
+                                        </span>
+                                        : null
+                                    }
                                 </div>
                             </div>
-                            <AddVeteran />
+                            <AddVeteran saveVeteran={ this.saveVeteran } />
                         </div>
                     </div>
                 </div>

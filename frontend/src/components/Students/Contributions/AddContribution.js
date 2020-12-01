@@ -62,14 +62,14 @@ class AddContribution extends Component {
                                         </div>
                                         <div className="col-8">
                                             <div onChange={ this.radioChange }>
-                                                <input type="radio" id="company-review" name="addContributionOption" value="company-review" checked={ this.state.activeRadio === "company-review" } />&nbsp;&nbsp;&nbsp;&nbsp;
-                                                <label for="company review">Company Review</label><br />
-                                                <input type="radio" id="salary" name="addContributionOption" value="salary" checked={ this.state.activeRadio === "salary" } />&nbsp;&nbsp;&nbsp;&nbsp;
-                                                <label for="salary">Salary</label><br />
-                                                <input type="radio" id="interview-review" name="addContributionOption" value="interview-review" checked={ this.state.activeRadio === "interview-review" } />&nbsp;&nbsp;&nbsp;&nbsp;
-                                                <label for="interview review">Interview Review</label><br />
-                                                <input type="radio" id="workday-photo" name="addContributionOption" value="workday-photo" checked={ this.state.activeRadio === "workday-photo" } />&nbsp;&nbsp;&nbsp;&nbsp;
-                                                <label for="workday photo">Workday Photos</label>
+                                                <input type="radio" id="company-review" name="addContributionOption" value="company-review" defaultChecked={ this.state.activeRadio === "company-review" } />&nbsp;&nbsp;&nbsp;&nbsp;
+                                                <label htmlFor="company review">Company Review</label><br />
+                                                <input type="radio" id="salary" name="addContributionOption" value="salary" defaultChecked={ this.state.activeRadio === "salary" } />&nbsp;&nbsp;&nbsp;&nbsp;
+                                                <label htmlFor="salary">Salary</label><br />
+                                                <input type="radio" id="interview-review" name="addContributionOption" value="interview-review" defaultChecked={ this.state.activeRadio === "interview-review" } />&nbsp;&nbsp;&nbsp;&nbsp;
+                                                <label htmlFor="interview review">Interview Review</label><br />
+                                                <input type="radio" id="workday-photo" name="addContributionOption" value="workday-photo" defaultChecked={ this.state.activeRadio === "workday-photo" } />&nbsp;&nbsp;&nbsp;&nbsp;
+                                                <label htmlFor="workday photo">Workday Photos</label>
                                             </div>
                                         </div>
                                     </div>

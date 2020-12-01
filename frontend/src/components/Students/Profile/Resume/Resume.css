@@ -68,6 +68,14 @@
     font-weight: bold;
 }
 
+.isprimary-input {
+    width: 100%;
+}
+
+.isprimary-input div {
+    margin: 2% 0 0 15%;
+}
+
 .resume-upload-input {
     display: none;
 }

@@ -52,6 +52,11 @@
     width: 55px;
 }
 
+.dashboard-profile {
+    height: 40px;
+    width: 40px;
+}
+
 .userinfo-name {
     font-weight: bold;
     font-size: 20px;;

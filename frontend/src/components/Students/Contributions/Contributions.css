@@ -52,7 +52,42 @@
     margin-bottom: 16px;
 }
 
-/* salaries */
+/* reviews */
+
+.review-description {
+    margin-top: 10%;
+}
+
+/* photos */
+
+.photos-employer-name {
+    font-weight: 600;
+    font-size: 18px;
+}
+
+.contributions-table-photo {
+    height: 150px;
+    width: 250px;
+    margin: 5% 0;
+}
+
+.show-photos {
+    height: 30px;
+    font-size: 12px;
+}
+
+.allphotos {
+    width: auto;
+    height: 450px;
+    overflow: scroll;
+}
+
+.contributions-allphotos-photo {
+    height: 280px;
+    width: 380px;
+    padding: 10px;
+    margin-left: 70px;
+}
 
 /* common to all contributions */
 
@@ -61,7 +96,6 @@
 }
 
 .contributions-stat-heading {
-    line-height: 50px;
     margin-top: 4%;
 }
 
@@ -70,6 +104,7 @@
     border: 1px solid lightgray;
 }
 
-.contributions-stats {
-    line-height: 40px;
+.contribution-delete-option {
+    color: #1861bf;
+    cursor: pointer;
 }

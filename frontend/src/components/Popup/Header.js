@@ -6,6 +6,7 @@ class Header extends Component {
 
     closePopup = ( e ) => {
         e.preventDefault()
+        console.log( "header close popup" )
         this.props.closePopup()
     }
 

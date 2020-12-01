@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Redirect } from 'react-router'
+import axios from 'axios'
 
 import './StudentProfile.css'
 import SEO from '../../SEO/SEO'
@@ -8,12 +9,16 @@ import Resume from './Resume/Resume'
 import JobPreference from './Job Preference/JobPreference'
 import Demographics from './Demographics/Demographics'
 
+import { BACKEND_URL, BACKEND_PORT } from '../../Config/Config'
+const FormData = require( 'form-data' )
+
 class UserProfile extends Component {
 
     constructor( props ) {
         super( props )
         this.state = {
-            selectedSection: "profile"
+            selectedSection: "profile",
+            profilePicture: ""
         }
     }
 
@@ -32,6 +37,29 @@ class UserProfile extends Component {
                 }
             }
         }
+        let id = localStorage.getItem( "id" )
+        if ( id ) {
+            axios.defaults.withCredentials = true
+            axios.defaults.headers.common[ 'authorization' ] = localStorage.getItem( 'token' )
+            axios.get( BACKEND_URL + ":" + BACKEND_PORT + "/students/getUser/" + id )
+                .then( ( res ) => {
+                    if ( res.status === 200 ) {
+                        this.setState( {
+                            profilePicture: res.data.profilePicture,
+                            resume: res.data.resume
+                        } )
+                    }
+                } )
+                .catch( ( err ) => {
+                    if ( err.response ) {
+                        if ( err.response.status === 404 ) {
+                            console.log( err.response.message )
+                        } else if ( err.response.status === 400 ) {
+                            console.log( err.response.message )
+                        }
+                    }
+                } )
+        }
     }
 
     selectSection = ( option ) => {
@@ -42,6 +70,44 @@ class UserProfile extends Component {
         } )
         let activeSelection = document.getElementById( option )
         activeSelection.classList.add( "sections-each-link-active" )
+    }
+
+    clickProfilePicture = () => {
+        document.getElementById( "user-profile-picture" ).click()
+    }
+
+    changeProfilePicture = ( e ) => {
+        e.preventDefault()
+        let id = localStorage.getItem( "id" )
+        if ( id ) {
+            const formData = new FormData()
+            formData.append( 'myImage', e.target.files[ 0 ] )
+            const config = {
+                headers: {
+                    'content-type': 'multipart/form-data'
+                }
+            }
+            axios.defaults.withCredentials = true
+            axios.defaults.headers.common[ 'authorization' ] = localStorage.getItem( 'token' )
+            axios.post( BACKEND_URL + ":" + BACKEND_PORT + "/students/updateUserProfilePicture/" + id, formData, config )
+                .then( ( res ) => {
+                    if ( res.status === 200 ) {
+                        this.setState( {
+                            profilePicture: res.data.profilePicture
+                        } )
+                        console.log( res.data )
+                    }
+                } )
+                .catch( ( err ) => {
+                    if ( err.response ) {
+                        if ( err.response.status === 404 ) {
+                            console.log( err.response.message )
+                        } else if ( err.response.status === 400 ) {
+                            console.log( err.response.message )
+                        }
+                    }
+                } )
+        }
     }
 
     render () {
@@ -65,17 +131,20 @@ class UserProfile extends Component {
                 {redirectVar }
                 <div className="row">
                     <div className="col-4">
-                        <div className="userinfo-profile-picture">
-                            {/* <img className="userinfo-profile" src="" alt="profile"></img> */ }
-                            <svg className="userinfo-profile" xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
-                                <g fill="none" fillRule="evenodd">
-                                    <path d="M0 0h48v48H0z"></path>
-                                    <g fill="#C4C7CC" transform="translate(3.5 3.21)">
-                                        <path id="prefix__avatar-a" d="M20.5 40.79c-11.046 0-20-8.954-20-20 0-11.045 8.954-20 20-20s20 8.955 20 20c0 11.046-8.954 20-20 20z"></path>
+                        <div className="userinfo-profile-picture" onClick={ this.clickProfilePicture }>
+                            { this.state.profilePicture ?
+                                <img className="userinfo-profile" src={ BACKEND_URL + ":" + BACKEND_PORT + "/public/images/profilepics/" + this.state.profilePicture } alt="profile"></img>
+                                :
+                                <svg className="userinfo-profile" xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
+                                    <g fill="none" fillRule="evenodd">
+                                        <path d="M0 0h48v48H0z"></path>
+                                        <g fill="#C4C7CC" transform="translate(3.5 3.21)">
+                                            <path id="prefix__avatar-a" d="M20.5 40.79c-11.046 0-20-8.954-20-20 0-11.045 8.954-20 20-20s20 8.955 20 20c0 11.046-8.954 20-20 20z"></path>
+                                        </g>
+                                        <path fill="#FFF" fillRule="nonzero" d="M36.71 38.123A18.93 18.93 0 0124 43a18.93 18.93 0 01-12.71-4.877C13.51 33.327 18.367 30 24 30c5.633 0 10.489 3.327 12.71 8.123zM24 28a8 8 0 110-16 8 8 0 010 16z"></path>
                                     </g>
-                                    <path fill="#FFF" fillRule="nonzero" d="M36.71 38.123A18.93 18.93 0 0124 43a18.93 18.93 0 01-12.71-4.877C13.51 33.327 18.367 30 24 30c5.633 0 10.489 3.327 12.71 8.123zM24 28a8 8 0 110-16 8 8 0 010 16z"></path>
-                                </g>
-                            </svg>
+                                </svg>
+                            }
                             <svg className="userinfo-profile-icon" style={ { "width": "24px", "height": "24px" } } xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 20 24">
                                 <g fill="none" fillRule="evenodd">
                                     <g strokeWidth="2">
@@ -85,7 +154,10 @@ class UserProfile extends Component {
                                     <path d="M10.982 5.463L10.303 10h3.121c.556 0 .738.363.411.805l-4.372 5.91c-.328.445-.528.357-.448-.178L9.694 12h-3.12c-.556 0-.739-.363-.412-.805l4.372-5.91c.329-.445.528-.357.448.178z" fill="#0CAA41"></path>
                                 </g>
                             </svg> &nbsp;&nbsp;
-                            <span className="add-photo">Add a photo</span>
+                            { this.state.profilePicture ?
+                                null : <span className="add-photo">Add a photo</span>
+                            }
+                            <input type="file" name="user-profile-picture" id="user-profile-picture" accept="image/*" onChange={ this.changeProfilePicture } />
                         </div>
                         <div className="userinfo-sections-links">
                             <div className="userinfo-profile sections-each-link sections-each-link-active" id="profile" onClick={ () => this.selectSection( "profile" ) }>

@@ -1,15 +1,33 @@
 import React, { Component } from 'react'
+import axios from 'axios'
 
 import './Education.css'
+import UpdateEducation from './UpdateEducation'
+
+import { BACKEND_URL, BACKEND_PORT } from '../../../../Config/Config'
 
 class Education extends Component {
+
+    constructor( props ) {
+        super( props )
+        this.state = {
+            educationID: this.props.education.educationID,
+            collegeName: this.props.education.collegeName,
+            degree: this.props.education.degree,
+            major: this.props.education.major,
+            collegeLocation: this.props.education.collegeLocation,
+            collegeStartDate: this.props.education.collegeStartDate,
+            collegeEndDate: this.props.education.collegeEndDate,
+            collegeDescription: this.props.education.collegeDescription,
+        }
+    }
 
     componentDidMount () {
     }
 
     showEducationOptions = ( e ) => {
         e.preventDefault()
-        let options = document.getElementById( "education-more-icon-option" )
+        let options = document.getElementById( "education-more-icon-option-" + this.props.index )
         if ( options.classList.contains( "education-more-icon-option-show" ) ) {
             options.classList.remove( "education-more-icon-option-show" )
         } else {
@@ -19,10 +37,64 @@ class Education extends Component {
 
     editEducation = ( e ) => {
         e.preventDefault()
+        let popup = document.getElementById( "update-education-popup-" + this.props.index )
+        let modal = document.getElementById( "modal" )
+        modal.appendChild( popup )
+        popup.classList.add( "popup-wrapper-show" )
+    }
+
+    updateEducation = ( education ) => {
+        let id = localStorage.getItem( "id" )
+        if ( id ) {
+            axios.defaults.withCredentials = true
+            axios.defaults.headers.common[ 'authorization' ] = localStorage.getItem( 'token' )
+            axios.put( BACKEND_URL + ":" + BACKEND_PORT + "/students/updateUserEducation/" + id, education )
+                .then( ( res ) => {
+                    if ( res.status === 200 ) {
+                        window.location.reload()
+                    } else {
+                        console.log( "Error updating basic info" )
+                    }
+                } )
+                .catch( ( err ) => {
+                    if ( err.response ) {
+                        if ( err.response.status === 404 ) {
+                            console.log( err.response.message )
+                        } else if ( err.response.status === 400 ) {
+                            console.log( err.response.message )
+                        }
+                    }
+                } )
+        }
     }
 
     deleteEducation = ( e ) => {
         e.preventDefault()
+        let id = localStorage.getItem( "id" )
+        if ( id ) {
+            let education = {
+                educationID: this.state.educationID
+            }
+            axios.defaults.withCredentials = true
+            axios.defaults.headers.common[ 'authorization' ] = localStorage.getItem( 'token' )
+            axios.delete( BACKEND_URL + ":" + BACKEND_PORT + "/students/removeUserEducation/" + id, { data: education } )
+                .then( ( res ) => {
+                    if ( res.status === 200 ) {
+                        window.location.reload()
+                    } else {
+                        console.log( "Error updating basic info" )
+                    }
+                } )
+                .catch( ( err ) => {
+                    if ( err.response ) {
+                        if ( err.response.status === 404 ) {
+                            console.log( err.response.message )
+                        } else if ( err.response.status === 400 ) {
+                            console.log( err.response.message )
+                        }
+                    }
+                } )
+        }
     }
 
     render () {
@@ -42,8 +114,7 @@ class Education extends Component {
                         <div className="education-title">
                             <div className="row">
                                 <div className="col-10">
-                                    {/* {this.props.university_name} */ }
-                                    San Jose State university
+                                    { this.state.collegeName }
                                 </div>
                                 <div className="col-2">
                                     <div className="education-more-icon" onClick={ this.showEducationOptions }>
@@ -66,7 +137,7 @@ class Education extends Component {
                                         </svg>
                                     </div>
                                     <div className="education-more-icon-option-wrapper">
-                                        <div className="education-more-icon-option" id="education-more-icon-option">
+                                        <div className="education-more-icon-option" id={ "education-more-icon-option-" + this.props.index } >
                                             <button className="dropdown-item" type="button" onClick={ this.editEducation } value="Edit">
                                                 <svg className="basic-info-pen-svg" style={ { "width": "24px", "height": "24px" } } xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                                                     <g fill="#20262e" fillRule="evenodd">
@@ -86,23 +157,32 @@ class Education extends Component {
                             </div>
                         </div>
                         <div className="education-degree-major">
-                            {/* {this.state.degree}, {this.state.major} */ }
-                            Master's Degree, Software Engineering
+                            { this.state.degree },&nbsp;
+                            { this.state.major ?
+                                this.state.major
+                                : null }
                         </div>
                         <div className="education-location">
-                            {/* {this.state.education_location} */ }
-                            San Jose, CA
+                            { this.state.collegeLocation ?
+                                this.state.collegeLocation
+                                : null }
                         </div>
                         <div className="education-duration">
-                            {/* {this.state.education_duration} */ }
-                            Aug 2019 - May 2021
+                            { this.state.collegeStartDate ?
+                                this.state.collegeEndDate && this.state.collegeEndDate !== " " ?
+                                    this.state.collegeStartDate + " - " + this.state.collegeEndDate
+                                    :
+                                    this.state.collegeStartDate
+                                : null }
                         </div>
                         <div className="education-description">
-                            {/* {this.state.education_description} */ }
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                            { this.state.collegeDescription ?
+                                this.state.collegeDescription
+                                : null }
                         </div>
                     </div>
                 </div>
+                <UpdateEducation education={ { ...this.state } } index={ this.props.index } updateEducation={ this.updateEducation } />
             </div>
 
         )

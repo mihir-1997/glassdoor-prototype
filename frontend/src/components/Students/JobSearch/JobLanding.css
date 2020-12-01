@@ -50,8 +50,7 @@
     height: calc(100vh - 145px);
 }
 
-.job-search-display-left,
-.job-search-display-right {
+.job-search-display-left {
     overflow-y: scroll;
 }
 
@@ -217,6 +216,8 @@
 }
 
 .job-description-text-wrapper {
+    overflow-y: scroll;
+    height: 300px;
     padding: 2% 2% 15% 2%;
 }
 

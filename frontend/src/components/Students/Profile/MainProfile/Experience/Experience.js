@@ -1,15 +1,32 @@
 import React, { Component } from 'react'
+import axios from 'axios'
 
 import './Experience.css'
+import UpdateExperience from './UpdateExperience'
+
+import { BACKEND_URL, BACKEND_PORT } from '../../../../Config/Config'
 
 class Experience extends Component {
+
+    constructor( props ) {
+        super( props )
+        this.state = {
+            experienceID: this.props.experience.experienceID,
+            companyName: this.props.experience.companyName,
+            jobTitle: this.props.experience.jobTitle,
+            jobStartDate: this.props.experience.jobStartDate,
+            jobEndDate: this.props.experience.jobEndDate,
+            jobLocation: this.props.experience.jobLocation,
+            jobDescription: this.props.experience.jobDescription
+        }
+    }
 
     componentDidMount () {
     }
 
     showExperienceOptions = ( e ) => {
         e.preventDefault()
-        let options = document.getElementById( "experience-more-icon-option" )
+        let options = document.getElementById( "experience-more-icon-option-" + this.props.index )
         if ( options.classList.contains( "experience-more-icon-option-show" ) ) {
             options.classList.remove( "experience-more-icon-option-show" )
         } else {
@@ -19,10 +36,64 @@ class Experience extends Component {
 
     editExperience = ( e ) => {
         e.preventDefault()
+        let popup = document.getElementById( "update-experience-popup-" + this.props.index )
+        let modal = document.getElementById( "modal" )
+        modal.appendChild( popup )
+        popup.classList.add( "popup-wrapper-show" )
+    }
+
+    updateExperience = ( experience ) => {
+        let id = localStorage.getItem( "id" )
+        if ( id ) {
+            axios.defaults.withCredentials = true
+            axios.defaults.headers.common[ 'authorization' ] = localStorage.getItem( 'token' )
+            axios.put( BACKEND_URL + ":" + BACKEND_PORT + "/students/updateUserExperience/" + id, experience )
+                .then( ( res ) => {
+                    if ( res.status === 200 ) {
+                        window.location.reload()
+                    } else {
+                        console.log( "Error updating basic info" )
+                    }
+                } )
+                .catch( ( err ) => {
+                    if ( err.response ) {
+                        if ( err.response.status === 404 ) {
+                            console.log( err.response.message )
+                        } else if ( err.response.status === 400 ) {
+                            console.log( err.response.message )
+                        }
+                    }
+                } )
+        }
     }
 
     deleteExperience = ( e ) => {
         e.preventDefault()
+        let id = localStorage.getItem( "id" )
+        if ( id ) {
+            let experience = {
+                experienceID: this.state.experienceID
+            }
+            axios.defaults.withCredentials = true
+            axios.defaults.headers.common[ 'authorization' ] = localStorage.getItem( 'token' )
+            axios.delete( BACKEND_URL + ":" + BACKEND_PORT + "/students/removeUserExperience/" + id, { data: experience } )
+                .then( ( res ) => {
+                    if ( res.status === 200 ) {
+                        window.location.reload()
+                    } else {
+                        console.log( "Error updating basic info" )
+                    }
+                } )
+                .catch( ( err ) => {
+                    if ( err.response ) {
+                        if ( err.response.status === 404 ) {
+                            console.log( err.response.message )
+                        } else if ( err.response.status === 400 ) {
+                            console.log( err.response.message )
+                        }
+                    }
+                } )
+        }
     }
 
     render () {
@@ -42,8 +113,7 @@ class Experience extends Component {
                         <div className="experience-title">
                             <div className="row">
                                 <div className="col-10">
-                                    {/* {this.props.experience_title} */ }
-                                    Software Engineer(internship)
+                                    { this.state.jobTitle }
                                 </div>
                                 <div className="col-2">
                                     <div className="experience-more-icon" onClick={ this.showExperienceOptions }>
@@ -66,7 +136,7 @@ class Experience extends Component {
                                         </svg>
                                     </div>
                                     <div className="experience-more-icon-option-wrapper">
-                                        <div className="experience-more-icon-option" id="experience-more-icon-option">
+                                        <div className="experience-more-icon-option" id={ "experience-more-icon-option-" + this.props.index }>
                                             <button className="dropdown-item" type="button" onClick={ this.editExperience } value="Edit">
                                                 <svg className="basic-info-pen-svg" style={ { "width": "24px", "height": "24px" } } xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                                                     <g fill="#20262e" fillRule="evenodd">
@@ -86,23 +156,20 @@ class Experience extends Component {
                             </div>
                         </div>
                         <div className="experience-company">
-                            {/* {this.state.experience_company} */ }
-                            Dummy
+                            { this.state.companyName }
                         </div>
                         <div className="experience-location">
-                            {/* {this.state.experience_location} */ }
-                            San Jose, CA
+                            { this.state.jobLocation }
                         </div>
                         <div className="experience-duration">
-                            {/* {this.state.experience_duration} */ }
-                            Jun 2020 - Aug 2020
+                            { this.state.jobStartDate + " - " + this.state.jobEndDate }
                         </div>
                         <div className="experience-description">
-                            {/* {this.state.experience_description} */ }
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                            { this.state.jobDescription }
                         </div>
                     </div>
                 </div>
+                <UpdateExperience experience={ { ...this.state } } index={ this.props.index } updateExperience={ this.updateExperience } />
             </div>
 
         )
