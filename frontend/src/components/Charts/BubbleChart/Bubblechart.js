@@ -61,7 +61,7 @@ class Bubblechart extends Component {
         // }
         return (
             <div className="chart-inline-60">
-                <div className="text-center">Top 5 Companies</div>
+                <div className="text-center chart-heading">Top 5 Companies</div>
                 <div className="bubble-chart-wrapper">
                     <ResponsiveBubble
                         root={ this.state.chartData }

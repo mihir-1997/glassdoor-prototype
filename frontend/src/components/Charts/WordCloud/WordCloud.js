@@ -40,7 +40,7 @@ class WordCloud extends Component {
         };
         return (
             <div className="chart-inline-40">
-                <div className="text-center">Top 10 CEOs</div>
+                <div className="text-center chart-heading">Top 10 CEOs</div>
                 <ReactWordcloud words={ this.state.chartData } options={ options } />
             </div>
         )

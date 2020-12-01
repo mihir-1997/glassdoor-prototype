@@ -28,6 +28,24 @@
     padding: 2% 0;
 }
 
+.views-per-day {
+    background-color: #ffffff ;
+    margin: 1% 5%;
+    width: 90%;
+    padding: 2% 0;
+}
+
+.chart-heading,
+.recharts-legend-item-text {
+    font-family: 'Lato', sans-serif;
+    color: #81CA9C;
+    font-weight: 600;
+}
+
+.recharts-legend-item-text {
+    font-weight: 500;
+}
+
 .small-font {
     font-size: small;
 }

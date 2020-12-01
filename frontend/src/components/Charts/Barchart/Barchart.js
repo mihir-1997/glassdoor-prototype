@@ -7,6 +7,7 @@ class Barchart extends Component {
         super( props )
         this.state = {
             chartData: [],
+            yAxis: "",
             dataKey: "Reviews"
         }
     }
@@ -14,12 +15,13 @@ class Barchart extends Component {
     componentDidMount () {
         if ( this.props.dataKey ) {
             this.setState( {
-                dataKey: this.props.dataKey
+                dataKey: this.props.dataKey,
             } )
         }
         if ( this.props.data ) {
             this.setState( {
-                chartData: this.props.data
+                chartData: this.props.data,
+                yAxis: this.props.yAxis
             } )
         }
     }
@@ -61,13 +63,13 @@ class Barchart extends Component {
         //     }
         // ]
         return (
-            <div className="chart-inline">
+            <div className={ this.props.className }>
                 <ResponsiveContainer width="100%" height={ 250 }>
                     <BarChart width={ 730 } height={ 250 } barSize={ 35 } data={ this.state.chartData }>
                         <XAxis dataKey="name" padding={ { left: 5, right: 10 } } label={ this.getLabel( 'Company', 0, 'insideBottom', -3 ) } />
-                        <YAxis padding={ { top: 10 } } label={ this.getLabel( 'No of Reviews', -90, 'center' ) } />
+                        <YAxis padding={ { top: 10 } } label={ this.getLabel( this.state.yAxis, -90, 'center' ) } />
                         <Tooltip />
-                        <Legend verticalAlign="top" height={ 30 } margin={ { top: 2, bottom: 10 } } />
+                        <Legend verticalAlign="top" height={ 20 } margin={ { top: 2, bottom: 15 } } fontWeight={ 600 } />
                         <Bar dataKey={ this.state.dataKey } fill="#82ca9d" isAnimationActive={ true } animationBegin={ 0 } animationDuration={ 1700 } />
                     </BarChart>
                 </ResponsiveContainer>

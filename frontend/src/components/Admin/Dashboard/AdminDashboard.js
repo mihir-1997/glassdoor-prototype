@@ -20,7 +20,8 @@ class AdminDashboard extends Component {
             mostReviewedCompanies: [],
             mostReviewesByStudents: [],
             ceoRatings: [],
-            companiesAvgRatings: {}
+            companiesAvgRatings: {},
+            employersByViews: []
         }
     }
 
@@ -41,7 +42,19 @@ class AdminDashboard extends Component {
                         let date = new Date( Date.now() )
                         for ( const key in res.data.analytics.reviews_per_day ) {
                             let singleItem = {}
-                            singleItem.name = date.getDate() - key + "/" + ( date.getMonth() + 1 )
+                            let newDate = date.getDate() - key
+                            console.log( newDate )
+                            let month = date.getMonth() + 1
+                            if ( newDate <= 0 ) {
+                                if ( newDate.getMonth % 2 === 0 ) {
+                                    newDate = 31 + newDate
+                                    month = date.getMonth()
+                                } else {
+                                    newDate = 30 + newDate
+                                    month = date.getMonth()
+                                }
+                            }
+                            singleItem.name = newDate + "/" + month
                             singleItem[ "Reviews/Day" ] = res.data.analytics.reviews_per_day[ key ]
                             reviewData.splice( 0, 0, singleItem )
                         }
@@ -72,12 +85,16 @@ class AdminDashboard extends Component {
                             return b.value - a.value
                         } )
 
+                        // get all employers
+                        let allEmployers = await this.getAllEmployers()
+
                         // set state for chart data
                         this.setState( {
                             reviewsPerDay: reviewData,
                             mostReviewedCompanies: companyReviews.slice( 0, 5 ),
                             companiesAvgRatings: { name: "root", children: companyAvgReviews },
-                            mostReviewesByStudents: studentData
+                            mostReviewesByStudents: studentData,
+                            employersByViews: allEmployers
                         } )
                     }
                 } )
@@ -185,6 +202,30 @@ class AdminDashboard extends Component {
         }
     }
 
+    getAllEmployers = async () => {
+        axios.defaults.withCredentials = true
+        axios.defaults.headers.common[ 'authorization' ] = localStorage.getItem( 'token' )
+        return axios.get( BACKEND_URL + ":" + BACKEND_PORT + "/analytics/getEmployerByViews" )
+            .then( ( res ) => {
+                if ( res.status === 200 ) {
+                    console.log( res.data )
+                    return res.data
+                }
+            } )
+            .catch( ( err ) => {
+                if ( err.response ) {
+                    if ( err.response.status === 404 ) {
+                        console.log( "Error! No user" )
+                        this.setState( { "error": "No user found" } )
+                    } else if ( err.response.status === 401 ) {
+                        this.setState( { "error": "Wrong Password" } )
+                    } else if ( err.response.status === 400 ) {
+                        this.setState( { "error": "Each field is required" } )
+                    }
+                }
+            } )
+    }
+
     render () {
         let redirectVar = null
         if ( !localStorage.getItem( "active" ) ) {
@@ -208,8 +249,8 @@ class AdminDashboard extends Component {
                         <div className="admin-dashboard-col-95">
                             <div className="admin-reviews-wrapper">
                                 <Linechart key={ Math.random() } dataKey="Reviews/Day" data={ this.state.reviewsPerDay } />
-                                <Barchart key={ Math.random() } dataKey="Reviews by Company" data={ this.state.mostReviewedCompanies } />
-                                <VerticalBarchart key={ Math.random() } dataKey="Reviews by Student" data={ this.state.mostReviewesByStudents } />
+                                <Barchart key={ Math.random() } dataKey="Reviews by Company" data={ this.state.mostReviewedCompanies } yAxis="No of Reviews" className="chart-inline" />
+                                <VerticalBarchart key={ Math.random() } dataKey="Reviews by Student" data={ this.state.mostReviewesByStudents } yAxis="No of Reviews" className="chart-inline" />
                             </div>
                         </div>
                     </div>
@@ -227,6 +268,18 @@ class AdminDashboard extends Component {
                                 <div className="col-5">
                                     <Bubblechart key={ Math.random() } data={ this.state.companiesAvgRatings } />
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="admin-dashboard-second-row">
+                        <div className="admin-dashboard-col-5">
+                            <div className="vertically-aligned-div">
+                                V<br />I<br />E<br />W<br />s
+                            </div>
+                        </div>
+                        <div className="admin-dashboard-col-95-wrapper">
+                            <div className="admin-reviews-wrapper">
+                                <Barchart key={ Math.random() } dataKey="Views/Day" data={ this.state.employersByViews } className="views-per-day" yAxis="No of Views" />
                             </div>
                         </div>
                     </div>
