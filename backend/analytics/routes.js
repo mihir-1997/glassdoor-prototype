@@ -59,4 +59,45 @@ router.get( '/reviewsPerDay', checkAuth, ( req, res ) => {
     } );
 } )
 
+
+//get review by Employers
+router.post( '/getReviewsbyEmployer/:employerName', ( req, res ) => {
+    // redisClient.get( RedisKey, ( err, data ) => {
+    //     if ( data != null ) {
+    //         console.log( "from redis" )
+    //         res.status( 200 ).send( JSON.parse( data ) )
+    //     } else {
+    req.body.params = req.params
+    kafka.make_request( 'analytics_getReviewsByemployer', req.body, function ( err, results ) {
+        if ( err ) {
+            console.log( "Inside err", err );
+            res.status( 404 ).send( "Failed" )
+
+
+        } else {
+            console.log( "Inside else", results );
+            res.status( 200 ).send( results )
+
+        }
+    } )
+
+} )
+
+//get Employers by views
+router.get( '/getEmployerByViews', ( req, res ) => {
+    kafka.make_request( 'analytics_getEmployerByViews', req.body, function ( err, results ) {
+        if ( err ) {
+            console.log( "Inside err", err );
+            res.status( 404 ).send( "Failed" )
+
+
+        } else {
+            console.log( "Inside else", results );
+            res.status( 200 ).send( results )
+
+        }
+    } )
+
+} )
+
 module.exports = router;

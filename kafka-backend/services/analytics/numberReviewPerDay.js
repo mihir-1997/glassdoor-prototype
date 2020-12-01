@@ -45,7 +45,7 @@ function handle_request ( msg, callback ) {
 
             }
 
-
+            //change employer name to ceo name
             if ( review.employerName in ceo_rating ) {
                 if ( review.approveCEO == true ) {
                     ceo_rating[ review.employerName ][ "positive" ] += 1

@@ -73,6 +73,8 @@ var job_getJobsReport = require( './services/jobs/job_getJobsReport' )
 //analytics
 var admin_login = require( './services/analytics/adminLogin' )
 var analytics_reviewsperday = require( './services/analytics/numberReviewPerDay' )
+var analytics_getReviewByEmployer = require( './services/analytics/getReviewsbyEmployer' )
+var analytics_getEmployerByViews = require( './services/analytics/getEmployersByViews' )
 
 
 function handleTopicRequest ( topic_name, fname ) {
@@ -182,3 +184,6 @@ handleTopicRequest( "job_getJobsReport", job_getJobsReport )
 //analytics
 handleTopicRequest( "admin_login", admin_login )
 handleTopicRequest( "analytics_reviewsperday", analytics_reviewsperday )
+handleTopicRequest( "analytics_getReviewsByemployer", analytics_getReviewByEmployer )
+handleTopicRequest( "analytics_getEmployerByViews", analytics_getEmployerByViews )
+
