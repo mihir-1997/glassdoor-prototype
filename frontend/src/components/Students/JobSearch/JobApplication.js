@@ -19,6 +19,7 @@ class JobApplication extends Component {
             resumes: [],
             selectedResumeID: "",
             selectedResumeName: "",
+            selectedImageName: "",
             coverletter: "",
             employerName: this.props.employerName,
             error: ""
@@ -36,12 +37,18 @@ class JobApplication extends Component {
             axios.get( BACKEND_URL + ":" + BACKEND_PORT + "/students/getUser/" + id )
                 .then( ( res ) => {
                     if ( res.status === 200 ) {
-                        let primary = res.data.resume.filter( resume => resume.isPrimary === true )
-                        console.log( primary )
                         this.setState( {
-                            resumes: res.data.resume,
-                            selectedResumeID: primary[ 0 ].resumeID,
-                            selectedResumeName: primary[ 0 ].resumeName
+                            resumes: res.data.resume
+                        }, () => {
+                            let primary = res.data.resume.filter( resume => resume.isPrimary === true )
+                            console.log( primary )
+                            if ( primary.length > 0 ) {
+                                this.setState( {
+                                    selectedResumeID: primary[ 0 ].resumeID,
+                                    selectedResumeName: primary[ 0 ].resumeName,
+                                    selectedImageName: primary[ 0 ].imageName
+                                } )
+                            }
                         } )
                     }
                 } )
@@ -67,7 +74,8 @@ class JobApplication extends Component {
     onResumeChange = ( e ) => {
         this.setState( {
             selectedResumeID: e.target.value.split( "-/-" )[ 0 ],
-            selectedResumeName: e.target.value.split( "-/-" )[ 1 ]
+            selectedResumeName: e.target.value.split( "-/-" )[ 1 ],
+            selectedImageName: e.target.value.split( "-/-" )[ 2 ]
         } )
     }
 
@@ -89,13 +97,14 @@ class JobApplication extends Component {
     }
 
     applyToJob = () => {
-        if ( this.state.firstName && this.state.lastName && this.state.selectedResumeID && this.state.selectedResumeName ) {
+        if ( this.state.firstName && this.state.lastName && this.state.selectedResumeID && this.state.selectedResumeName && this.state.selectedImageName ) {
             let id = localStorage.getItem( "id" )
             if ( id ) {
                 let jobApplication = {
                     studentID: id,
                     resumeID: this.state.selectedResumeID,
                     resumeName: this.state.selectedResumeName,
+                    imageName: this.state.selectedImageName,
                     name: this.state.firstName + " " + this.state.lastName,
                 }
                 axios.defaults.withCredentials = true
@@ -155,7 +164,7 @@ class JobApplication extends Component {
                                                     if ( this.state.selectedResumeName === resume.resumeName ) {
                                                         selected = "selected"
                                                     }
-                                                    return <option value={ resume._id + "-/-" + resume.resumeName } key={ index } selected={ selected }>{ resume.resumeName }</option>
+                                                    return <option value={ resume._id + "-/-" + resume.resumeName + "-/-" + resume.imageName } key={ index } selected={ selected }>{ resume.resumeName }</option>
                                                 } )
                                                 : null }
                                         </select>

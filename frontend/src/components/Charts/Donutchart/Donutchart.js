@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { ResponsiveContainer, PieChart, Pie, Cell } from 'recharts'
 
-import './Charts.css'
+import '../Charts.css'
 
 class DonutChart extends Component {
 
@@ -76,7 +76,7 @@ class DonutChart extends Component {
                         </Pie>
                     </PieChart>
                 </ResponsiveContainer>
-                <div className="chart-rectangles">
+                <div className="chart-inline">
                     {
                         this.state.chartData.map( ( data, index ) => {
                             return <span>

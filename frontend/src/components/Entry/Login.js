@@ -32,6 +32,39 @@ class Login extends Component {
     login = e => {
         e.preventDefault()
         if ( this.state.email && this.state.password ) {
+            if ( this.state.selected === "admin" ) {
+                const admin = {
+                    userName: this.state.email,
+                    password: this.state.password,
+                }
+                axios.defaults.withCredentials = true
+                axios.post( BACKEND_URL + ":" + BACKEND_PORT + "/analytics/loginAdmin", admin )
+                    .then( ( res ) => {
+                        console.log( res )
+                        if ( res.status === 200 ) {
+                            console.log( "loggedin successfully" )
+                            localStorage.setItem( "token", res.data )
+                            var decoded = jwt_decode( res.data.split( ' ' )[ 1 ] )
+                            localStorage.setItem( "email", decoded.userName )
+                            localStorage.setItem( "id", decoded.id )
+                            localStorage.setItem( "active", decoded.type )
+                            window.location.assign( '/admin/dashboard' )
+                        }
+                    } )
+                    .catch( ( err ) => {
+                        if ( err.response ) {
+                            if ( err.response.status === 404 ) {
+                                console.log( "Error! No user" )
+                                this.setState( { "error": "No user found" } )
+                            } else if ( err.response.status === 401 ) {
+                                this.setState( { "error": "Wrong Password" } )
+                            } else if ( err.response.status === 400 ) {
+                                this.setState( { "error": "Each field is required" } )
+                            }
+                        }
+                    } )
+                return
+            }
             const re_email = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
             const re_password = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/
             if ( !re_email.test( this.state.email.toLowerCase() ) ) {
@@ -105,6 +138,9 @@ class Login extends Component {
         if ( localStorage.getItem( "email" ) && localStorage.getItem( "active" ) === "students" ) {
             redirectVar = <Redirect to="/studentDashboard" />
             return redirectVar
+        } if ( localStorage.getItem( "email" ) && localStorage.getItem( "active" ) === "admin" ) {
+            redirectVar = <Redirect to="/admin/dashboard" />
+            return redirectVar
         } else if ( localStorage.getItem( "email" ) && localStorage.getItem( "active" ) === "restaurant" ) {
 
         }
@@ -148,7 +184,7 @@ class Login extends Component {
                         <div className="col-3"></div>
                     </div>
                 </div>
-                <div>
+                <div className="error">
                     { this.state.error }
                 </div>
             </div>

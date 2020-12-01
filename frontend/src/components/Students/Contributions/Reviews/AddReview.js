@@ -21,6 +21,7 @@ class AddReview extends Component {
             cons: "",
             description: "",
             employers: [],
+            ceoname: "",
             error: "",
             redirectToContributions: false
         }
@@ -77,7 +78,8 @@ class AddReview extends Component {
 
     employerNameChange = ( e ) => {
         this.setState( {
-            employerName: e[ 0 ]
+            employerName: e[ 0 ].label,
+            ceoname: e[ 0 ].id
         } )
     }
 
@@ -88,7 +90,9 @@ class AddReview extends Component {
             if ( id ) {
                 let review = {
                     studentID: id,
+                    studentName: localStorage.getItem( "name" ),
                     employerName: this.state.employerName,
+                    ceoName: this.state.ceoname,
                     employeeStatus: this.state.employeeStatus,
                     rating: this.state.rating,
                     isPositive: this.state.isPositive,
@@ -131,6 +135,13 @@ class AddReview extends Component {
         if ( this.state.redirectToContributions ) {
             redirect = <Redirect to="/students/contributions" />
         }
+        let options = []
+        if ( this.state.employers ) {
+            this.state.employers.forEach( employer => {
+                options.push( { id: employer.ceoname, label: employer.name } )
+            } );
+            // options = this.state.employers.map( employer => { return { id: employer.ceoname, value: employer.name } } )
+        }
         return (
             <div>
                 { redirect }
@@ -138,7 +149,7 @@ class AddReview extends Component {
                     <div className="form-group row">
                         <label htmlFor="employerName" className="col-4">Employer Name*</label>
                         <div className="col-8">
-                            <Typeahead id="employerName" name="employerName" options={ this.state.employers.map( employer => employer.name ) } paginate={ false } placeholder="Select Employer..." onChange={ this.employerNameChange } />
+                            <Typeahead id="employerName" name="employerName" options={ options } paginate={ false } placeholder="Select Employer..." onChange={ this.employerNameChange } />
                         </div>
                     </div>
                     <div className="form-group row">

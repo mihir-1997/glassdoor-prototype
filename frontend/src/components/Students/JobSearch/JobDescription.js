@@ -1,14 +1,33 @@
 import React, { Component } from 'react'
+import axios from 'axios'
 
 import intel1 from '../../../Images/intel1.jpg'
 import JobApplication from './JobApplication'
+
+import { BACKEND_URL, BACKEND_PORT } from '../../Config/Config'
 
 class JobDescription extends Component {
 
     constructor( props ) {
         super( props )
         this.state = {
-            ...this.props.job
+            ...this.props.job,
+            applicationStatus: "",
+            applicationID: ""
+        }
+    }
+
+    componentDidMount () {
+        if ( this.props.job ) {
+            if ( this.props.job.applicants ) {
+                let userApplicationStatus = this.state.applicants.find( applicant => applicant.studentID === localStorage.getItem( "id" ) )
+                if ( userApplicationStatus ) {
+                    this.setState( {
+                        applicationStatus: userApplicationStatus.status,
+                        applicationID: userApplicationStatus._id
+                    } )
+                }
+            }
         }
     }
 
@@ -23,6 +42,29 @@ class JobDescription extends Component {
     applyToJob = () => {
         // this.componentDidMount()
         window.location.reload()
+    }
+
+    withdrawApplication = () => {
+        let id = localStorage.getItem( "id" )
+        if ( id && this.state.applicationID ) {
+            axios.defaults.withCredentials = true
+            axios.defaults.headers.common[ 'authorization' ] = localStorage.getItem( 'token' )
+            axios.put( BACKEND_URL + ":" + BACKEND_PORT + "/jobs/withdrawApplication/" + this.state.applicationID )
+                .then( ( res ) => {
+                    if ( res.status === 200 ) {
+                        window.location.reload()
+                    }
+                } )
+                .catch( ( err ) => {
+                    if ( err.response ) {
+                        if ( err.response.status === 404 ) {
+                            console.log( err.response.message )
+                        } else if ( err.response.status === 400 ) {
+                            console.log( err.response.message )
+                        }
+                    }
+                } )
+        }
     }
 
     render () {
@@ -60,8 +102,14 @@ class JobDescription extends Component {
                             </div>
                         </div>
                         <div className="company-right-pane col-4">
-                            { this.state.applicants.find( applicant => applicant.studentID === localStorage.getItem( "id" ) ) ?
-                                <button type="button" className="btn reverse-update-proflie" disabled={ true }>Applied</button>
+                            { this.state.applicationStatus ?
+                                <span>
+                                    <button type="button" className="btn reverse-update-proflie" disabled={ true }>{ this.state.applicationStatus }</button>
+                                    { this.state.applicationStatus === "Submitted" ?
+                                        <button type="button" className="btn reverse-update-proflie" onClick={ this.withdrawApplication }>Withdraw</button>
+                                        :
+                                        null }
+                                </span>
                                 : <button type="button" className="btn reverse-update-proflie" onClick={ this.applyForJob }>Apply Now</button>
                             }
 

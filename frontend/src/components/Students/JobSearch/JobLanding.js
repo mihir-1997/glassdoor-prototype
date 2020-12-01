@@ -32,8 +32,8 @@ class JobLanding extends Component {
     }
 
     componentDidMount () {
-        if ( this.props.location.state ) {
-            if ( this.props.location.state.searchTerm ) {
+        if ( this.props.location.state !== undefined ) {
+            if ( this.props.location.state.searchTerm !== undefined ) {
                 let id = localStorage.getItem( "id" )
                 if ( id ) {
                     axios.defaults.withCredentials = true
@@ -61,29 +61,42 @@ class JobLanding extends Component {
                                 }
                             }
                         } )
-                    // axios.get( BACKEND_URL + ":" + BACKEND_PORT + "/jobs/getApplicationStatus/" + id )
-                    //     .then( ( res ) => {
-                    //         if ( res.status === 200 ) {
-                    //             console.log( "getapplicationstatus", res.data )
-                    //         }
-                    //     } )
-                    //     .catch( ( err ) => {
-                    //         if ( err.response ) {
-                    //             if ( err.response.status === 404 ) {
-                    //                 console.log( err.response.message )
-                    //             } else if ( err.response.status === 400 ) {
-                    //                 console.log( err.response.message )
-                    //             }
-                    //         }
-                    //     } )
                 }
+            }
+        } else {
+            let id = localStorage.getItem( "id" )
+            if ( id ) {
+                axios.get( BACKEND_URL + ":" + BACKEND_PORT + "/jobs/getApplicationStatus/" + id )
+                    .then( ( res ) => {
+                        if ( res.status === 200 ) {
+                            console.log( "getapplicationstatus", res.data )
+                            this.setState( {
+                                filteredJobs: res.data
+                            } )
+                        }
+                    } )
+                    .catch( ( err ) => {
+                        if ( err.response ) {
+                            if ( err.response.status === 404 ) {
+                                console.log( err.response.message )
+                            } else if ( err.response.status === 400 ) {
+                                console.log( err.response.message )
+                            }
+                        }
+                    } )
             }
         }
     }
 
     componentDidUpdate ( prevProps ) {
-        if ( prevProps.location.state.searchTerm !== this.props.location.state.searchTerm ) {
-            this.componentDidMount()
+        if ( this.props.location.state !== undefined ) {
+            if ( prevProps.location.state !== undefined ) {
+                if ( prevProps.location.state.searchTerm !== this.props.location.state.searchTerm ) {
+                    this.componentDidMount()
+                }
+            } else {
+                this.componentDidMount()
+            }
         }
     }
 
@@ -245,42 +258,44 @@ class JobLanding extends Component {
                 {redirectVar }
                 <div className="job-search-wrapper">
                     <div className="job-search">
-                        <div className="job-search-filters">
-                            <div className="row">
-                                <div className="col-2">
-                                    <div className="dropdown">
-                                        <button className="btn dropdown-toggle navbar-dropdown-button job-type-filter" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            { this.state.selectedJobType }
-                                        </button>
-                                        <div className="dropdown-menu" aria-labelledby="dropdownMenu2">
-                                            <button className="dropdown-item" type="button" onClick={ this.changeJobType } value="All Job Types">All Job Types</button>
-                                            <button className="dropdown-item" type="button" onClick={ this.changeJobType } value="Remote">Remote</button>
-                                            <button className="dropdown-item" type="button" onClick={ this.changeJobType } value="In-person">In-person</button>
+                        { this.props.location.state ?
+                            <div className="job-search-filters">
+                                <div className="row">
+                                    <div className="col-2">
+                                        <div className="dropdown">
+                                            <button className="btn dropdown-toggle navbar-dropdown-button job-type-filter" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                { this.state.selectedJobType }
+                                            </button>
+                                            <div className="dropdown-menu" aria-labelledby="dropdownMenu2">
+                                                <button className="dropdown-item" type="button" onClick={ this.changeJobType } value="All Job Types">All Job Types</button>
+                                                <button className="dropdown-item" type="button" onClick={ this.changeJobType } value="Remote">Remote</button>
+                                                <button className="dropdown-item" type="button" onClick={ this.changeJobType } value="In-person">In-person</button>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div className="col-2">
-                                    <div className="dropdown">
-                                        <button className="btn dropdown-toggle navbar-dropdown-button salary-filter" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            { this.state.selectedSalary }
-                                        </button>
-                                        <div className="dropdown-menu" aria-labelledby="dropdownMenu2">
-                                            <button className="dropdown-item" type="button" onClick={ this.changeSalary } value="Select salary range">Select salary range</button>
-                                            <button className="dropdown-item" type="button" onClick={ this.changeSalary } value="10000-50000">$10K-$50K</button>
-                                            <button className="dropdown-item" type="button" onClick={ this.changeSalary } value="51000-100000">$51K-$100K</button>
-                                            <button className="dropdown-item" type="button" onClick={ this.changeSalary } value="101000-200000">$101K-$200K</button>
-                                            <button className="dropdown-item" type="button" onClick={ this.changeSalary } value="201000-300000">&gt; $201K</button>
+                                    <div className="col-2">
+                                        <div className="dropdown">
+                                            <button className="btn dropdown-toggle navbar-dropdown-button salary-filter" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                { this.state.selectedSalary }
+                                            </button>
+                                            <div className="dropdown-menu" aria-labelledby="dropdownMenu2">
+                                                <button className="dropdown-item" type="button" onClick={ this.changeSalary } value="Select salary range">Select salary range</button>
+                                                <button className="dropdown-item" type="button" onClick={ this.changeSalary } value="10000-50000">$10K-$50K</button>
+                                                <button className="dropdown-item" type="button" onClick={ this.changeSalary } value="51000-100000">$51K-$100K</button>
+                                                <button className="dropdown-item" type="button" onClick={ this.changeSalary } value="101000-200000">$101K-$200K</button>
+                                                <button className="dropdown-item" type="button" onClick={ this.changeSalary } value="201000-300000">&gt; $201K</button>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div className="col-2">
-                                    <div className="dropdown">
-                                        <Typeahead id="locationFilter" name="locationFilter" options={ this.state.allLocations } paginate={ false } placeholder="Location" onChange={ this.locationFilterChange } />
+                                    <div className="col-2">
+                                        <div className="dropdown">
+                                            <Typeahead id="locationFilter" name="locationFilter" options={ this.state.allLocations } paginate={ false } placeholder="Location" onChange={ this.locationFilterChange } />
+                                        </div>
                                     </div>
+                                    <div className="col-2"></div>
                                 </div>
-                                <div className="col-2"></div>
                             </div>
-                        </div>
+                            : null }
                         <div className="job-search-display clear-float">
                             <div className="job-search-display-left left-pane">
                                 <div className="job-search-sort-wrapper clear-float">
@@ -300,11 +315,13 @@ class JobLanding extends Component {
                                         </button>
                                         </div>
                                     </div>
-                                    <div className="right-pane">
-                                        <div className="job-search-total-jobs-wrapper">
-                                            { this.state.filteredJobs.length } { this.props.location.state.searchTerm } Jobs
+                                    { this.props.location.state ?
+                                        <div className="right-pane">
+                                            <div className="job-search-total-jobs-wrapper">
+                                                { this.state.filteredJobs.length } { this.props.location.state.searchTerm } Jobs
                                         </div>
-                                    </div>
+                                        </div>
+                                        : null }
                                 </div>
                                 { this.state.filteredJobs ?
                                     this.state.filteredJobs.slice( this.state.currPage * this.state.eachPageSize - this.state.eachPageSize, this.state.currPage * this.state.eachPageSize ).map( ( job, index ) => {

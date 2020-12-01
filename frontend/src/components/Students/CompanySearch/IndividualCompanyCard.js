@@ -28,10 +28,10 @@ class IndividualCompanyCard extends Component {
                 firstTime: true,
                 pageSize: 5
             }
-            axios.post( BACKEND_URL + ":" + BACKEND_PORT + "/contributions/getReviewsbyEmployer/" + this.state.employerName, data )
+            axios.post( BACKEND_URL + ":" + BACKEND_PORT + "/contributions/getReviewsbyEmployer/" + this.state.name, data )
                 .then( ( res ) => {
                     if ( res.status === 200 ) {
-                        console.log( res.data )
+                        console.log( this.state.name, res.data )
                         if ( res.data.reviewStats.totalCount ) {
                             this.setState( {
                                 numOfReviews: res.data.reviewStats.totalCount
@@ -55,10 +55,10 @@ class IndividualCompanyCard extends Component {
                 } )
             axios.defaults.withCredentials = true
             axios.defaults.headers.common[ 'authorization' ] = localStorage.getItem( 'token' )
-            axios.post( BACKEND_URL + ":" + BACKEND_PORT + "/contributions/getInterviewsByEmployer/" + this.state.employerName, data )
+            axios.post( BACKEND_URL + ":" + BACKEND_PORT + "/contributions/getInterviewsByEmployer/" + this.state.name, data )
                 .then( ( res ) => {
                     if ( res.status === 200 ) {
-                        console.log( res.data )
+                        console.log( this.state.name, res.data )
                         if ( res.data.interviewStats.totalCount ) {
                             this.setState( {
                                 numOfInterviews: res.data.interviewStats.totalCount
@@ -77,10 +77,10 @@ class IndividualCompanyCard extends Component {
                 } )
             axios.defaults.withCredentials = true
             axios.defaults.headers.common[ 'authorization' ] = localStorage.getItem( 'token' )
-            axios.post( BACKEND_URL + ":" + BACKEND_PORT + "/contributions/getSalariesByEmployer/" + this.state.employerName, data )
+            axios.post( BACKEND_URL + ":" + BACKEND_PORT + "/contributions/getSalariesByEmployer/" + this.state.name, data )
                 .then( ( res ) => {
                     if ( res.status === 200 ) {
-                        console.log( res.data )
+                        console.log( this.state.name, res.data )
                         if ( res.data.salaryStats.totalCount ) {
                             this.setState( {
                                 numOfSalaries: res.data.salaryStats.totalCount
@@ -165,12 +165,14 @@ class IndividualCompanyCard extends Component {
                             </div>
                             </div>
                         </div>
-                        <div className="row individual-company-add-review">
-                            <div className="col-6"></div>
-                            <div className="col-6">
-                                <button type="button" className="btn reverse-update-proflie" onClick={ this.writeReview }>Add a Review</button>
+                        { localStorage.getItem( "active" ) === "students" ?
+                            <div className="row individual-company-add-review">
+                                <div className="col-6"></div>
+                                <div className="col-6">
+                                    <button type="button" className="btn reverse-update-proflie" onClick={ this.writeReview }>Add a Review</button>
+                                </div>
                             </div>
-                        </div>
+                            : null }
                     </div>
                 </div>
             </div>
