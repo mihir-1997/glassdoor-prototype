@@ -102,7 +102,7 @@ router.put( '/applyForJob/:jobID', checkAuth, ( req, res ) => {
 } )
 
 //get all applications status for students
-router.get( '/getApplicationStatus/:studentID',( req, res ) => {
+router.get( '/getApplicationStatus/:studentID',checkAuth, ( req, res ) => {
     console.log("inside getApplicationStatus")
     kafka.make_request( 'job_getApplicationStatus', req.params, function ( err, results ) {
         if ( err ) {
