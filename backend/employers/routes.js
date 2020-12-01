@@ -107,7 +107,8 @@ router.post( '/updateEmployerLogo/:employerID',   checkAuth, ( req, res ) => {
 //get employer by name
 router.get( '/getEmployerByName/:name', checkAuth, ( req, res ) => {
     console.log("inside getEmployerByName")
-    kafka.make_request( 'employer_getEmployerByName', req.params, function ( err, results ) {
+    req.body.params = req.params
+    kafka.make_request( 'employer_getEmployerByName', req.body, function ( err, results ) {
         if ( err ) {
             console.log( "Inside err", err );
             res.status( 404 ).send( "No employer found" )
@@ -142,7 +143,7 @@ router.get( '/getAllEmployers', checkAuth, ( req, res ) => {
 
 
 //get employer by id
-router.get( '/getEmployerById/:employerId', checkAuth,  ( req, res ) => {
+router.get( '/getEmployerById/:employerId', checkAuth, ( req, res ) => {
     console.log("inside getEmployerById")
     kafka.make_request( 'employer_getEmployerById', req.params, function ( err, results ) {
         if ( err ) {
