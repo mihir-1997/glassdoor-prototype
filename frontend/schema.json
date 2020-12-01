@@ -1,0 +1,211 @@
+{
+	"contributions": {
+		"_id": {
+			"primaryKey": true,
+			"type": "Object",
+			"required": true
+		},
+		"type": {
+			"type": "string",
+			"required": true
+		},
+		"studentID": {
+			"key": true,
+			"type": "string",
+			"required": true
+		},
+		"employerID": {
+			"key": true,
+			"type": "string",
+			"required": true
+		},
+		"ratingOverall": {
+			"type": "number",
+			"required": true
+		},
+		"ratingRTF": {
+			"type": "number",
+			"required": true
+		},
+		"ratingCEO": {
+			"type": "number",
+			"required": true
+		},
+		"headline": {
+			"type": "string",
+			"required": true
+		},
+		"pros": {
+			"key": true,
+			"type": "string",
+			"required": true
+		},
+		"cons": {
+			"key": true,
+			"type": "string",
+			"required": true
+		},
+		"description": {
+			"type": "string",
+			"required": true
+		},
+		"helpful": {
+			"type": "number",
+			"required": true
+		},
+		"__v": {
+			"type": "number",
+			"required": true
+		}
+	},
+	"students": {
+		"_id": {
+			"primaryKey": true,
+			"type": "Object",
+			"required": true
+		},
+		"skills": {
+			"type": "Array",
+			"required": true
+		},
+		"name": {
+			"type": "string",
+			"required": true
+		},
+		"email": {
+			"type": "string",
+			"required": true
+		},
+		"phoneNumber": {
+			"type": "undefined",
+			"required": false
+		},
+		"address": {
+			"type": "string",
+			"required": true
+		},
+		"city": {
+			"type": "string",
+			"required": true
+		},
+		"zipcode": {
+			"type": "string",
+			"required": true
+		},
+		"website": {
+			"type": "string",
+			"required": true
+		},
+		"experience": {
+			"type": "Array",
+			"required": true
+		},
+		"education": {
+			"type": "Array",
+			"required": true
+		},
+		"resume": {
+			"type": "Array",
+			"required": true
+		},
+		"jobPreference": {
+			"type": "Object",
+			"structure": {
+				"_id": {
+					"primaryKey": true,
+					"type": "Object",
+					"required": true
+				}
+			},
+			"required": true
+		},
+		"userDemographics": {
+			"type": "Object",
+			"structure": {
+				"_id": {
+					"primaryKey": true,
+					"type": "Object",
+					"required": true
+				}
+			},
+			"required": true
+		},
+		"profilePicture": {
+			"type": "string",
+			"required": true
+		},
+		"__v": {
+			"type": "number",
+			"required": true
+		},
+		"aboutMe": {
+			"type": "string",
+			"required": true
+		}
+	},
+	"employers": {
+		"_id": {
+			"primaryKey": true,
+			"type": "Object",
+			"required": true
+		},
+		"__v": {
+			"type": "number",
+			"required": true
+		},
+		"name": {
+			"type": "string",
+			"required": true
+		},
+		"email": {
+			"key": true,
+			"type": "string",
+			"required": true
+		},
+		"address": {
+			"type": "string",
+			"required": true
+		},
+		"profileImageUrl": {
+			"type": "string",
+			"required": true
+		},
+		"website": {
+			"type": "string",
+			"required": true
+		},
+		"companySize": {
+			"type": "undefined",
+			"required": false
+		},
+		"companyType": {
+			"type": "string",
+			"required": true
+		},
+		"revenue": {
+			"type": "undefined",
+			"required": false
+		},
+		"headquarter": {
+			"type": "string",
+			"required": true
+		},
+		"industry": {
+			"type": "string",
+			"required": true
+		},
+		"founded": {
+			"type": "string",
+			"required": true
+		},
+		"mission": {
+			"type": "string",
+			"required": true
+		},
+		"ceoname": {
+			"type": "string",
+			"required": true
+		}
+	},
+	"jobs": {}
+}
