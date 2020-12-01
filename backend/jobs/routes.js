@@ -86,7 +86,7 @@ router.get( '/getJobsBasedOnTitle/:title', checkAuth, ( req, res ) => {
 } )
 
 //apply for a job
-router.put( '/applyForJob/:jobID', checkAuth, ( req, res ) => {
+router.put( '/applyForJob/:jobID',  checkAuth,( req, res ) => {
     console.log("Apply for Job");
     req.body.params = req.params
     kafka.make_request( 'job_applyForJob', req.body, function ( err, results ) {
@@ -173,7 +173,7 @@ router.put( '/applicationStatusChange/:applicationID',checkAuth, ( req, res ) =>
 } )
 
 //get report of jobs for a employer
-router.get( '/getJobsReport/:employerID', ( req, res ) => {
+router.get( '/getJobsReport/:employerID',  checkAuth,( req, res ) => {
     console.log("inside getJobsReport")
     kafka.make_request( 'job_getJobsReport', req.params, function ( err, results ) {
         if ( err ) {
@@ -189,6 +189,7 @@ router.get( '/getJobsReport/:employerID', ( req, res ) => {
 
     } );
 } )
+
 //sample post
 router.post( '/', ( req, res ) => {
 

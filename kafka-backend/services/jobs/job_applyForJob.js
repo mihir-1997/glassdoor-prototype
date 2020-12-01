@@ -13,6 +13,10 @@ function handle_request ( msg, callback ) {
         name:req.body.name,
         status: "Submitted",
         imageName:req.body.imageName,
+        ethnicity: req.body.ethnicity,
+        gender: req.body.gender,
+        disability: req.body.disability,
+        veteranStatus: req.body.veteranStatus,
         application_date:Date.now()
 
     }
