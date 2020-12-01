@@ -2,10 +2,13 @@ import React, { Component } from 'react'
 import { Redirect } from 'react-router'
 import axios from "axios";
 
-import IndividualReview from "./individualReview"
 import './EmployerReviews.css'
-import cover from '../../../Images/employer.png'
 import SEO from '../../SEO/SEO'
+import Paginate from '../../Pagination'
+import IndividualReview from "./individualReview"
+import reviewCover from '../../../Images/reviews.png'
+import reviewUs from '../../../Images/review_us.png'
+
 
 import { BACKEND_URL, BACKEND_PORT } from '../../Config/Config'
 
@@ -16,6 +19,11 @@ class EmployerProfile extends Component {
         this.state ={
             reviews:[],
             logoImageUrl:"",
+            featuredReviews:[],
+            //pagination
+            currentPage:1,
+            elementsPerPage: 2,
+            reviewStats:{},
         }
     }
 
@@ -50,14 +58,47 @@ class EmployerProfile extends Component {
         if ( name ) {
             axios.defaults.withCredentials = true
             axios.defaults.headers.common[ 'authorization' ] = localStorage.getItem( 'token' )
-            axios.post( BACKEND_URL + ":" + BACKEND_PORT + "/contributions/getReviewsbyEmployer/" + name,{firstTime:true, pageSize:5,pageNumber:1} )
+            axios.post( BACKEND_URL + ":" + BACKEND_PORT + "/contributions/getReviewsbyEmployer/" + name,{firstTime:true, pageSize:10,pageNumber:1} )
                 .then( ( res ) => {
-                     //console.log(res.data)
+                    //  console.log(res.data)
                     if ( res.status === 200 ) {
                         this.setState( {
-                            reviews:res.data.review
+                            reviews:res.data.review,
+                            reviewStats: res.data.reviewStats
                         } )
-                        console.log(this.state.reviews)
+                        console.log("#####",this.state.reviews)
+                    }
+                } )
+                .catch( ( err ) => {
+                    if ( err.response ) {
+                        if ( err.response.status === 404 ) {
+                            console.log( err.response.message )
+                        } else if ( err.response.status === 400 ) {
+                            console.log( " " + err.response.message )
+                        }
+                    }
+                } )
+        }
+
+        if ( name ) {
+            axios.defaults.withCredentials = true
+            axios.defaults.headers.common[ 'authorization' ] = localStorage.getItem( 'token' )
+            axios.post( BACKEND_URL + ":" + BACKEND_PORT + "/contributions/getReviewsbyEmployer/" + name,{firstTime:true, pageSize:10000000,pageNumber:1} )
+                .then( ( res ) => {
+                      console.log(res.data)
+                      var featured = []
+                     
+                    if ( res.status === 200 ) {
+                        
+                        res.data.review.map((r)=>{
+                            if(r.featured===true){
+                                console.log(r)
+                                featured.push(r)
+                            }
+                        })
+                        this.setState({
+                            featuredReviews:featured,
+                        })
                     }
                 } )
                 .catch( ( err ) => {
@@ -73,6 +114,38 @@ class EmployerProfile extends Component {
         
     }
 
+       // Change page
+        paginate = (pageNumber) => {
+            console.log("pagenumber ", pageNumber);
+            
+            let name = localStorage.getItem( "name" )
+            if ( name ) {
+                axios.defaults.withCredentials = true
+                axios.defaults.headers.common[ 'authorization' ] = localStorage.getItem( 'token' )
+                axios.post( BACKEND_URL + ":" + BACKEND_PORT + "/contributions/getReviewsbyEmployer/" + name,{firstTime:false, pageSize:2,pageNumber:pageNumber} )
+                    .then( ( res ) => {
+                         console.log(res.data)
+                        if ( res.status === 200 ) {
+                            this.setState( {
+                                reviews:res.data.review,
+                                // reviewStats: res.data.reviewStats
+                            } )
+                            console.log(this.state.reviews)
+                        }
+                    } )
+                    .catch( ( err ) => {
+                        if ( err.response ) {
+                            if ( err.response.status === 404 ) {
+                                console.log( err.response.message )
+                            } else if ( err.response.status === 400 ) {
+                                console.log( " " + err.response.message )
+                            }
+                        }
+                    } )
+            }
+
+        };
+
     render() {
 
         let redirectVar = null
@@ -82,7 +155,9 @@ class EmployerProfile extends Component {
         }
 
         let allReviews = this.state.reviews.map((eachreview) => {
-            if(eachreview.reviewStatus === "Approved" && !eachreview.featured){
+            console.log("&&&&&&&",eachreview)
+            if(eachreview.reviewStatus === "Pending"){
+                console.log("&&&&&&&",eachreview)
                 return (
                     <IndividualReview
                        key={Math.random()}
@@ -93,8 +168,8 @@ class EmployerProfile extends Component {
             }
             })
 
-        let featuredReviews =  this.state.reviews.map((featuredReview) =>{
-            if(featuredReview.reviewStatus === "Approved" && featuredReview.featured){
+        let featuredReviews =  this.state.featuredReviews.map((featuredReview) =>{
+            if(featuredReview.reviewStatus === "Approved"){
                 return (
                     <IndividualReview
                        key={Math.random()}
@@ -110,7 +185,7 @@ class EmployerProfile extends Component {
                 {redirectVar}
                 <div className="root-header">
                     <div className="image-wrapper">
-                        <img className="cover" src={cover} alt="Cover"  />
+                        <img className="cover" src={reviewCover} alt="Cover"  />
                     </div>
                     <div className="details-wrapper">
                             <div className="employer-company-logo">
@@ -128,22 +203,28 @@ class EmployerProfile extends Component {
                             <div className="col-1.2 single-link"><a href="/employer/salaries">Salaries</a> </div>
                             <div className="col-1.2 single-link"><a href="/employer/interviews">Interviews</a> </div>
                             <div className="col-1.2 single-link"><a href="/employer/photos">Photos</a> </div>
-                            
+                            <div className="col-1.2 single-link"><a href="/employer/reports">Reports</a> </div>
                         </div>
                     </div>   
-                    <div className="review-info-wrapper">
-                    <p style={{fontSize:"20px", lineHeight:"27px", marginLeft:"1px"}}>Featured Reviews</p>
+                    <div className="review-info-wrapper" style={{overflowY:"auto", height:"800px"}}>
+                    <p style={{fontSize:"20px", lineHeight:"27px", marginLeft:"1px", fontWeight:"bold"}}>Featured Reviews</p>
                     <hr/>
                     {featuredReviews}
                     <br/>
-                    <p style={{fontSize:"20px", lineHeight:"27px",marginLeft:"1px"}}>LinkedIn Reviews</p>
+                    <p style={{fontSize:"20px", lineHeight:"27px",marginLeft:"1px",fontWeight:"bold"}}>{localStorage.getItem("name")} Reviews</p>
                     {allReviews}
+                    <Paginate 
+                        elementsPerPage= {this.state.elementsPerPage}
+                        totalElements={this.state.reviewStats.totalCount}
+                        paginate={this.paginate}
+                    />
+                        
                     <hr/>
                        
                     </div> 
 
-                    <div className="form-wrapper">
-                    Fixed image here
+                    <div className="review-form-wrapper">
+                        <img src={reviewUs} style={{width:"100%"}} alt="Review Us"/>
                     </div>     
                 </div>
                 

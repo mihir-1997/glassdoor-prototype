@@ -4,8 +4,7 @@ import axios from "axios";
 
 import './EmployerInterviews.css'
 import IndividualInterview from './individualInterview'
-import cover from '../../../Images/employer.png'
-import logo from '../../../Images/linkedin-logo.png'
+import interviewCover from '../../../Images/interview.jpg'
 import SEO from '../../SEO/SEO'
 
 import { BACKEND_URL, BACKEND_PORT } from '../../Config/Config'
@@ -103,7 +102,7 @@ class EmployerInterviews extends Component {
                 {redirectVar}
                 <div className="root-header">
                     <div className="image-wrapper">
-                        <img className="cover" src={cover} alt="Cover"  />
+                        <img className="cover" src={interviewCover} alt="Cover"  />
                     </div>
                     <div className="details-wrapper">
                             <div className="employer-company-logo">
@@ -121,24 +120,22 @@ class EmployerInterviews extends Component {
                             <div className="col-1.2 single-link"><a href="/employer/salaries">Salaries</a> </div>
                             <div className="col-1.2 single-link"><a href="/employer/interviews">Interviews</a> </div>
                             <div className="col-1.2 single-link"><a href="/employer/photos">Photos</a> </div>
+                            <div className="col-1.2 single-link"><a href="/employer/reports">Reports</a> </div>
                             
                             {/* <button className="col-1.2 btn btn-primary d-flex justify-content-center align-items-center" style={{marginLeft:"320px", marginBottom:"15px", marginTop:"15px", color:"rgb(24, 97, 191)", background:"white",fontWeight:"bold" ,border:"1px solid rgb(24, 97, 191)"}}>Follow</button> */}
                             {/* <button className="col-1.2 btn btn-primary d-flex justify-content-center align-items-center" style={{marginLeft:"10px", marginBottom:"15px", marginTop:"15px", color:"rgb(24, 97, 191)", background:"white",fontWeight:"bold" ,border:"1px solid rgb(24, 97, 191)"}}> + Add Review</button> */}
 
                         </div>
                     </div>   
-                    <div className="info-wrapper">
-                    <p style={{fontSize:"20px", lineHeight:"27px"}}>Interviews at {localStorage.getItem("name")} </p>
-                    <hr/>
-                    <p style={{fontSize:"20px", lineHeight:"27px"}}>LinkedIn Interviews</p>
-
+                    <div className="interview-info-wrapper" style={{overflowY:"auto", height:"900px"}}>
+                    <p style={{fontSize:"20px", lineHeight:"27px", marginLeft:"0px", fontWeight:"bold"}}>Interviews at {localStorage.getItem("name")} </p>
                     <hr/>
                     {allInterviews}
 
                        
                     </div> 
 
-                    <div className="form-wrapper">
+                    <div className="interview-form-wrapper">
                     form
                     </div>     
                 </div>

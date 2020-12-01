@@ -21,7 +21,7 @@ class IndividualApplicant extends Component {
         this.setState( {
             [ e.target.name ]: e.target.value
         } )
-        // console.log("%%%%%%%%%%%%",this.state.status)
+        
     }
 
     changeStatus = () => {
@@ -36,7 +36,7 @@ class IndividualApplicant extends Component {
                 console.log(res.data)
                 if ( res.status === 200 ) {
                     alert("Review Status changed")
-                    // window.location.reload()
+                 
                 }
             } )
             .catch( ( err ) => {
@@ -61,6 +61,7 @@ class IndividualApplicant extends Component {
             <option value="Initial screening">Initial screening</option>
             <option value="Interviewing">Interviewing</option>
             <option value="Hired">Hired</option>
+            <option value="Rejected">Rejected</option>
           </select>
         );
     };
@@ -77,7 +78,7 @@ class IndividualApplicant extends Component {
                             <span>{this.props.data.name}</span>
                             <span> Status: {this.props.data.status}</span>
                             <br/>                          
-                            <span>Cover Letter: <a href="resume" download>Cover_Letter.pdf</a></span>
+                            <span>Cover Letter: <a href={BACKEND_URL + ":" + BACKEND_PORT + "/public/images/resumes/" +this.props.data.coverName} download>Letter.pdf</a></span>
                             <span style={{marginLeft:"20px"}} >
                                 <form onSubmit={this.changeStatus}  style={{ display:"inline-block"}}>
                                     {this.showOptions()}                                           

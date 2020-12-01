@@ -14,13 +14,6 @@
   border: 1px solid #1861bf;
 }
 
-.star-string {
-  color: #0a9739f1;
-  font-size: 15px;
-  margin-left: 5px;
-  margin-bottom: 10px;
-}
-
 .company-logo-salary {
   width: 55px;
   height: 55px;
@@ -50,31 +43,6 @@ span {
   font-size: 15px;
   color: #505863;
   margin-right: 40px;
-}
-
-.green-box {
-  height: 15px;
-  width: 15px;
-  margin-bottom: 0px;
-  border-radius: 3px;
-  margin-left: 40px;
-  margin-right: 5px;
-  border: 1px solid #0a9739f1;
-  background-color: #0a9739f1;
-  display: inline-block;
-}
-
-.red-box {
-  height: 15px;
-  width: 15px;
-  margin-bottom: 0px;
-  border-radius: 3px;
-  margin-left: 40px;
-  margin-right: 5px;
-  margin-top: 5px;
-  border: 1px solid #d93e30;
-  background-color: #d93e30;
-  display: inline-block;
 }
 
 .employer-profile-wrapper {

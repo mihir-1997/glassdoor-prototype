@@ -161,14 +161,17 @@ class IndividualReview extends Component {
 
                         <p className="review-string">"{this.props.data.headline}"</p>
                         <p className="star-string"> {this.props.data.rating}.0 {printStar(this.props.data.rating)} </p>
-                        {this.props.data.recommended ?  <div className="green-box"></div>:<div className="red-box"></div>}
-                        <span >Recommends</span>
-                        {this.props.data.approveCEO ?  <div className="green-box"></div>:<div className="red-box"></div>}
-                        <span>Positive Outlook</span>
-                        {this.props.data.isPositive ?  <div className="green-box"></div>:<div className="red-box"></div>}
-                        <span>Approves CEO</span>
+                        <div style={{marginLeft:"-55px", marginBottom:"0px"}}>
+                            {this.props.data.recommended ?  <div className="green-box-review"></div>:<div className="red-box-review"></div>}
+                            <span >Recommends</span>
+                            {this.props.data.approveCEO ?  <div className="green-box-review"></div>:<div className="red-box-review"></div>}
+                            <span>Positive Outlook</span>
+                            {this.props.data.isPositive ?  <div className="green-box-review"></div>:<div className="red-box-review"></div>}
+                            <span>Approves CEO</span>
+                        </div>
+                        
                         <br/>
-                            <div className="pros-cons">
+                            <div className="pros-cons-review">
                                 <p>{this.props.data.description}</p>
                                 <p >{this.props.data.employeeStatus} Employee </p>
                                 
@@ -183,7 +186,7 @@ class IndividualReview extends Component {
 
                             </div>
                             <div style={{display:"flex", height:"30px"}}> 
-                                <input onChange={this.onChange} style={{border:"2px solid rgb(24, 97, 191)", borderRadius:"4px", width:"300px", display:"inline-block", marginRight:"10px"}} type="text" name="reply" placeholder="Reply"/>
+                                <input onChange={this.onChange} style={{border:"2px solid rgb(24, 97, 191)", borderRadius:"4px", width:"300px", display:"inline-block", marginLeft:"-15px",marginRight:"10px"}} type="text" name="reply" placeholder="      Reply"/>
                                 <button onClick={this.sendReply} className="btn btn-primary d-flex justify-content-center align-items-center" style={{ display:"inline-block", color:"rgb(24, 97, 191)", background:"white",fontWeight:"bold" ,border:"1px solid rgb(24, 97, 191)",  marginRight:"10px"}} >Reply</button>
                                 {this.props.data.featured ? 
                                 " "

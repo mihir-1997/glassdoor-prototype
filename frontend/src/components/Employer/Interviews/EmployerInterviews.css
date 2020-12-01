@@ -41,15 +41,15 @@
 .interview-values,
 p {
   padding: 0px;
-  margin: 0px 0px 0px 26px;
+  margin: 0px 0px 0px 90px;
   color: #505863;
 }
 
-.span-box {
-  margin-left: 55px;
+.span-box-interview {
+  margin-left: 62px;
 }
 
-.green-box {
+.green-box-interview {
   height: 15px;
   width: 15px;
   margin-bottom: 0px;
@@ -61,7 +61,7 @@ p {
   display: inline-block;
 }
 
-.red-box {
+.red-box-interview {
   height: 15px;
   width: 15px;
   margin-bottom: 0px;
@@ -74,7 +74,7 @@ p {
   display: inline-block;
 }
 
-.yellow-box {
+.yellow-box-interview {
   height: 15px;
   width: 15px;
   margin-bottom: 0px;
@@ -139,7 +139,7 @@ p {
   border: 2px solid #fff;
 }
 
-.info-wrapper {
+.interview-info-wrapper {
   padding: 20px;
   margin-top: 20px;
   background-color: #fff;
@@ -147,9 +147,9 @@ p {
   height: 100%;
 }
 
-.form-wrapper {
+.interview-form-wrapper {
   position: absolute;
-  top: 66.2%;
+  top: 82.2%;
   right: 12%;
   padding: 20px;
   margin-top: 20px;

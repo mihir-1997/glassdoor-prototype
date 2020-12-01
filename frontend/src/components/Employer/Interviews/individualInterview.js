@@ -27,24 +27,24 @@ class IndividualInterview extends Component {
     render(){
         let experienceDisplay = (value) => {
             if(value==="Positive"){
-                return <div style={{display:"inline-block"}}> <span className="green-box"></span> <span>Positive Experience</span> </div>                        
+                return <div style={{display:"inline-block"}}> <span className="green-box-interview"></span> <span>Positive Experience</span> </div>                        
             }
             else if(value==="Negative"){
-                return <div style={{display:"inline-block"}}> <span className="red-box"></span> <span>Negative Experience</span> </div>
+                return <div style={{display:"inline-block"}}> <span className="red-box-interview"></span> <span>Negative Experience</span> </div>
             }
             else{
-                return <div style={{display:"inline-block"}}> <span className="yellow-box"></span> <span>Neutral Experience</span> </div>
+                return <div style={{display:"inline-block"}}> <span className="yellow-box-interview"></span> <span>Neutral Experience</span> </div>
             }
         }
         let levelDisplay = (value) => {
             if(value==="Easy"){
-                return <div style={{display:"inline-block"}}> <span className="green-box"></span> <span>Easy Interview</span> </div>                        
+                return <div style={{display:"inline-block"}}> <span className="green-box-interview"></span> <span>Easy Interview</span> </div>                        
             }
             else if(value==="Hard"){
-                return <div style={{display:"inline-block"}}> <span className="red-box"></span> <span>Hard Interview</span> </div>
+                return <div style={{display:"inline-block"}}> <span className="red-box-interview"></span> <span>Hard Interview</span> </div>
             }
             else{
-                return <div style={{display:"inline-block"}}> <span className="yellow-box"></span> <span>Average Interview</span> </div>
+                return <div style={{display:"inline-block"}}> <span className="yellow-box-interview"></span> <span>Average Interview</span> </div>
             }
         }
         return(    
@@ -52,7 +52,7 @@ class IndividualInterview extends Component {
                     
                         <div className="interview-wrapper">
 
-                        <p style={{color:"#7F7F7F", fontSize:"14px", fontWeight:"normal" , marginTop:"0px",marginBottom:"8px"}}>{this.convertDate(this.props.data.interviewDate)}</p>
+                        <p style={{color:"#7F7F7F", fontSize:"14px", fontWeight:"normal" , marginTop:"0px",marginBottom:"8px", marginLeft:"0px"}}>{this.convertDate(this.props.data.interviewDate)}</p>
 
                         <img className="company-logo-interview" src={BACKEND_URL + ":" + BACKEND_PORT + "/public/images/profilepics/" +this.props.logo} alt="logo"/>
 
@@ -62,14 +62,12 @@ class IndividualInterview extends Component {
                             
                             <br/>
                             <br/>
-                            <div className="span-box">
+                            <div className="span-box-interview">
                                
-                                {this.props.data.offerStatus === "Accepted" ?  <span className="green-box"></span> : <span className="red-box"></span>}
+                                {this.props.data.offerStatus === "Accepted" ?  <span className="green-box-interview"></span> : <span className="red-box-interview"></span>}
                                 {this.props.data.offerStatus === "Accepted" ?  <span > Accepted Offer </span> : <span>No Offer</span>}
                                 {experienceDisplay(this.props.data.overallExperience)}
                                 {levelDisplay(this.props.data.difficulty)}
-                                {/* <span className="green-box"></span>
-                                <span>Easy Interview</span> */}
                             </div>
 
                             <div className="interview-values">

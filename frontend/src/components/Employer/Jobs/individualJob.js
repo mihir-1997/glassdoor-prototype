@@ -36,7 +36,7 @@ class IndividualJob extends Component {
                      
                      <div className="job-wrapper">
 
-                         <img className="company-logo-job" src={logo} alt="logo"/>
+                         <img className="company-logo-job" src={BACKEND_URL + ":" + BACKEND_PORT + "/public/images/profilepics/" +this.props.logo} alt="logo"/>
 
                          <div className="job">
                          <span className="employer-name">{this.props.data.employerName}</span>

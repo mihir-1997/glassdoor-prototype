@@ -29,14 +29,14 @@
   font-weight: bold;
   font-size: 18px;
   margin-bottom: 0px;
-  margin-left: 5px;
+  margin-left: -20px;
 }
 
 .star-string {
   color: #0a9739f1;
   font-size: 15px;
-  margin-left: 5px;
   margin-bottom: 10px;
+  margin-left: -17px;
 }
 
 .company-logo-review {
@@ -47,17 +47,17 @@
   float: left;
 }
 
-.pros-cons {
+.pros-cons-review {
   font-size: 15px;
   font-weight: normal;
   color: #505863;
-  margin-top: 20px;
+  margin-top: 10px;
 }
 
-.pros-cons,
+.pros-cons-review,
 p {
   padding: 0px;
-  margin: 0px 0px 0px -28px;
+  margin: 0px 0px 0px 10px;
   color: #505863;
 }
 
@@ -70,7 +70,7 @@ span {
   margin-right: 40px;
 }
 
-.green-box {
+.green-box-review {
   height: 15px;
   width: 15px;
   margin-bottom: 0px;
@@ -82,7 +82,7 @@ span {
   display: inline-block;
 }
 
-.red-box {
+.red-box-review {
   height: 15px;
   width: 15px;
   margin-bottom: 0px;
@@ -155,9 +155,9 @@ span {
   height: 100%;
 }
 
-.form-wrapper {
+.review-form-wrapper {
   position: absolute;
-  top: 66.2%;
+  top: 70.2%;
   right: 12%;
   padding: 20px;
   margin-top: 20px;

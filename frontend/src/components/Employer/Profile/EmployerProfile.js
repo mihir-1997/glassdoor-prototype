@@ -211,9 +211,10 @@ class EmployerProfile extends Component {
                             <div className="col-1.2 single-link"><a href="/employer/salaries">Salaries</a> </div>
                             <div className="col-1.2 single-link"><a href="/employer/interviews">Interviews</a> </div>
                             <div className="col-1.2 single-link"><a href="/employer/photos">Photos</a></div>
+                            <div className="col-1.2 single-link"><a href="/employer/reports">Reports</a> </div>
                             
                             <div >
-                            <button onClick={this.clickProfileButton} className="col-1.2 btn btn-primary d-flex justify-content-center align-items-center" style={{marginLeft:"280px", marginBottom:"15px", marginTop:"15px", color:"rgb(24, 97, 191)", background:"white",fontWeight:"bold" ,border:"1px solid rgb(24, 97, 191)"}}>+ Profile Picture
+                            <button onClick={this.clickProfileButton} className="col-1.2 btn btn-primary d-flex justify-content-center align-items-center" style={{marginLeft:"200px", marginBottom:"15px", marginTop:"15px", color:"rgb(24, 97, 191)", background:"white",fontWeight:"bold" ,border:"1px solid rgb(24, 97, 191)"}}>+ Profile Picture
                            
                             </button>
                             <input type="file" className="hide" id="employer-profile-picture" style={{display:"none"}} onChange={this.changeProfilePicture} />
@@ -229,7 +230,7 @@ class EmployerProfile extends Component {
                     </div>   
                     <div className="info-wrapper">
                     
-                    <p style={{fontSize:"20px", lineHeight:"27px"}}>{this.state.name } Overview</p>
+                    <p style={{fontSize:"20px", lineHeight:"27px", marginLeft:"1px", fontWeight:"bolder"}}>{this.state.name } Overview</p>
                     <br/>
                     <div className=" row info-wrapper-row">
                             <div className="col-6 single-row">
@@ -282,7 +283,7 @@ class EmployerProfile extends Component {
                     </div> 
 
                     <div className="form-wrapper-side">
-                    <button onClick={this.editProfile} className = "emp-profile-btn btn btn-primary d-flex justify-content-center align-items-center" style={{marginLeft:"20px", marginBottom:"15px", marginTop:"15px", color:"rgb(24, 97, 191)", background:"white",fontWeight:"bold" ,border:"1px solid rgb(24, 97, 191),",  }}>+ Edit Profile</button>
+                    <button onClick={this.editProfile} className = "emp-profile-btn btn btn-primary d-flex justify-content-center align-items-center" style={{marginLeft:"60px", marginBottom:"15px", marginTop:"15px", color:"rgb(24, 97, 191)", background:"white",fontWeight:"bold" ,border:"1px solid rgb(24, 97, 191),",  }}>+ Edit Profile</button>
                     <EditProfile key={Math.random()} employer = {this.state}/>
                     </div>     
                 </div>

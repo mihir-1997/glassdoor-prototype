@@ -81,7 +81,7 @@ class JobApplicants extends Component {
                     </div>
                         
                     </div>
-                    <Footer closePopup={ this.closePopup }  />
+                    <Footer closePopup={ this.closePopup } saveChanges={ this.closePopup }  />
                 </div>
             </div>
         )
