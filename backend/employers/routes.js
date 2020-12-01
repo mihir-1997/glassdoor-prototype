@@ -105,7 +105,7 @@ router.post( '/updateEmployerLogo/:employerID',   checkAuth, ( req, res ) => {
 } );
 
 //get employer by name
-router.get( '/getEmployerByName/:name',  ( req, res ) => {
+router.get( '/getEmployerByName/:name',  checkAuth,  ( req, res ) => {
     console.log("inside getEmployerByName")
     req.body.params = req.params
     kafka.make_request( 'employer_getEmployerByName', req.body, function ( err, results ) {

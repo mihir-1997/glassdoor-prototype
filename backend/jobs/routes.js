@@ -31,7 +31,7 @@ router.post( '/createJob',  checkAuth,( req, res ) => {
 
 
 //get jobs for a employer
-router.get( '/getJobsForEmployer/:employerID', ( req, res ) => {
+router.get( '/getJobsForEmployer/:employerID',  checkAuth, ( req, res ) => {
     console.log("inside getJobsForEmployer")
     req.body.params = req.params
     kafka.make_request( 'job_getJobsForEmployer', req.body, function ( err, results ) {
