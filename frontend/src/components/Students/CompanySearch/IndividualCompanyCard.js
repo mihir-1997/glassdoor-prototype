@@ -16,7 +16,8 @@ class IndividualCompanyCard extends Component {
             numOfInterviews: 0,
             numOfSalaries: 0,
             avgRatings: 0,
-            redirectToAddContribution: null
+            redirectToAddContribution: null,
+            redirectToCompany: false
         }
     }
 
@@ -107,21 +108,43 @@ class IndividualCompanyCard extends Component {
         } )
     }
 
+    redirectToCompany = () => {
+        this.setState( {
+            redirectToCompany: true
+        } )
+    }
+
     render () {
         let redirect = null
         if ( this.state.redirectToAddContribution ) {
             redirect = <Redirect to="/students/addcontribution" />
+        }
+        if ( this.state.redirectToCompany ) {
+            redirect = <Redirect to="/employer/profile" />
         }
         return (
             <div className="individual-comanycard-wrapper">
                 { redirect }
                 <div className="row">
                     <div className="col-2">
-                        <img className="company-search-company-logo" src={ BACKEND_URL + ":" + BACKEND_PORT + "/public/images/profilepics/" + this.state.profileImageUrl } alt="company_logo" />
+                        { this.state.profileImageUrl ?
+                            <img className="company-search-company-logo" src={ BACKEND_URL + ":" + BACKEND_PORT + "/public/images/profilepics/" + this.state.profileImageUrl } alt="company_logo" />
+                            :
+                            <svg xmlns="http://www.w3.org/2000/svg" width="75" height="75" viewBox="0 0 48 48">
+                                <g fill="none" fillRule="evenodd">
+                                    <path fill="#0CAA41" fillRule="nonzero" d="M19.182 10h19.636c1.205 0 2.182.895 2.182 2v27H17V12c0-1.105.977-2 2.182-2zM39 37V13a1 1 0 00-1-1H20a1 1 0 00-1 1v24h20z"></path>
+                                    <path fill="#DFF7E7" fillRule="nonzero" d="M22 14h14a1 1 0 011 1v20h-4v-3a3 3 0 00-3-3h-2a3 3 0 00-3 3v3h-4V15a1 1 0 011-1z"></path>
+                                    <path fill="#0CAA41" fillRule="nonzero" d="M16 19v2h-6a1 1 0 00-1 1v15h7v2H7V21c0-1.105.728-2 1.625-2H16z"></path>
+                                    <rect width="4" height="4" x="23" y="16" fill="#0CAA41" rx="2"></rect><rect width="4" height="4" x="23" y="21" fill="#0CAA41" rx="2"></rect>
+                                    <rect width="4" height="4" x="31" y="16" fill="#0CAA41" rx="2"></rect><rect width="4" height="4" x="31" y="21" fill="#0CAA41" rx="2"></rect>
+                                    <path fill="#0CAA41" stroke="#0CAA41" strokeWidth="2" d="M27 38h4v-6a1 1 0 00-1-1h-2a1 1 0 00-1 1v6z"></path>
+                                </g>
+                            </svg>
+                        }
                     </div>
                     <div className="col-4">
                         <div className="individual-company-right-pane">
-                            <div className="individual-company-name">
+                            <div className="individual-company-name" onClick={ this.redirectToCompany }>
                                 { this.state.name }
                             </div>
                             <div className="individual-company-ratings">

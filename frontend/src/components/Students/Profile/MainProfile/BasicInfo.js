@@ -29,6 +29,7 @@ class BasicInfo extends Component {
             experience: [],
             education: [],
             skills: [],
+            isEmployerActive: false,
         }
     }
 
@@ -36,6 +37,13 @@ class BasicInfo extends Component {
         SEO( {
             title: "User Profile | Glassdoor"
         } )
+        if ( this.props.location ) {
+            if ( this.props.location.active ) {
+                this.setState( {
+                    isEmployerActive: !this.state.isEmployerActive
+                } )
+            }
+        }
         let id = localStorage.getItem( "id" )
         if ( id ) {
             axios.defaults.withCredentials = true
@@ -251,16 +259,19 @@ class BasicInfo extends Component {
                             this.state.name
                             :
                             localStorage.getItem( "name" ) }
-                        <span onClick={ this.updateBasicInfo }>
-                            <svg className="basic-info-pen-svg" style={ { "width": "24px", "height": "24px" } } xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                                <g className="basic-info-pen" fill="#ccc" fillRule="evenodd">
-                                    <path d="M14.775 6.202l2.99 2.99-11.81 11.663a.499.499 0 01-.352.144H3.498a.5.5 0 01-.5-.5v-2.342a.5.5 0 01.147-.354l11.63-11.6zM16.19 4.79l1.641-1.638a.502.502 0 01.707 0l2.3 2.298a.5.5 0 010 .707l-.003.003-1.648 1.627L16.19 4.79z"></path>
-                                </g>
-                                <g className="basic-info-pen-hover" fill="#20262e" fillRule="evenodd">
-                                    <path d="M14.775 6.202l2.99 2.99-11.81 11.663a.499.499 0 01-.352.144H3.498a.5.5 0 01-.5-.5v-2.342a.5.5 0 01.147-.354l11.63-11.6zM16.19 4.79l1.641-1.638a.502.502 0 01.707 0l2.3 2.298a.5.5 0 010 .707l-.003.003-1.648 1.627L16.19 4.79z"></path>
-                                </g>
-                            </svg>
-                        </span>
+                        { this.state.isEmployerActive ?
+                            null :
+                            <span onClick={ this.updateBasicInfo }>
+                                <svg className="basic-info-pen-svg" style={ { "width": "24px", "height": "24px" } } xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                    <g className="basic-info-pen" fill="#ccc" fillRule="evenodd">
+                                        <path d="M14.775 6.202l2.99 2.99-11.81 11.663a.499.499 0 01-.352.144H3.498a.5.5 0 01-.5-.5v-2.342a.5.5 0 01.147-.354l11.63-11.6zM16.19 4.79l1.641-1.638a.502.502 0 01.707 0l2.3 2.298a.5.5 0 010 .707l-.003.003-1.648 1.627L16.19 4.79z"></path>
+                                    </g>
+                                    <g className="basic-info-pen-hover" fill="#20262e" fillRule="evenodd">
+                                        <path d="M14.775 6.202l2.99 2.99-11.81 11.663a.499.499 0 01-.352.144H3.498a.5.5 0 01-.5-.5v-2.342a.5.5 0 01.147-.354l11.63-11.6zM16.19 4.79l1.641-1.638a.502.502 0 01.707 0l2.3 2.298a.5.5 0 010 .707l-.003.003-1.648 1.627L16.19 4.79z"></path>
+                                    </g>
+                                </svg>
+                            </span>
+                        }
                     </h3>
                     <div className="row basic-info-row">
                         <div className="col-4">
@@ -311,7 +322,10 @@ class BasicInfo extends Component {
                             </div>
                         </div>
                     </div>
-                    <AddBasicInfo key={ Math.random() } basicInfo={ basicInfo } saveBasicInfo={ this.saveBasicInfo } />
+                    { this.state.isEmployerActive ?
+                        null :
+                        <AddBasicInfo key={ Math.random() } basicInfo={ basicInfo } saveBasicInfo={ this.saveBasicInfo } />
+                    }
                 </div>
                 <div className="about-me basic-info-each-section">
                     <h3>
@@ -330,7 +344,10 @@ class BasicInfo extends Component {
                     <div className="aboutme-text">
                         { this.state.aboutMe }
                     </div>
-                    <AddAboutMe key={ Math.random() } aboutMe={ this.state.aboutMe } saveAboutMe={ this.saveAboutMe } />
+                    { this.state.isEmployerActive ?
+                        null :
+                        <AddAboutMe key={ Math.random() } aboutMe={ this.state.aboutMe } saveAboutMe={ this.saveAboutMe } />
+                    }
                 </div>
                 <div className="experience basic-info-each-section">
                     <h3>
@@ -356,7 +373,10 @@ class BasicInfo extends Component {
                             } )
                             : null
                     }
-                    <AddExperience saveExperience={ this.saveExperience } />
+                    { this.state.isEmployerActive ?
+                        null :
+                        <AddExperience saveExperience={ this.saveExperience } />
+                    }
                 </div>
                 <div className="skills">
                     <h3>
@@ -377,7 +397,10 @@ class BasicInfo extends Component {
                             <Skills key={ Math.random() } skills={ this.state.skills } />
                             : null
                     }
-                    <UpdateSkills saveSkill={ this.saveSkill } />
+                    { this.state.isEmployerActive ?
+                        null :
+                        <UpdateSkills saveSkill={ this.saveSkill } />
+                    }
                 </div>
                 <div className="education">
                     <h3>
@@ -403,7 +426,10 @@ class BasicInfo extends Component {
                             } )
                             : null
                     }
-                    <AddEducation saveEducation={ this.saveEducation } />
+                    { this.state.isEmployerActive ?
+                        null :
+                        <AddEducation saveEducation={ this.saveEducation } />
+                    }
                 </div>
             </div>
         )

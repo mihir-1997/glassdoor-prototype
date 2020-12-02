@@ -15,9 +15,9 @@ class EmployerInterviews extends Component {
 
     constructor( props ) {
         super( props )
-        this.state ={
-            interviews:[],
-            logoImageUrl:"",
+        this.state = {
+            interviews: [],
+            logoImageUrl: "",
         }
     }
 
@@ -34,7 +34,7 @@ class EmployerInterviews extends Component {
                 .then( ( res ) => {
                     //console.log(res)
                     if ( res.status === 200 ) {
-                        this.setState( {                           
+                        this.setState( {
                             logoImageUrl: res.data.logoImageUrl,
                         } )
                     }
@@ -49,19 +49,26 @@ class EmployerInterviews extends Component {
                     }
                 } )
         }
-        
-        let name = localStorage.getItem( "name" )
+        let name = null
+        if ( this.props.location ) {
+            if ( this.props.location.state ) {
+                name = this.props.location.state.searchTerm
+            } else {
+                name = localStorage.getItem( "name" )
+            }
+        }
+        console.log( name )
         if ( name ) {
             axios.defaults.withCredentials = true
             axios.defaults.headers.common[ 'authorization' ] = localStorage.getItem( 'token' )
-            axios.post( BACKEND_URL + ":" + BACKEND_PORT + "/contributions/getInterviewsByEmployer/" + name,{firstTime:true, pageSize:5,pageNumber:1} )
+            axios.post( BACKEND_URL + ":" + BACKEND_PORT + "/contributions/getInterviewsByEmployer/" + name, { firstTime: true, pageSize: 5, pageNumber: 1 } )
                 .then( ( res ) => {
-                     //console.log(res.data.interview)
+                    //console.log(res.data.interview)
                     if ( res.status === 200 ) {
                         this.setState( {
-                            interviews:res.data.interview
+                            interviews: res.data.interview
                         } )
-                        console.log(this.state.interviews)
+                        console.log( this.state.interviews )
                     }
                 } )
                 .catch( ( err ) => {
@@ -74,10 +81,10 @@ class EmployerInterviews extends Component {
                     }
                 } )
         }
-       
+
     }
 
-    render() {
+    render () {
 
         let redirectVar = null
         if ( !localStorage.getItem( "active" ) ) {
@@ -85,61 +92,61 @@ class EmployerInterviews extends Component {
             return redirectVar
         }
 
-        let allInterviews = this.state.interviews.map((eachinterview) => {
-           
-                return (
-                    <IndividualInterview
-                       key={Math.random()}
-                       data={eachinterview}
-                       logo={this.state.logoImageUrl}
-                    ></IndividualInterview>
-                  );
-            })
+        let allInterviews = this.state.interviews.map( ( eachinterview ) => {
+
+            return (
+                <IndividualInterview
+                    key={ Math.random() }
+                    data={ eachinterview }
+                    logo={ this.state.logoImageUrl }
+                ></IndividualInterview>
+            );
+        } )
 
         return (
 
             <div className="employer-profile-wrapper">
-                {redirectVar}
+                {redirectVar }
                 <div className="root-header">
                     <div className="image-wrapper">
-                        <img className="cover" src={interviewCover} alt="Cover"  />
+                        <img className="cover" src={ interviewCover } alt="Cover" />
                     </div>
                     <div className="details-wrapper">
-                            <div className="employer-company-logo">
-                                <img className="logo" src={BACKEND_URL + ":" + BACKEND_PORT + "/public/images/profilepics/" + this.state.logoImageUrl} alt="logo"/>
-                            </div>
+                        <div className="employer-company-logo">
+                            <img className="logo" src={ BACKEND_URL + ":" + BACKEND_PORT + "/public/images/profilepics/" + this.state.logoImageUrl } alt="logo" />
+                        </div>
                         <div className="details">
-                            <h3 style={{marginTop:"10px"}}> {localStorage.getItem("name")} </h3>
-                            <br/>
-                            <br/>
+                            <h3 style={ { marginTop: "10px" } }> { localStorage.getItem( "name" ) } </h3>
+                            <br />
+                            <br />
                         </div>
                         <div className="row multiple-links">
-                            <div className="col-1.2 single-link"><a href="/employer/profile">Overview</a> </div> 
+                            <div className="col-1.2 single-link"><a href="/employer/profile">Overview</a> </div>
                             <div className="col-1.2 single-link"><a href="/employer/reviews">Reviews</a> </div>
                             <div className="col-1.2 single-link"><a href="/employer/jobs">Jobs</a> </div>
                             <div className="col-1.2 single-link"><a href="/employer/salaries">Salaries</a> </div>
                             <div className="col-1.2 single-link"><a href="/employer/interviews">Interviews</a> </div>
                             <div className="col-1.2 single-link"><a href="/employer/photos">Photos</a> </div>
                             <div className="col-1.2 single-link"><a href="/employer/reports">Reports</a> </div>
-                            
-                            {/* <button className="col-1.2 btn btn-primary d-flex justify-content-center align-items-center" style={{marginLeft:"320px", marginBottom:"15px", marginTop:"15px", color:"rgb(24, 97, 191)", background:"white",fontWeight:"bold" ,border:"1px solid rgb(24, 97, 191)"}}>Follow</button> */}
-                            {/* <button className="col-1.2 btn btn-primary d-flex justify-content-center align-items-center" style={{marginLeft:"10px", marginBottom:"15px", marginTop:"15px", color:"rgb(24, 97, 191)", background:"white",fontWeight:"bold" ,border:"1px solid rgb(24, 97, 191)"}}> + Add Review</button> */}
+
+                            {/* <button className="col-1.2 btn btn-primary d-flex justify-content-center align-items-center" style={{marginLeft:"320px", marginBottom:"15px", marginTop:"15px", color:"rgb(24, 97, 191)", background:"white",fontWeight:"bold" ,border:"1px solid rgb(24, 97, 191)"}}>Follow</button> */ }
+                            {/* <button className="col-1.2 btn btn-primary d-flex justify-content-center align-items-center" style={{marginLeft:"10px", marginBottom:"15px", marginTop:"15px", color:"rgb(24, 97, 191)", background:"white",fontWeight:"bold" ,border:"1px solid rgb(24, 97, 191)"}}> + Add Review</button> */ }
 
                         </div>
-                    </div>   
-                    <div className="interview-info-wrapper" style={{overflowY:"auto", height:"900px"}}>
-                    <p style={{fontSize:"20px", lineHeight:"27px", marginLeft:"0px", fontWeight:"bold"}}>Interviews at {localStorage.getItem("name")} </p>
-                    <hr/>
-                    {allInterviews}
+                    </div>
+                    <div className="interview-info-wrapper" style={ { overflowY: "auto", height: "900px" } }>
+                        <p style={ { fontSize: "20px", lineHeight: "27px", marginLeft: "0px", fontWeight: "bold" } }>Interviews at { localStorage.getItem( "name" ) } </p>
+                        <hr />
+                        { allInterviews }
 
-                       
-                    </div> 
+
+                    </div>
 
                     <div className="interview-form-wrapper">
-                    form
-                    </div>     
+                        form
+                    </div>
                 </div>
-                
+
             </div>
         )
     }

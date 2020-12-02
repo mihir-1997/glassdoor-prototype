@@ -127,13 +127,23 @@ class JobDescription extends Component {
                             </div>
                         </span>
                         : null }
-                    { this.state.description ?
+                    { this.state.qualifications ?
                         <span>
                             <div className="job-description-heading">
                                 Qualifications
                             </div>
                             <div className="job-description-text">
                                 { this.state.qualifications }
+                            </div>
+                        </span>
+                        : null }
+                    { this.state.responsibilities ?
+                        <span>
+                            <div className="job-description-heading">
+                                Responsibilities
+                            </div>
+                            <div className="job-description-text">
+                                { this.state.responsibilities }
                             </div>
                         </span>
                         : null }

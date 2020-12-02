@@ -19,6 +19,7 @@
 
 .second-row-buttons {
     padding: 3% 0;
+    min-width: 200px;
 }
 
 .second-row-buttons:hover {

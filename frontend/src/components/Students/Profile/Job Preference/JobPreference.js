@@ -20,7 +20,8 @@ class JobPreference extends Component {
             typeOfIndustry: "",
             salaryFrom: "",
             salaryTo: "",
-            payPeriod: ""
+            payPeriod: "",
+            isEmployerActive: false
         }
     }
 
@@ -28,6 +29,13 @@ class JobPreference extends Component {
         SEO( {
             title: "Job Preferences | Glassdoor"
         } )
+        if ( this.props.location ) {
+            if ( this.props.location.active ) {
+                this.setState( {
+                    isEmployerActive: !this.state.isEmployerActive
+                } )
+            }
+        }
         let id = localStorage.getItem( "id" )
         if ( id ) {
             axios.defaults.withCredentials = true
@@ -183,96 +191,107 @@ class JobPreference extends Component {
                         <div className="job-prefer-search-status-text">
                             <span>Where are you in your job search?</span>
                         </div>
-                        <div className="job-prefer-search-status-select">
-                            <form className="job-prefer-search-status-form">
-                                <div className="form-row">
-                                    <div className="form-group col-md">
-                                        <label htmlFor="joinSearchStatus">Select job search status</label>
-                                        <select className="custom-select" id="joinSearchStatus" value={ this.state.searchStatus } onChange={ this.searchStatusChange }>
-                                            <option value="">Select</option>
-                                            <option value="Not Looking">Not Looking</option>
-                                            <option value="Not Looking, but open">Not Looking, but open</option>
-                                            <option value="Casually looking">Casually looking</option>
-                                            <option value="MastActively Lookinger">Actively Looking</option>
-                                        </select>
+                        { this.state.isEmployerActive ?
+                            this.state.searchStatus
+                            :
+                            <div className="job-prefer-search-status-select">
+                                <form className="job-prefer-search-status-form">
+                                    <div className="form-row">
+                                        <div className="form-group col-md">
+                                            <label htmlFor="joinSearchStatus">Select job search status</label>
+                                            <select className="custom-select" id="joinSearchStatus" value={ this.state.searchStatus } onChange={ this.searchStatusChange }>
+                                                <option value="">Select</option>
+                                                <option value="Not Looking">Not Looking</option>
+                                                <option value="Not Looking, but open">Not Looking, but open</option>
+                                                <option value="Casually looking">Casually looking</option>
+                                                <option value="MastActively Lookinger">Actively Looking</option>
+                                            </select>
+                                        </div>
                                     </div>
-                                </div>
-                            </form>
-                        </div>
+                                </form>
+                            </div> }
                         <div className="job-prefer-job-title">
                             <div className="job-prefer-job-title-text">
                                 <span>What job titles are you looking for?</span>
                             </div>
-                            <div className="job-prefer-job-title-add">
-                                <div className="add-title-icon" onClick={ this.showAddTitle }>+ Add Job Title</div>
-                                { this.state.jobTitle ?
-                                    <div className="job-title">
-                                        <span >{ this.state.jobTitle }</span>&nbsp;&nbsp;&nbsp;&nbsp;
+                            { this.state.isEmployerActive ?
+                                this.state.jobTitle
+                                :
+                                <div className="job-prefer-job-title-add">
+                                    <div className="add-title-icon" onClick={ this.showAddTitle }>+ Add Job Title</div>
+                                    { this.state.jobTitle ?
+                                        <div className="job-title">
+                                            <span >{ this.state.jobTitle }</span>&nbsp;&nbsp;&nbsp;&nbsp;
                                             <span className="remove-job-title" onClick={ this.removeJobTitle }>
-                                            <svg width="15" height="15" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fillRule="evenodd" clipRule="evenodd">
-                                                <path fill="#fff" d="M12 11.293l10.293-10.293.707.707-10.293 10.293 10.293 10.293-.707.707-10.293-10.293-10.293 10.293-.707-.707 10.293-10.293-10.293-10.293.707-.707 10.293 10.293z" />
-                                            </svg>
-                                        </span>
-                                    </div>
-                                    : null }
-
-                                <div className="add-title-input" id="add-title-input">
-                                    <form className="popup-form">
-                                        <div className="form-row">
-                                            <div className="form-group col-10">
-                                                <label htmlFor="jobPrefInputTitle">Job Title</label>
-                                                <input type="text" name="jobTitle" className="form-control" id="jobPrefInputTitle" placeholder="Job Title" value={ this.state.jobTitle } onChange={ this.onChange } />
-                                            </div>
-                                            <div className="form-group col-2">
-                                                <label>Add</label>
-                                                <button type="button" className="btn btn-primary form-control" onClick={ this.addJobTitle }>Add</button>
-                                            </div>
+                                                <svg width="15" height="15" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fillRule="evenodd" clipRule="evenodd">
+                                                    <path fill="#fff" d="M12 11.293l10.293-10.293.707.707-10.293 10.293 10.293 10.293-.707.707-10.293-10.293-10.293 10.293-.707-.707 10.293-10.293-10.293-10.293.707-.707 10.293 10.293z" />
+                                                </svg>
+                                            </span>
                                         </div>
-                                    </form>
+                                        : null }
+
+                                    <div className="add-title-input" id="add-title-input">
+                                        <form className="popup-form">
+                                            <div className="form-row">
+                                                <div className="form-group col-10">
+                                                    <label htmlFor="jobPrefInputTitle">Job Title</label>
+                                                    <input type="text" name="jobTitle" className="form-control" id="jobPrefInputTitle" placeholder="Job Title" value={ this.state.jobTitle } onChange={ this.onChange } />
+                                                </div>
+                                                <div className="form-group col-2">
+                                                    <label>Add</label>
+                                                    <button type="button" className="btn btn-primary form-control" onClick={ this.addJobTitle }>Add</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
                                 </div>
-                            </div>
+                            }
                         </div>
                         <div className="job-prefer-salary">
                             <div className="job-prefer-salary-text">
                                 <span>What is your target salary range?</span>
                             </div>
-                            <div className="job-prefer-salary-add">
-                                <div className="job-prefer-salary-add-button" id="salary-add-title" onClick={ this.showSalary }>+ Add Salary Range</div>
-                                <div className="target-salary">
-                                    { this.state.targetSalary ?
-                                        this.state.targetSalary
-                                        : null }
-                                </div>
-                                <div className="salary-add-div" id="salary-add-div">
-                                    <div className="salary-add-title">
-                                        Add Salary Range
+                            { this.state.isEmployerActive ?
+                                this.state.targetSalary
+                                :
+                                <div className="job-prefer-salary-add">
+                                    <div className="job-prefer-salary-add-button" id="salary-add-title" onClick={ this.showSalary }>+ Add Salary Range</div>
+                                    <div className="target-salary">
+                                        { this.state.targetSalary ?
+                                            this.state.targetSalary
+                                            : null }
                                     </div>
-                                    <div className="salary-add-form">
-                                        <form className="popup-form">
-                                            <div className="form-row">
-                                                <div className="form-group col-6">
-                                                    <label htmlFor="jobPrefInputSalaryStart">From</label>
-                                                    <input type="text" name="salaryFrom" className="form-control" id="jobPrefInputSalaryStart" placeholder="" value={ this.state.salaryFrom } onChange={ this.onChange } />
-                                                </div>
-                                                <div className="form-group col-6">
-                                                    <label htmlFor="jobPrefInputSalaryEnd">To</label>
-                                                    <input type="text" name="salaryTo" className="form-control" id="jobPrefInputSalaryEnd" placeholder="" value={ this.state.salaryTo } onChange={ this.onChange } />
-                                                </div>
-                                            </div>
-                                            <div className="form-group">
-                                                <label htmlFor="jobPrefInputSalaryPeriod">Pay Period</label>
-                                                <select className="custom-select" name="payPeriod" id="jobPrefInputSalaryPeriod" value={ this.state.payPeriod } onChange={ this.onChange }>
-                                                    <option value="">Select</option>
-                                                    <option value="Per Year">Per Year</option>
-                                                    <option value="Per Month">Per Month</option>
-                                                    <option value="Per Hour">Per Hour</option>
-                                                </select>
-                                            </div>
-                                        </form>
+                                    <div className="salary-add-div" id="salary-add-div">
+                                        <div className="salary-add-title">
+                                            Add Salary Range
                                     </div>
-                                    <Footer closePopup={ this.closeSalaryPopup } saveChanges={ this.saveSalary } />
+                                        <div className="salary-add-form">
+                                            <form className="popup-form">
+                                                <div className="form-row">
+                                                    <div className="form-group col-6">
+                                                        <label htmlFor="jobPrefInputSalaryStart">From</label>
+                                                        <input type="text" name="salaryFrom" className="form-control" id="jobPrefInputSalaryStart" placeholder="" value={ this.state.salaryFrom } onChange={ this.onChange } />
+                                                    </div>
+                                                    <div className="form-group col-6">
+                                                        <label htmlFor="jobPrefInputSalaryEnd">To</label>
+                                                        <input type="text" name="salaryTo" className="form-control" id="jobPrefInputSalaryEnd" placeholder="" value={ this.state.salaryTo } onChange={ this.onChange } />
+                                                    </div>
+                                                </div>
+                                                <div className="form-group">
+                                                    <label htmlFor="jobPrefInputSalaryPeriod">Pay Period</label>
+                                                    <select className="custom-select" name="payPeriod" id="jobPrefInputSalaryPeriod" value={ this.state.payPeriod } onChange={ this.onChange }>
+                                                        <option value="">Select</option>
+                                                        <option value="Per Year">Per Year</option>
+                                                        <option value="Per Month">Per Month</option>
+                                                        <option value="Per Hour">Per Hour</option>
+                                                    </select>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <Footer closePopup={ this.closeSalaryPopup } saveChanges={ this.saveSalary } />
+                                    </div>
                                 </div>
-                            </div>
+                            }
                         </div>
                     </div>
                 </div>
@@ -280,45 +299,57 @@ class JobPreference extends Component {
                     <div className="job-prefer-title">
                         <h3>Company Preferences</h3>
                     </div>
-                    <div className="job-prefer-text">
-                        <span>We use this information to help find you the best company matches.</span>
-                    </div>
-                    <div className="job-prefer-search-status">
-                        <div className="job-location-pref">
-                            <div className="job-prefer-search-status-text">
-                                <span>Where would you prefer to work?</span>
+                    { this.state.isEmployerActive ?
+                        this.state.openToRelocation
+                        :
+                        <div>
+                            <div className="job-prefer-text">
+                                <span>We use this information to help find you the best company matches.</span>
                             </div>
-                            <div className="relocation-checkbox">
-                                <input type="checkbox" checked={ this.state.openToRelocation } onChange={ this.changeJobLocation } />&nbsp;&nbsp;<label>I'm open to relocation</label>
+                            <div className="job-prefer-search-status">
+                                <div className="job-location-pref">
+                                    <div className="job-prefer-search-status-text">
+                                        <span>Where would you prefer to work?</span>
+                                    </div>
+                                    <div className="relocation-checkbox">
+                                        <input type="checkbox" checked={ this.state.openToRelocation } onChange={ this.changeJobLocation } />&nbsp;&nbsp;<label>I'm open to relocation</label>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    }
                     <div className="job-industry-pref">
                         <div className="job-prefer-search-status-text">
                             <span>What industries do you prefer?</span>
                         </div>
-                        { this.state.typeOfIndustry ?
-                            <div className="job-title">
-                                <span >{ this.state.typeOfIndustry }</span>&nbsp;&nbsp;&nbsp;&nbsp;
+                        { this.state.isEmployerActive ?
+                            this.state.typeOfIndustry
+                            :
+                            <div>
+                                { this.state.typeOfIndustry ?
+                                    <div className="job-title">
+                                        <span >{ this.state.typeOfIndustry }</span>&nbsp;&nbsp;&nbsp;&nbsp;
                                     <span className="remove-job-title" onClick={ this.removeIndustry }>
-                                    <svg width="15" height="15" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fillRule="evenodd" clipRule="evenodd">
-                                        <path fill="#fff" d="M12 11.293l10.293-10.293.707.707-10.293 10.293 10.293 10.293-.707.707-10.293-10.293-10.293 10.293-.707-.707 10.293-10.293-10.293-10.293.707-.707 10.293 10.293z" />
-                                    </svg>
-                                </span>
+                                            <svg width="15" height="15" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fillRule="evenodd" clipRule="evenodd">
+                                                <path fill="#fff" d="M12 11.293l10.293-10.293.707.707-10.293 10.293 10.293 10.293-.707.707-10.293-10.293-10.293 10.293-.707-.707 10.293-10.293-10.293-10.293.707-.707 10.293 10.293z" />
+                                            </svg>
+                                        </span>
+                                    </div>
+                                    : null }
+                                <form className="popup-form">
+                                    <div className="form-row">
+                                        <div className="form-group col-10">
+                                            <label htmlFor="jobPrefInputIndustry">Industry</label>
+                                            <input type="text" name="typeOfIndustry" className="form-control" id="jobPrefInputIndustry" placeholder="Industry" onChange={ this.onChange } />
+                                        </div>
+                                        <div className="form-group col-2">
+                                            <label>Add</label>
+                                            <button type="button" className="btn btn-primary form-control" onClick={ this.addIndustry }>Add</button>
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
-                            : null }
-                        <form className="popup-form">
-                            <div className="form-row">
-                                <div className="form-group col-10">
-                                    <label htmlFor="jobPrefInputIndustry">Industry</label>
-                                    <input type="text" name="typeOfIndustry" className="form-control" id="jobPrefInputIndustry" placeholder="Industry" onChange={ this.onChange } />
-                                </div>
-                                <div className="form-group col-2">
-                                    <label>Add</label>
-                                    <button type="button" className="btn btn-primary form-control" onClick={ this.addIndustry }>Add</button>
-                                </div>
-                            </div>
-                        </form>
+                        }
                     </div>
                 </div>
             </div>

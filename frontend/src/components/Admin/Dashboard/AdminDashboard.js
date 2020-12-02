@@ -228,14 +228,14 @@ class AdminDashboard extends Component {
 
     render () {
         let redirectVar = null
-        if ( !localStorage.getItem( "active" ) ) {
+        if ( localStorage.getItem( "active" ) !== "admin" ) {
             redirectVar = <Redirect to="/login" />
             return redirectVar
         }
         console.log( this.state )
         return (
             <div>
-                {redirectVar }
+                { redirectVar }
                 <div className="admin-dashboard">
                     <div className="admin-dashboard-heading">
                         Analytics Dashboard

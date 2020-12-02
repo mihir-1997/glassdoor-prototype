@@ -10,7 +10,6 @@ import JobLanding from './Students/JobSearch/JobLanding'
 import CompanySearch from './Students/CompanySearch/CompanySearch'
 import Contributions from './Students/Contributions/Contributions'
 import AddContribution from './Students/Contributions/AddContribution'
-import DonutChart from './Charts/Donutchart/Donutchart'
 import AdminDashboard from './Admin/Dashboard/AdminDashboard'
 
 import EmployerProfile from './Employer/Profile/EmployerProfile'
@@ -35,7 +34,6 @@ class Routes extends Component {
                 <Route path="/students/contributions" component={ Contributions } />
                 <Route path="/students/addcontribution" component={ AddContribution } />
                 <Route path="/students/applications" component={ JobLanding } />
-                <Route path="/students/charts" component={ DonutChart } />
           
                 {/* Employer Routes */}
                 <Route path="/employer/profile" component={ EmployerProfile }/>
@@ -45,9 +43,8 @@ class Routes extends Component {
                 <Route path="/employer/interviews" component={ EmployerInterviews }/>
                 <Route path="/employer/photos" component={ EmployerPhotos }/>
                 <Route path="/employer/reports" component={ EmployerReports }/>
-                
 
-                {/* Admin Routes */}
+                {/* Admin Routes */ }
                 <Route path="/admin/dashboard" component={ AdminDashboard } />
                 <Route path="/admin/companies" component={ CompanySearch } />
             </div>

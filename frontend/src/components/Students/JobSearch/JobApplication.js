@@ -109,20 +109,36 @@ class JobApplication extends Component {
         if ( this.state.firstName && this.state.lastName && this.state.selectedResumeID && this.state.selectedResumeName && this.state.selectedImageName && this.state.disability && this.state.ethnicity && this.state.gender && this.state.veteranStatus ) {
             let id = localStorage.getItem( "id" )
             if ( id ) {
-                let jobApplication = {
-                    studentID: id,
-                    resumeID: this.state.selectedResumeID,
-                    resumeName: this.state.selectedResumeName,
-                    imageName: this.state.selectedImageName,
-                    ethnicity: this.state.ethnicity,
-                    gender: this.state.gender,
-                    disability: this.state.disability,
-                    veteranStatus: this.state.veteranStatus,
-                    name: this.state.firstName + " " + this.state.lastName,
+                const formData = new FormData()
+                formData.append( 'myResume', this.state.coverletter )
+                formData.append( 'studentID', id )
+                formData.append( 'resumeID', this.state.selectedResumeID )
+                formData.append( 'resumeName', this.state.selectedResumeName )
+                formData.append( 'imageName', this.state.selectedImageName )
+                formData.append( 'ethnicity', this.state.ethnicity )
+                formData.append( 'gender', this.state.gender )
+                formData.append( 'disability', this.state.disability )
+                formData.append( 'veteranStatus', this.state.veteranStatus )
+                formData.append( 'name', this.state.firstName + " " + this.state.lastName )
+                const config = {
+                    headers: {
+                        'content-type': 'multipart/form-data'
+                    }
                 }
+                // let jobApplication = {
+                //     studentID: id,
+                //     resumeID: this.state.selectedResumeID,
+                //     resumeName: this.state.selectedResumeName,
+                //     imageName: this.state.selectedImageName,
+                //     ethnicity: this.state.ethnicity,
+                //     gender: this.state.gender,
+                //     disability: this.state.disability,
+                //     veteranStatus: this.state.veteranStatus,
+                //     name: this.state.firstName + " " + this.state.lastName,
+                // }
                 axios.defaults.withCredentials = true
                 axios.defaults.headers.common[ 'authorization' ] = localStorage.getItem( 'token' )
-                axios.put( BACKEND_URL + ":" + BACKEND_PORT + "/jobs/applyForJob/" + this.state.jobId, jobApplication )
+                axios.put( BACKEND_URL + ":" + BACKEND_PORT + "/jobs/applyForJob/" + this.state.jobId, formData, config )
                     .then( ( res ) => {
                         if ( res.status === 200 ) {
                             this.closePopup()

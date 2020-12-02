@@ -249,7 +249,7 @@ class JobLanding extends Component {
 
     render () {
         let redirectVar = null
-        if ( !localStorage.getItem( "active" ) ) {
+        if ( localStorage.getItem( "active" ) !== "students" ) {
             redirectVar = <Redirect to="/login" />
             return redirectVar
         }

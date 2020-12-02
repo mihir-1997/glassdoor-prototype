@@ -86,7 +86,7 @@ class SignUp extends Component {
                         error: "*Some required fields are empty"
                     } )
                 }
-            } else if(this.state.selected === "employer"){
+            } else if ( this.state.selected === "employer" ) {
                 if ( this.state.name && this.state.email && this.state.password ) {
                     const employer = {
                         name: this.state.name,
@@ -114,9 +114,9 @@ class SignUp extends Component {
                                 }
                             }
                         } )
-                } 
-               
-                 else {
+                }
+
+                else {
                     this.setState( {
                         error: "*Some required fields are empty"
                     } )
@@ -167,16 +167,12 @@ class SignUp extends Component {
                                 </form>
                                 <br />
                                 <Link to="/login" className="sign-up">Already have an account? Log In</Link>
-                                <div className="row">
-                                    <p id="error">{ }</p>
-                                    <p id="error">{ }</p>
-                                </div>
                             </div>
                         </div>
                         <div className="col-3"></div>
                     </div>
                 </div>
-                <div>
+                <div className="error">
                     { this.state.error }
                 </div>
             </div>

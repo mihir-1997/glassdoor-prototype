@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Redirect } from 'react-router'
 import axios from 'axios'
+import Pagination from '@material-ui/lab/Pagination';
 
 import './CompanySearch.css'
 import IndividualCompanyCard from './IndividualCompanyCard'
@@ -15,7 +16,7 @@ class CompanySearch extends Component {
             allCompanies: [],
             searchTerm: this.props.location.state ? this.props.location.state.searchTerm : "",
             currPage: 1,
-            eachPageSize: 10
+            eachPageSize: 5
         }
     }
 
@@ -30,13 +31,7 @@ class CompanySearch extends Component {
                         .then( ( res ) => {
                             if ( res.status === 200 ) {
                                 console.log( res.data )
-                                // if ( res.data.length > 0 ) {
-                                //     this.setState( {
-                                //         allCompanies: res.data
-                                //     } )
                                 if ( res.data ) {
-                                    // let data = []
-                                    // data.push( res.data )
                                     this.setState( {
                                         allCompanies: res.data.employers
                                     } )
@@ -45,7 +40,6 @@ class CompanySearch extends Component {
                                         allCompanies: []
                                     } )
                                 }
-
                             }
                         } )
                         .catch( ( err ) => {
@@ -108,9 +102,15 @@ class CompanySearch extends Component {
         }
     }
 
+    handlePageChange = ( value ) => {
+        this.setState( {
+            currPage: value,
+        } )
+    }
+
     render () {
         let redirectVar = null
-        if ( !localStorage.getItem( "active" ) ) {
+        if ( localStorage.getItem( "active" ) === "employers" ) {
             redirectVar = <Redirect to="/login" />
             return redirectVar
         }
@@ -135,10 +135,15 @@ class CompanySearch extends Component {
                     }
                 </div>
                 {this.state.allCompanies.length > 0 ?
-                    this.state.allCompanies.map( ( company, index ) => {
+                    this.state.allCompanies.slice( this.state.currPage * this.state.eachPageSize - this.state.eachPageSize, this.state.currPage * this.state.eachPageSize ).map( ( company, index ) => {
                         return <IndividualCompanyCard company={ company } key={ Math.random() } />
                     } )
                     : null }
+                <div className="companysearch-page-wrapper">
+                    { this.state.allCompanies.length > 0 ?
+                        <Pagination count={ Math.ceil( this.state.allCompanies.length / this.state.eachPageSize ) } onChange={ this.handlePageChange } />
+                        : null }
+                </div>
             </div>
         )
     }
