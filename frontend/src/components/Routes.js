@@ -18,6 +18,7 @@ import EmployerInterviews from './Employer/Interviews/EmployerInterviews'
 import EmployerSalaries from './Employer/Salaries/EmployerSalaries'
 import EmployerPhotos from './Employer/Photos/EmployerPhotos'
 import EmployerJobs from './Employer/Jobs/EmployerJobs'
+import EmployerReports from './Employer/Reports/EmployerReports'
 
 class Routes extends Component {
     render () {
@@ -33,14 +34,15 @@ class Routes extends Component {
                 <Route path="/students/contributions" component={ Contributions } />
                 <Route path="/students/addcontribution" component={ AddContribution } />
                 <Route path="/students/applications" component={ JobLanding } />
-
-                {/* Employer Routes */ }
-                <Route path="/employer/profile" component={ EmployerProfile } />
-                <Route path="/employer/reviews" component={ EmployerReviews } />
-                <Route path="/employer/jobs" component={ EmployerJobs } />
-                <Route path="/employer/salaries" component={ EmployerSalaries } />
-                <Route path="/employer/interviews" component={ EmployerInterviews } />
-                <Route path="/employer/photos" component={ EmployerPhotos } />
+          
+                {/* Employer Routes */}
+                <Route path="/employer/profile" component={ EmployerProfile }/>
+                <Route path="/employer/reviews" component={ EmployerReviews }/>
+                <Route path="/employer/jobs" component={ EmployerJobs }/>
+                <Route path="/employer/salaries" component={ EmployerSalaries }/>
+                <Route path="/employer/interviews" component={ EmployerInterviews }/>
+                <Route path="/employer/photos" component={ EmployerPhotos }/>
+                <Route path="/employer/reports" component={ EmployerReports }/>
 
                 {/* Admin Routes */ }
                 <Route path="/admin/dashboard" component={ AdminDashboard } />

@@ -24,7 +24,8 @@ class AddJob extends Component {
             description:"",
             qualifications:"",
             responsibilities:"",
-            error:""
+            error:"",
+            logoImageUrl:this.props.logo,
         }
     }
    
@@ -50,7 +51,8 @@ class AddJob extends Component {
             salary:this.state.salary,
             description:this.state.description,
             qualifications:this.state.qualifications,
-            responsibilities:this.state.responsibilities
+            responsibilities:this.state.responsibilities,
+            logoImageUrl:this.props.logo
         }
         if(data){
         let id = localStorage.getItem( "id" )
@@ -156,14 +158,14 @@ class AddJob extends Component {
 
                                 <div className="form-group col-md">
                                     <label htmlFor="experienceInputTitle">Qualifications</label>
-                                    <input type="text-area" className="form-control" name="qualifications" onChange={this.onChange} placeholder="Qualifications" />
+                                    <textarea type="text" className="form-control" name="qualifications" onChange={this.onChange} placeholder="Qualifications" />
                                 </div>
                             </div>
                             <div className="form-row">
 
                                 <div className="form-group col-md">
                                     <label htmlFor="experienceInputTitle">Responsibilities</label>
-                                    <input type="text-area" className="form-control" name="responsibilities" onChange={this.onChange} placeholder="Responsibilities" />
+                                    <textarea type="text" className="form-control" name="responsibilities" onChange={this.onChange} placeholder="Responsibilities" />
                                 </div>
                             </div>
                         
