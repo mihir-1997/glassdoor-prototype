@@ -50,7 +50,7 @@ var userDemographicsSchema = new Schema( {
 
 var studentSchema = new Schema( {
     name: String,
-    email: String,
+    email: { type: 'String', unique: true },
     phoneNumber: Number,
     address: String,
     city: String,

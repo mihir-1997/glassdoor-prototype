@@ -37,13 +37,13 @@ function handle_request ( msg, callback ) {
                     } else {
                         console.log( "Invalid Credentials" )
                         // res.status( 401 ).send( "Invalid Credentials" )
-                        callback( "401", null )
+                        callback( "401", "401" )
                     }
                 } )
 
 
             } else {
-                callback( "404", null )
+                callback( "404", "404" )
             }
 
         }

@@ -14,11 +14,11 @@ router.get( '/', ( req, res ) => {
 } )
 //employer signup
 router.post( '/registerEmployer', ( req, res ) => {
-    console.log("register Employer");
+    console.log( "register Employer" );
     kafka.make_request( 'employer_signup', req.body, function ( err, results ) {
-        if ( err ) {
+        if ( results === null ) {
             console.log( "Inside err", err );
-            res.status( 400 ).send( err )
+            res.status( 409 ).send( err )
         } else {
             console.log( "Inside else", results );
             res.status( 200 ).send( results )
@@ -31,14 +31,11 @@ router.post( '/registerEmployer', ( req, res ) => {
 //employer login
 router.post( '/loginEmployer', ( req, res ) => {
     kafka.make_request( 'employer_login', req.body, function ( err, results ) {
-        if ( err ) {
-            console.log( "Inside err", err );
-            if ( err === "401" ) {
-                res.status( 401 ).send( "Wrong Credentials" )
-            } else {
-                res.status( 404 ).send( "No employer found" )
-            }
+        if ( results === "401" ) {
 
+            res.status( 401 ).send( "Wrong Credentials" )
+        } else if ( results === "404" ) {
+            res.status( 404 ).send( "No employer found" )
         } else {
             console.log( "Inside else", results );
             res.status( 200 ).send( results )
@@ -49,7 +46,7 @@ router.post( '/loginEmployer', ( req, res ) => {
 } )
 
 //upload profile pic employer
-router.post( '/updateEmployerProfilePicture/:employerID', checkAuth,  ( req, res ) => {
+router.post( '/updateEmployerProfilePicture/:employerID', checkAuth, ( req, res ) => {
     let upload = req.app.get( 'upload_profileImage' );
     upload( req, res, err => {
         if ( err ) {
@@ -77,7 +74,7 @@ router.post( '/updateEmployerProfilePicture/:employerID', checkAuth,  ( req, res
 } );
 
 //upload logo image of  employer
-router.post( '/updateEmployerLogo/:employerID',   checkAuth, ( req, res ) => {
+router.post( '/updateEmployerLogo/:employerID', checkAuth, ( req, res ) => {
     let upload = req.app.get( 'upload_profileImage' );
     upload( req, res, err => {
         if ( err ) {
@@ -105,8 +102,8 @@ router.post( '/updateEmployerLogo/:employerID',   checkAuth, ( req, res ) => {
 } );
 
 //get employer by name
-router.get( '/getEmployerByName/:name',  checkAuth,  ( req, res ) => {
-    console.log("inside getEmployerByName")
+router.get( '/getEmployerByName/:name', checkAuth, ( req, res ) => {
+    console.log( "inside getEmployerByName" )
     req.body.params = req.params
     kafka.make_request( 'employer_getEmployerByName', req.body, function ( err, results ) {
         if ( err ) {
@@ -125,7 +122,7 @@ router.get( '/getEmployerByName/:name',  checkAuth,  ( req, res ) => {
 
 //get all employers
 router.get( '/getAllEmployers', checkAuth, ( req, res ) => {
-    console.log("inside getAllEmployers")
+    console.log( "inside getAllEmployers" )
     kafka.make_request( 'employer_getAllEmployers', req.params, function ( err, results ) {
         if ( err ) {
             console.log( "Inside err", err );
@@ -144,7 +141,7 @@ router.get( '/getAllEmployers', checkAuth, ( req, res ) => {
 
 //get employer by id
 router.get( '/getEmployerById/:employerId', checkAuth, ( req, res ) => {
-    console.log("inside getEmployerById")
+    console.log( "inside getEmployerById" )
     kafka.make_request( 'employer_getEmployerById', req.params, function ( err, results ) {
         if ( err ) {
             console.log( "Inside err", err );

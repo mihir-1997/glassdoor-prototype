@@ -11,9 +11,9 @@ auth();
 //students signup
 router.post( '/registerUser', ( req, res ) => {
     kafka.make_request( 'students_signup', req.body, function ( err, results ) {
-        if ( err ) {
+        if ( results === null ) {
             console.log( "Inside err", err );
-            res.status( 400 ).send( err )
+            res.status( 409 ).send( err )
         } else {
             console.log( "Inside else", results );
             res.status( 200 ).send( results )
@@ -27,15 +27,14 @@ router.post( '/registerUser', ( req, res ) => {
 //students login
 router.post( '/loginUser', ( req, res ) => {
     kafka.make_request( 'students_login', req.body, function ( err, results ) {
-        if ( err ) {
-            console.log( "Inside err", err );
-            if ( err === "401" ) {
-                res.status( 401 ).send( "Wrong Credentials" )
-            } else {
-                res.status( 404 ).send( "No user found" )
-            }
+        if ( results === "401" ) {
+            res.status( 401 ).send( "Wrong Credentials" )
 
-        } else {
+
+        } else if ( results === "404" ) {
+            res.status( 404 ).send( "No user found" )
+        }
+        else {
             console.log( "Inside else", results );
             res.status( 200 ).send( results )
 

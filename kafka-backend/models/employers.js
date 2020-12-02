@@ -1,14 +1,14 @@
-const mongoose = require('mongoose')
+const mongoose = require( 'mongoose' )
 var Schema = mongoose.Schema;
 
-var employerSchema = new Schema({
-    
-    name: String,
+var employerSchema = new Schema( {
+
+    name: { type: 'String', unique: true },
     email: String,
     address: String,
     profileImageUrl: String,
-    logoImageUrl:String,
-    views:Number,
+    logoImageUrl: String,
+    views: Number,
     website: String,
     companySize: String,
     companyType: String,
@@ -23,4 +23,4 @@ var employerSchema = new Schema({
     , { collection: 'employers' }
 );
 
-module.exports = mongoose.model('employerSchema', employerSchema);  
+module.exports = mongoose.model( 'employerSchema', employerSchema );  
