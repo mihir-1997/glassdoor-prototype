@@ -13,6 +13,8 @@ function handle_request ( msg, callback ) {
         name:req.body.name,
         status: "Submitted",
         imageName:req.body.imageName,
+        coverLetterName: req.body.file.originalname,
+        coverLetterImageName: req.body.file.filename,
         ethnicity: req.body.ethnicity,
         gender: req.body.gender,
         disability: req.body.disability,

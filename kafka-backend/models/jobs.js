@@ -8,6 +8,8 @@ var applicantSchema = new Schema( {
     name:String,
     status: String,
     imageName:String,
+    coverLetterName: String,
+    coverLetterImageName: String,
     ethnicity: String,
     gender: String,
     disability: String,
