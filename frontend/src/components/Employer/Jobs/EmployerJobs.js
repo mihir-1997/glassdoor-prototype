@@ -18,7 +18,11 @@ class EmployerJobs extends Component {
         super( props )
         this.state ={
             jobs:[],
-            logoImageUrl:""
+            logoImageUrl:"",
+            currentPage:1,
+            totalCount:"",
+            elementsPerPage: 3,
+            jobStats:{},
         }
     }
 
@@ -52,12 +56,17 @@ class EmployerJobs extends Component {
         if ( id ) {
             axios.defaults.withCredentials = true
             axios.defaults.headers.common[ 'authorization' ] = localStorage.getItem( 'token' )
-            axios.get( BACKEND_URL + ":" + BACKEND_PORT + "/jobs/getJobsForEmployer/" + id )
+            axios.post( BACKEND_URL + ":" + BACKEND_PORT + "/jobs/getJobsForEmployer/" + id, {
+                "firstTime":true,
+                "pageNumber":1,
+                "pageSize":3
+            } )
                 .then( ( res ) => {
-                    //console.log(res.data)
+                    console.log(res.data)
                     if ( res.status === 200 ) {
                         this.setState( {
-                            jobs:res.data
+                            jobs:res.data.jobs,
+                            totalCount: res.data.totalCount
                         } )
                         //console.log(this.state.jobs)
                     }
@@ -140,7 +149,9 @@ class EmployerJobs extends Component {
 
                     <div className="form-wrapper-jobs">
                     <button onClick={this.addJob} className = "emp-profile-btn btn btn-primary d-flex justify-content-center align-items-center" style={{marginLeft:"75px", marginBottom:"15px", marginTop:"15px", color:"rgb(24, 97, 191)", background:"white",fontWeight:"bold" ,border:"1px solid rgb(24, 97, 191),",  }}>+ Add Job</button>
-                    <AddJob />
+                    <AddJob 
+                    logo={this.state.logoImageUrl}
+                     />
                     <div style={{margin:"0% 0% 0% 10%"}}>
                         <img style={{width:"91%", height:"140%"}} src={bestPlaces} alt="Best Places to work in 2020"/>
                     </div>
