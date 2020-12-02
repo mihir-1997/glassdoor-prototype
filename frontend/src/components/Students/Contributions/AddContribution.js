@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Redirect } from 'react-router'
 
 import './AddContribution.css'
 import SEO from '../../SEO/SEO'
@@ -43,8 +44,14 @@ class AddContribution extends Component {
         } else if ( this.state.activeRadio === "workday-photo" ) {
             activeSection = <AddPhotos />
         }
+        let redirectVar = null
+        if ( localStorage.getItem( "active" ) !== "students" ) {
+            redirectVar = <Redirect to="/login" />
+            return redirectVar
+        }
         return (
             <div>
+                { redirectVar }
                 <div className="contributions-wrapper">
                     <div className="row">
                         <div className="col-8">

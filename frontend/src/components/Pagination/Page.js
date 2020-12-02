@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Pagination from '@material-ui/lab/Pagination';
+import Pagination from '@material-ui/lab/Pagination'
 
 import './Page.css'
 

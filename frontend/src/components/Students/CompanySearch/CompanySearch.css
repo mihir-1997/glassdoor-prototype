@@ -18,6 +18,15 @@
     color: #505963;
 }
 
+.companysearch-page-wrapper {
+    width: 60%;
+    margin-top: 20px;
+}
+
+.companysearch-page-wrapper .MuiPagination-root {
+    padding-top: 25px;
+}
+
 /* Individual company card */
 
 .individual-comanycard-wrapper {
@@ -42,6 +51,7 @@
 .individual-company-name {
     font-size: 22px;
     font-weight: 600;
+    cursor: pointer;
 }
 
 .individual-company-ratings {

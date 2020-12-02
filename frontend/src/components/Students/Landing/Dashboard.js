@@ -64,7 +64,7 @@ class Dashboard extends Component {
 
     render () {
         let redirectVar = null
-        if ( !localStorage.getItem( "active" ) ) {
+        if ( localStorage.getItem( "active" ) !== "students" ) {
             redirectVar = <Redirect to="/login" />
             return redirectVar
         }
@@ -115,7 +115,7 @@ class Dashboard extends Component {
                                 </div>
                                 <div className="col-3">
                                     <div className="companies-icon second-row-buttons">
-                                        <svg style={ { "width": "48px", "height": "48px" } } xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
                                             <g fill="none" fillRule="evenodd">
                                                 <path fill="#0CAA41" fillRule="nonzero" d="M19.182 10h19.636c1.205 0 2.182.895 2.182 2v27H17V12c0-1.105.977-2 2.182-2zM39 37V13a1 1 0 00-1-1H20a1 1 0 00-1 1v24h20z"></path>
                                                 <path fill="#DFF7E7" fillRule="nonzero" d="M22 14h14a1 1 0 011 1v20h-4v-3a3 3 0 00-3-3h-2a3 3 0 00-3 3v3h-4V15a1 1 0 011-1z"></path>

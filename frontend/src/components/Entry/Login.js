@@ -97,7 +97,7 @@ class Login extends Component {
                     .then( ( res ) => {
                         console.log( res )
                         if ( res.status === 200 ) {
-                            console.log( "loggedin successfully")
+                            console.log( "loggedin successfully" )
                             localStorage.setItem( "token", res.data )
                             var decoded = jwt_decode( res.data.split( ' ' )[ 1 ] )
                             localStorage.setItem( "email", decoded.email )
@@ -119,7 +119,7 @@ class Login extends Component {
                             }
                         }
                     } )
-            } else if(this.state.selected === "employer"){
+            } else if ( this.state.selected === "employer" ) {
                 const employer = {
                     email: this.state.email,
                     password: this.state.password,
@@ -151,7 +151,7 @@ class Login extends Component {
                             }
                         }
                     } )
-              
+
             }
         } else {
             this.setState( {
@@ -168,8 +168,8 @@ class Login extends Component {
         } if ( localStorage.getItem( "email" ) && localStorage.getItem( "active" ) === "admin" ) {
             redirectVar = <Redirect to="/admin/dashboard" />
             return redirectVar
-        } else if ( localStorage.getItem( "email" ) && localStorage.getItem( "active" ) === "restaurant" ) {
-
+        } else if ( localStorage.getItem( "email" ) && localStorage.getItem( "active" ) === "employers" ) {
+            redirectVar = <Redirect to="/employer/profile" />
         }
         return (
             <div className="login-container-wrapper">
@@ -202,10 +202,6 @@ class Login extends Component {
                                 </form>
                                 <br />
                                 <Link to="/signup" className="sign-up"> Don't have account? Sign up</Link>
-                                <div className="row">
-                                    <p id="error">{ }</p>
-                                    <p id="error">{ }</p>
-                                </div>
                             </div>
                         </div>
                         <div className="col-3"></div>

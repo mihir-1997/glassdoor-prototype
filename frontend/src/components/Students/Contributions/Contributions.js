@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Redirect } from 'react-router'
 
 import './Contributions.css'
 import Interviews from './Interviews/Interviews'
@@ -16,9 +17,11 @@ class Contributions extends Component {
     }
 
     componentDidMount () {
-        if ( this.state.activeContribution ) {
-            let previousActive = document.getElementById( this.state.activeContribution )
-            previousActive.classList.add( "each-contribution-button-active" )
+        if ( localStorage.getItem( "active" ) === "students" ) {
+            if ( this.state.activeContribution ) {
+                let previousActive = document.getElementById( this.state.activeContribution )
+                previousActive.classList.add( "each-contribution-button-active" )
+            }
         }
     }
 
@@ -54,8 +57,14 @@ class Contributions extends Component {
         } else if ( this.state.activeContribution === "photos" ) {
             showContribution = <Photos />
         }
+        let redirectVar = null
+        if ( localStorage.getItem( "active" ) !== "students" ) {
+            redirectVar = <Redirect to="/login" />
+            return redirectVar
+        }
         return (
             <div>
+                { redirectVar }
                 <div className="contributions-wrapper">
                     <div className="row contributions">
                         <div className="col-3">
