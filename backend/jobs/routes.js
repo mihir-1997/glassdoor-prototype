@@ -31,7 +31,7 @@ router.post( '/createJob',  checkAuth,( req, res ) => {
 
 
 //get jobs for a employer
-router.get( '/getJobsForEmployer/:employerID',  checkAuth, ( req, res ) => {
+router.post( '/getJobsForEmployer/:employerID',  checkAuth, ( req, res ) => {
     console.log("inside getJobsForEmployer")
     req.body.params = req.params
     kafka.make_request( 'job_getJobsForEmployer', req.body, function ( err, results ) {
@@ -86,9 +86,18 @@ router.get( '/getJobsBasedOnTitle/:title', checkAuth, ( req, res ) => {
 } )
 
 //apply for a job
-router.put( '/applyForJob/:jobID',  checkAuth,( req, res ) => {
+router.put( '/applyForJob/:jobID',  checkAuth, ( req, res ) => {
+    let upload = req.app.get( 'upload_Resume' );
+   upload( req, res, err => {
+        if ( err ) {
+            console.log( "Error uploading cover letter", err );
+            res.status( 400 ).end( 'Issue with uploading' )
+        } else {
+            console.log( "Inside upload", req.file, req.body );
+            req.body.file = req.file
+            req.body.params = req.params
+      
     console.log("Apply for Job");
-    req.body.params = req.params
     kafka.make_request( 'job_applyForJob', req.body, function ( err, results ) {
         if ( err ) {
             console.log( "Inside err", err );
@@ -100,6 +109,8 @@ router.put( '/applyForJob/:jobID',  checkAuth,( req, res ) => {
         }
 
     } );
+}
+} );
 } )
 
 //get all applications status for students
