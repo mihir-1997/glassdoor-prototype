@@ -5,6 +5,7 @@ import axios from "axios";
 import './EmployerJobs.css'
 import AddJob from './AddJob'
 import IndividualJob from './individualJob'
+import Paginate from '../../Pagination'
 import jobCover from '../../../Images/job.jpg'
 import bestPlaces from '../../../Images/best_places.jpg'
 import SEO from '../../SEO/SEO'
@@ -83,6 +84,38 @@ class EmployerJobs extends Component {
         }
     }
 
+        // Change page
+        paginate = (pageNumber) => {
+        console.log("pagenumber ", pageNumber);
+        
+        let id = localStorage.getItem( "id" )
+        if ( id ) {
+            axios.defaults.withCredentials = true
+            axios.defaults.headers.common[ 'authorization' ] = localStorage.getItem( 'token' )
+            axios.post( BACKEND_URL + ":" + BACKEND_PORT + "/jobs/getJobsForEmployer/" + id,{firstTime:false, pageSize:3,pageNumber:pageNumber} )
+                .then( ( res ) => {
+                        console.log(res.data)
+                    if ( res.status === 200 ) {
+                        this.setState( {
+                            jobs:res.data.jobs,
+                            
+                        } )
+                        console.log(this.state.jobs)
+                    }
+                } )
+                .catch( ( err ) => {
+                    if ( err.response ) {
+                        if ( err.response.status === 404 ) {
+                            console.log( err.response.message )
+                        } else if ( err.response.status === 400 ) {
+                            console.log( " " + err.response.message )
+                        }
+                    }
+                } )
+        }
+
+    };
+
     addJob = ( e ) => {
         e.preventDefault()
         
@@ -139,12 +172,17 @@ class EmployerJobs extends Component {
 
                         </div>
                     </div>   
-                    <div className="info-wrapper overflow-auto" style={{ height:"480px"}}>
+                    <div className="info-wrapper" style={{ }}>
                     
-                    <p style={{fontSize:"20px", lineHeight:"27px", marginLeft:"1px"}}>Jobs at {localStorage.getItem("name")}</p>
+                    <p style={{fontSize:"20px", lineHeight:"27px", marginLeft:"1px", fontWeight:"bolder", textAlign:"center"}}>Jobs at {localStorage.getItem("name")}</p>
 
                     <hr/>
-                    {allJobs}                     
+                    {allJobs} 
+                    <Paginate 
+                        elementsPerPage= {this.state.elementsPerPage}
+                        totalElements={this.state.totalCount}
+                        paginate={this.paginate}
+                    />                    
                     </div> 
 
                     <div className="form-wrapper-jobs">

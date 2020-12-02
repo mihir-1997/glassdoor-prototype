@@ -22,8 +22,9 @@ class EmployerProfile extends Component {
             featuredReviews:[],
             //pagination
             currentPage:1,
-            elementsPerPage: 2,
+            elementsPerPage: 4,
             reviewStats:{},
+            totalCount:0
         }
     }
 
@@ -58,15 +59,34 @@ class EmployerProfile extends Component {
         if ( name ) {
             axios.defaults.withCredentials = true
             axios.defaults.headers.common[ 'authorization' ] = localStorage.getItem( 'token' )
-            axios.post( BACKEND_URL + ":" + BACKEND_PORT + "/contributions/getReviewsbyEmployer/" + name,{firstTime:true, pageSize:10,pageNumber:1} )
+            axios.post( BACKEND_URL + ":" + BACKEND_PORT + "/contributions/getReviewsbyEmployer/" + name,{firstTime:true, pageSize:4,pageNumber:1} )
                 .then( ( res ) => {
-                    //  console.log(res.data)
+                    // console.log("******",res.data)
                     if ( res.status === 200 ) {
                         this.setState( {
                             reviews:res.data.review,
                             reviewStats: res.data.reviewStats
                         } )
-                        console.log("#####",this.state.reviews)
+                        // console.log("#####",this.state.reviews)
+
+                        var featured = []
+                     
+                        if ( res.status === 200 ) {
+                            
+                            res.data.review.map((r)=>{
+                                if(r.featured===true){
+                                    console.log(r)
+                                    featured.push(r)
+                                }
+                            })
+                            
+                            this.setState({
+                                featuredReviews:featured,
+                                totalCount: res.data.reviewStats.totalCount - featured.length
+
+                            })
+                        }
+                        console.log("featured", featured)
                     }
                 } )
                 .catch( ( err ) => {
@@ -80,37 +100,37 @@ class EmployerProfile extends Component {
                 } )
         }
 
-        if ( name ) {
-            axios.defaults.withCredentials = true
-            axios.defaults.headers.common[ 'authorization' ] = localStorage.getItem( 'token' )
-            axios.post( BACKEND_URL + ":" + BACKEND_PORT + "/contributions/getReviewsbyEmployer/" + name,{firstTime:true, pageSize:10000000,pageNumber:1} )
-                .then( ( res ) => {
-                      console.log(res.data)
-                      var featured = []
+        // if ( name ) {
+        //     axios.defaults.withCredentials = true
+        //     axios.defaults.headers.common[ 'authorization' ] = localStorage.getItem( 'token' )
+        //     axios.post( BACKEND_URL + ":" + BACKEND_PORT + "/contributions/getReviewsbyEmployer/" + name,{firstTime:true, pageSize:10000000,pageNumber:1} )
+        //         .then( ( res ) => {
+        //               console.log(res.data)
+        //               var featured = []
                      
-                    if ( res.status === 200 ) {
+        //             if ( res.status === 200 ) {
                         
-                        res.data.review.map((r)=>{
-                            if(r.featured===true){
-                                console.log(r)
-                                featured.push(r)
-                            }
-                        })
-                        this.setState({
-                            featuredReviews:featured,
-                        })
-                    }
-                } )
-                .catch( ( err ) => {
-                    if ( err.response ) {
-                        if ( err.response.status === 404 ) {
-                            console.log( err.response.message )
-                        } else if ( err.response.status === 400 ) {
-                            console.log( " " + err.response.message )
-                        }
-                    }
-                } )
-        }
+        //                 res.data.review.map((r)=>{
+        //                     if(r.featured===true){
+        //                         console.log(r)
+        //                         featured.push(r)
+        //                     }
+        //                 })
+        //                 this.setState({
+        //                     featuredReviews:featured,
+        //                 })
+        //             }
+        //         } )
+        //         .catch( ( err ) => {
+        //             if ( err.response ) {
+        //                 if ( err.response.status === 404 ) {
+        //                     console.log( err.response.message )
+        //                 } else if ( err.response.status === 400 ) {
+        //                     console.log( " " + err.response.message )
+        //                 }
+        //             }
+        //         } )
+        // }
         
     }
 
@@ -122,7 +142,7 @@ class EmployerProfile extends Component {
             if ( name ) {
                 axios.defaults.withCredentials = true
                 axios.defaults.headers.common[ 'authorization' ] = localStorage.getItem( 'token' )
-                axios.post( BACKEND_URL + ":" + BACKEND_PORT + "/contributions/getReviewsbyEmployer/" + name,{firstTime:false, pageSize:2,pageNumber:pageNumber} )
+                axios.post( BACKEND_URL + ":" + BACKEND_PORT + "/contributions/getReviewsbyEmployer/" + name,{firstTime:false, pageSize:4,pageNumber:pageNumber} )
                     .then( ( res ) => {
                          console.log(res.data)
                         if ( res.status === 200 ) {
@@ -156,7 +176,7 @@ class EmployerProfile extends Component {
 
         let allReviews = this.state.reviews.map((eachreview) => {
             console.log("&&&&&&&",eachreview)
-            if(eachreview.reviewStatus === "Pending"){
+            if(eachreview.reviewStatus === "Approved" && eachreview.featured !== true){
                 console.log("&&&&&&&",eachreview)
                 return (
                     <IndividualReview
@@ -169,7 +189,7 @@ class EmployerProfile extends Component {
             })
 
         let featuredReviews =  this.state.featuredReviews.map((featuredReview) =>{
-            if(featuredReview.reviewStatus === "Approved"){
+            if(featuredReview.featured === true){
                 return (
                     <IndividualReview
                        key={Math.random()}
@@ -206,16 +226,17 @@ class EmployerProfile extends Component {
                             <div className="col-1.2 single-link"><a href="/employer/reports">Reports</a> </div>
                         </div>
                     </div>   
-                    <div className="review-info-wrapper" style={{overflowY:"auto", height:"800px"}}>
+                    <div className="review-info-wrapper" style={{}}>
                     <p style={{fontSize:"20px", lineHeight:"27px", marginLeft:"1px", fontWeight:"bold"}}>Featured Reviews</p>
                     <hr/>
                     {featuredReviews}
                     <br/>
                     <p style={{fontSize:"20px", lineHeight:"27px",marginLeft:"1px",fontWeight:"bold"}}>{localStorage.getItem("name")} Reviews</p>
+                    <hr/>
                     {allReviews}
                     <Paginate 
                         elementsPerPage= {this.state.elementsPerPage}
-                        totalElements={this.state.reviewStats.totalCount}
+                        totalElements={this.state.totalCount}
                         paginate={this.paginate}
                     />
                         

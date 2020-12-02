@@ -3,6 +3,7 @@ import { Redirect } from 'react-router'
 import axios from "axios";
 
 import './EmployerInterviews.css'
+import Paginate from '../../Pagination'
 import IndividualInterview from './individualInterview'
 import interviewCover from '../../../Images/interview.jpg'
 import SEO from '../../SEO/SEO'
@@ -18,6 +19,11 @@ class EmployerInterviews extends Component {
         this.state = {
             interviews: [],
             logoImageUrl: "",
+
+            //paginate   
+            elementsPerPage: 3,
+            currentPage:1,
+            totalCount:0
         }
     }
 
@@ -61,14 +67,15 @@ class EmployerInterviews extends Component {
         if ( name ) {
             axios.defaults.withCredentials = true
             axios.defaults.headers.common[ 'authorization' ] = localStorage.getItem( 'token' )
-            axios.post( BACKEND_URL + ":" + BACKEND_PORT + "/contributions/getInterviewsByEmployer/" + name, { firstTime: true, pageSize: 5, pageNumber: 1 } )
+            axios.post( BACKEND_URL + ":" + BACKEND_PORT + "/contributions/getInterviewsByEmployer/" + name, { firstTime: true, pageSize: 3, pageNumber: 1 } )
                 .then( ( res ) => {
-                    //console.log(res.data.interview)
+                    console.log(res.data)
                     if ( res.status === 200 ) {
                         this.setState( {
-                            interviews: res.data.interview
+                            interviews: res.data.interview,
+                            totalCount: res.data.interviewStats.totalCount
                         } )
-                        console.log( this.state.interviews )
+                        //console.log( this.state.interviews )
                     }
                 } )
                 .catch( ( err ) => {
@@ -83,6 +90,38 @@ class EmployerInterviews extends Component {
         }
 
     }
+
+    // Change page
+    paginate = (pageNumber) => {
+        console.log("pagenumber ", pageNumber);
+        
+        let id = localStorage.getItem( "id" )
+        if ( id ) {
+            axios.defaults.withCredentials = true
+            axios.defaults.headers.common[ 'authorization' ] = localStorage.getItem( 'token' )
+            axios.post( BACKEND_URL + ":" + BACKEND_PORT + "/jobs/getJobsForEmployer/" + id,{firstTime:false, pageSize:3,pageNumber:pageNumber} )
+                .then( ( res ) => {
+                        console.log(res.data)
+                    if ( res.status === 200 ) {
+                        this.setState( {
+                            jobs:res.data.jobs,
+                            
+                        } )
+                        console.log(this.state.jobs)
+                    }
+                } )
+                .catch( ( err ) => {
+                    if ( err.response ) {
+                        if ( err.response.status === 404 ) {
+                            console.log( err.response.message )
+                        } else if ( err.response.status === 400 ) {
+                            console.log( " " + err.response.message )
+                        }
+                    }
+                } )
+        }
+
+    };
 
     render () {
 
@@ -134,11 +173,15 @@ class EmployerInterviews extends Component {
 
                         </div>
                     </div>
-                    <div className="interview-info-wrapper" style={ { overflowY: "auto", height: "900px" } }>
+                    <div className="interview-info-wrapper" style={ { } }>
                         <p style={ { fontSize: "20px", lineHeight: "27px", marginLeft: "0px", fontWeight: "bold" } }>Interviews at { localStorage.getItem( "name" ) } </p>
                         <hr />
                         { allInterviews }
-
+                        <Paginate
+                         elementsPerPage= {this.state.elementsPerPage}
+                         totalElements={this.state.totalCount}
+                         paginate={this.paginate}
+                        />
 
                     </div>
 
