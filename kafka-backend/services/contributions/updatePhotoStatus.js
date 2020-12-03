@@ -9,7 +9,7 @@ function handle_request ( msg, callback ) {
         var response = JSON.parse( JSON.stringify( resp ) )
         response.photos.forEach( photo => {
             if ( photo.photoID === req.body.photoID ) {
-                photo.photoStatus = "Rejected"
+                photo.photoStatus = req.body.status
 
             }
         } );
