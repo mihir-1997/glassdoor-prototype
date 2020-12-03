@@ -368,7 +368,7 @@ router.get( '/getInterviewsByStudent/:studentID', checkAuth, ( req, res ) => {
 } )
 
 //update photo status
-router.put( '/updatePhotoStatus/:employerID', checkAuth, ( req, res ) => {
+router.put( '/updatePhotoStatus/:objectID', checkAuth, ( req, res ) => {
     req.body.params = req.params
     kafka.make_request( 'contributions_updatePhotoStatus', req.body, function ( err, results ) {
         if ( err ) {

@@ -4,16 +4,16 @@ function handle_request ( msg, callback ) {
     let req = {
         body: msg
     }
-    contributionsSchema.findOne( { $and: [ { "type": "photos" }, { "employerID": req.body.params.employerID } ] }
+    contributionsSchema.findById( { _id: req.body.params.objectID }
     ).then( resp => {
         var response = JSON.parse( JSON.stringify( resp ) )
         response.photos.forEach( photo => {
-            if ( req.body.photoIDs.includes( photo.photoID ) ) {
+            if ( photo.photoID === req.body.photoID ) {
                 photo.photoStatus = "Rejected"
 
             }
         } );
-        contributionsSchema.findOneAndUpdate( { $and: [ { "type": "photos" }, { "employerID": req.body.params.employerID } ] },
+        contributionsSchema.findByIdAndUpdate( { _id: req.body.params.objectID },
             { $set: { photos: response.photos } }, { new: true }
         ).then( doc => {
             console.log( "Photo Status Update successfull" )

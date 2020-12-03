@@ -10,6 +10,11 @@ function handle_request ( msg, callback ) {
         let photosDoc = JSON.parse( JSON.stringify( ph ) )
         let photos = []
         photosDoc.forEach( doc => {
+            console.log( doc )
+            doc.photos.objectId = doc._id
+            doc.photos.forEach( photo => {
+                photo.objectID = doc._id
+            } )
             photos = photos.concat( doc.photos )
 
         } );
