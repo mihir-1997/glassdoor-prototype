@@ -14,12 +14,13 @@ function handle_request ( msg, callback ) {
             doc.forEach( inte => {
                 count += 1
                 let interview = JSON.parse( JSON.stringify( inte ) )
-                if ( interview.overallExperience === "positive" ) {
+                console.log( "interview", interview )
+                if ( interview.overallExperience === "Positive" ) {
                     pos += 1
                 }
-                else if ( interview.overallExperience === "negative" ) {
+                else if ( interview.overallExperience === "Negative" ) {
                     neg += 1
-                } else if ( interview.overallExperience === "neutral" ) {
+                } else if ( interview.overallExperience === "Neutral" ) {
                     neu += 1
                 }
             } )
