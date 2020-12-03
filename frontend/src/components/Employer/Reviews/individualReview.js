@@ -186,7 +186,7 @@ class IndividualReview extends Component {
 
                             </div>
                             <div style={{display:"flex", height:"30px"}}> 
-                                <input onChange={this.onChange} style={{border:"2px solid rgb(24, 97, 191)", borderRadius:"4px", width:"300px", display:"inline-block", marginLeft:"-15px",marginRight:"10px"}} type="text" name="reply" placeholder="      Reply"/>
+                                <input onChange={this.onChange} style={{border:"2px solid rgb(24, 97, 191)", borderRadius:"4px", width:"300px", display:"inline-block", marginLeft:"-1px",marginRight:"10px"}} type="text" name="reply" placeholder="      Reply"/>
                                 <button onClick={this.sendReply} className="btn btn-primary d-flex justify-content-center align-items-center" style={{ display:"inline-block", color:"rgb(24, 97, 191)", background:"white",fontWeight:"bold" ,border:"1px solid rgb(24, 97, 191)",  marginRight:"10px"}} >Reply</button>
                                 {this.props.data.featured ? 
                                 " "

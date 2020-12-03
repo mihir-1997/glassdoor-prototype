@@ -8,7 +8,6 @@ import SEO from '../../SEO/SEO'
 import './EmployerPhotos.css'
 import { BACKEND_URL, BACKEND_PORT } from '../../Config/Config'
 import photoCover from '../../../Images/Office.jpg'
-import logo from '../../../Images/linkedin-logo.png'
 
 class EmployerPhotos extends Component {
 
@@ -117,19 +116,6 @@ class EmployerPhotos extends Component {
                     }
                 }
             } )
-    }
-
-    displayboxes = () => {
-        console.log( "inside for loop" )
-        let arr = [ 1, 2, 3, 4, 5 ]
-        arr.map( i => {
-            console.log( i )
-            return (
-                <div className="col-4" style={ { border: "1px solid black", height: "200px", margin: "3px" } }>
-                    {i }
-                </div>
-            )
-        } )
     }
 
 

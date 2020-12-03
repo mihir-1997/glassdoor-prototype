@@ -11,6 +11,8 @@ import CompanySearch from './Students/CompanySearch/CompanySearch'
 import Contributions from './Students/Contributions/Contributions'
 import AddContribution from './Students/Contributions/AddContribution'
 import AdminDashboard from './Admin/Dashboard/AdminDashboard'
+import AdminPhotos from './Admin/Photos/AdminPhotos'
+import AdminReviews from './Admin/Reviews/AdminReviews'
 
 import EmployerProfile from './Employer/Profile/EmployerProfile'
 import EmployerReviews from './Employer/Reviews/EmployerReviews'
@@ -47,6 +49,8 @@ class Routes extends Component {
                 {/* Admin Routes */ }
                 <Route path="/admin/dashboard" component={ AdminDashboard } />
                 <Route path="/admin/companies" component={ CompanySearch } />
+                <Route path="/admin/reviews" component={ AdminReviews } />
+                <Route path="/admin/photos" component={ AdminPhotos } />
             </div>
         )
     }

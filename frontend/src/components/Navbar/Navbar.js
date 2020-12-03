@@ -231,6 +231,12 @@ class Navbar extends Component {
                                     <Link className="navbar-brand" to="/admin/dashboard">
                                         <img src={ Glassdoor_logo } className="logo-image" alt="glassdoor-logo" />
                                     </Link>
+                                    {/* <Link className="navbar-brand" to="/admin/photos">
+                                        <img src={ Glassdoor_logo } className="logo-image" alt="glassdoor-logo" />
+                                    </Link>
+                                    <Link className="navbar-brand" to="/admin/reviews">
+                                        <img src={ Glassdoor_logo } className="logo-image" alt="glassdoor-logo" />
+                                    </Link> */}
                                     <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
                                         <li className="nav-item navbar-search-wrapper">
                                             <svg viewBox="0 0 15 15" fill="none" className="navbar-search-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18"><path d="M14.5 14.5l-4-4m-4 2a6 6 0 110-12 6 6 0 010 12z" stroke="#056b27"></path></svg>
@@ -260,6 +266,8 @@ class Navbar extends Component {
                                                     </svg>
                                                     <div className="user-icon-dropdown" >
                                                         <Link to="/admin/companies" style={ { textDecoration: 'none' } }><button className="dropdown-item" type="button" value="All Companies">All Companies</button></Link>
+                                                        <Link to="/admin/photos" style={ { textDecoration: 'none' } }><button className="dropdown-item" type="button" value="Photos">Photos</button></Link>
+                                                        <Link to="/admin/reviews" style={ { textDecoration: 'none' } }><button className="dropdown-item" type="button" value="Photos">Reviews</button></Link>
                                                         <button className="dropdown-item sign-out" type="button" onClick={ this.signOut } value="Sign Out">Sign Out</button>
                                                     </div>
                                                 </div>

@@ -27,10 +27,11 @@ class EmployerInterviews extends Component {
             redirectToAddContribution: false,
             interviewStats: {},
             donuChartData: [],
-            //paginate   
-            elementsPerPage: 1,
-            currentPage: 1,
-            totalCount: 0,
+            //paginate 
+            elementsPerPage: 4,
+            currentPage:1,
+            totalCount:0
+
         }
     }
 
@@ -66,7 +67,7 @@ class EmployerInterviews extends Component {
             axios.defaults.headers.common[ 'authorization' ] = localStorage.getItem( 'token' )
             axios.get( BACKEND_URL + ":" + BACKEND_PORT + "/employers/getEmployerById/" + id )
                 .then( ( res ) => {
-                    //console.log(res)
+                  
                     if ( res.status === 200 ) {
                         this.setState( {
                             logoImageUrl: res.data.logoImageUrl,
@@ -87,7 +88,7 @@ class EmployerInterviews extends Component {
         if ( name ) {
             axios.defaults.withCredentials = true
             axios.defaults.headers.common[ 'authorization' ] = localStorage.getItem( 'token' )
-            axios.post( BACKEND_URL + ":" + BACKEND_PORT + "/contributions/getInterviewsByEmployer/" + name, { firstTime: true, pageSize: 1, pageNumber: 1 } )
+            axios.post( BACKEND_URL + ":" + BACKEND_PORT + "/contributions/getInterviewsByEmployer/" + name, { firstTime: true, pageSize: this.state.elementsPerPage, pageNumber: 1 } )
                 .then( ( res ) => {
                     console.log( res.data )
                     if ( res.status === 200 ) {
@@ -127,13 +128,15 @@ class EmployerInterviews extends Component {
     }
 
     // Change page
+
     paginate = ( pageNumber ) => {
         console.log( "pagenumber ", pageNumber );
 
         if ( this.state.employerName ) {
             axios.defaults.withCredentials = true
             axios.defaults.headers.common[ 'authorization' ] = localStorage.getItem( 'token' )
-            axios.post( BACKEND_URL + ":" + BACKEND_PORT + "/contributions/getInterviewsByEmployer/" + this.state.employerName, { firstTime: false, pageSize: 1, pageNumber: pageNumber } )
+            axios.post( BACKEND_URL + ":" + BACKEND_PORT + "/contributions/getInterviewsByEmployer/" + this.state.employerName, { firstTime: false, pageSize: this.state.elementsPerPage, pageNumber: pageNumber } )
+
                 .then( ( res ) => {
                     console.log( res.data )
                     if ( res.status === 200 ) {
@@ -142,6 +145,7 @@ class EmployerInterviews extends Component {
 
                         } )
                         console.log( this.state.interview )
+
                     }
                 } )
                 .catch( ( err ) => {
