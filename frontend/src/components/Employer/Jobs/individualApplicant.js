@@ -95,7 +95,7 @@ class IndividualApplicant extends Component {
                         <button style={ { height: "30px", width: "70px", border: "1px solid lightgray", borderRadius: "3px", backgroundColor: "white", marginBottom: "3px" } } onClick={ this.redirectTODtudent }>{ this.props.data.name }</button>
                         <span> Status: { this.props.data.status }</span>
                         <br />
-                        <span>Cover Letter: <a href={ BACKEND_URL + ":" + BACKEND_PORT + "/public/images/resumes/" + this.props.data.coverName } download>Letter.pdf</a></span>
+                        <span>Cover Letter: <a href={ BACKEND_URL + ":" + BACKEND_PORT + "/public/images/resumes/" + this.props.data.coverName } download>Letter</a></span>
                         <span style={ { marginLeft: "20px" } } >
                             <form onSubmit={ this.changeStatus } style={ { display: "inline-block" } }>
                                 { this.showOptions() }

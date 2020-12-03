@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Redirect } from 'react-router'
 import axios from "axios";
-import { CardColumns, CardRows, Card } from 'react-bootstrap'
+import { CardColumns, Card } from 'react-bootstrap'
 import { Link } from 'react-router-dom';
 
 import SEO from '../../SEO/SEO'
@@ -179,9 +179,9 @@ class EmployerPhotos extends Component {
                                             <Card.Img variant="top" src={ BACKEND_URL + ":" + BACKEND_PORT + "/public/images/officePhotos/" + pic.photo } height="200px" width="60px" />
 
                                             {/* <Card.Title>Card title that wraps to a new line</Card.Title> */ }
-                                            <Card.Text style={ { marginLeft: "0px" } }>
+                                            {/* <Card.Text style={ { marginLeft: "0px" } }>
                                                 { pic.photo }
-                                            </Card.Text>
+                                            </Card.Text> */}
 
                                         </Card>
                                     )

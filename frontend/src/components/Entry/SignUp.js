@@ -76,7 +76,7 @@ class SignUp extends Component {
                         } )
                         .catch( ( err ) => {
                             if ( err.response ) {
-                                if ( err.response.status === 400 ) {
+                                if ( err.response.status === 409 ) {
                                     this.setState( { "error": "User already exist" } )
                                 }
                             }
@@ -102,14 +102,14 @@ class SignUp extends Component {
                                     error: ""
                                 } )
                                 console.log(res)
-                                // window.location.assign( '/login' )
+                                window.location.assign( '/login' )
                             } else {
                                 console.log( "Error creating Employer" )
                             }
                         } )
                         .catch( ( err ) => {
                             if ( err.response ) {
-                                if ( err.response.status === 400 ) {
+                                if ( err.response.status === 409 ) {
                                     this.setState( { "error": "Employer already exist" } );
                                 }
                             }
