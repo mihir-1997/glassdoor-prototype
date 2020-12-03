@@ -75,6 +75,8 @@ var admin_login = require( './services/analytics/adminLogin' )
 var analytics_reviewsperday = require( './services/analytics/numberReviewPerDay' )
 var analytics_getReviewByEmployer = require( './services/analytics/getReviewsbyEmployer' )
 var analytics_getEmployerByViews = require( './services/analytics/getEmployersByViews' )
+var analytics_getAllPhotos = require( './services/analytics/getAllPhotos' )
+var analytics_getAllReviews = require( './services/analytics/getAllReviews' )
 
 
 function handleTopicRequest ( topic_name, fname ) {
@@ -186,4 +188,6 @@ handleTopicRequest( "admin_login", admin_login )
 handleTopicRequest( "analytics_reviewsperday", analytics_reviewsperday )
 handleTopicRequest( "analytics_getReviewsByemployer", analytics_getReviewByEmployer )
 handleTopicRequest( "analytics_getEmployerByViews", analytics_getEmployerByViews )
+handleTopicRequest( "analytics_getAllPhotos", analytics_getAllPhotos )
+handleTopicRequest( "analytics_getAllReviews", analytics_getAllReviews )
 

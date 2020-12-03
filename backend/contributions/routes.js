@@ -22,14 +22,14 @@ auth();
 // } );
 
 //get review by students
-router.get( '/getReviewsbyStudent/:studentID', ( req, res ) => {
+router.get( '/getReviewsbyStudent/:studentID', checkAuth, ( req, res ) => {
     const RedisKey = req.params.studentID;
     // redisClient.get( RedisKey, ( err, data ) => {
     //     if ( data != null ) {
     //         console.log( "from redis" )
     //         res.status( 200 ).send( JSON.parse( data ) )
     //     } else {
-    kafka.make_request( 'contributions_getReview', req.params, function ( err, results ) {
+    kafka.make_request( 'contributions_getReview', checkAuth, req.params, function ( err, results ) {
         if ( err ) {
             console.log( "Inside err", err );
             res.status( 404 ).send( "Failed" )
@@ -45,7 +45,7 @@ router.get( '/getReviewsbyStudent/:studentID', ( req, res ) => {
 } )
 
 //get review by Employers
-router.post( '/getReviewsbyEmployer/:employerName', ( req, res ) => {
+router.post( '/getReviewsbyEmployer/:employerName', checkAuth, ( req, res ) => {
     // redisClient.get( RedisKey, ( err, data ) => {
     //     if ( data != null ) {
     //         console.log( "from redis" )
@@ -68,7 +68,7 @@ router.post( '/getReviewsbyEmployer/:employerName', ( req, res ) => {
 } )
 
 //add review
-router.post( '/addReview', ( req, res ) => {
+router.post( '/addReview', checkAuth, ( req, res ) => {
 
     kafka.make_request( 'contributions_addReview', req.body, function ( err, results ) {
         if ( err ) {
@@ -86,7 +86,7 @@ router.post( '/addReview', ( req, res ) => {
 } )
 
 //update review status
-router.put( '/reviewStatus/:reviewID', ( req, res ) => {
+router.put( '/reviewStatus/:reviewID', checkAuth, ( req, res ) => {
     req.body.params = req.params
     kafka.make_request( 'contributions_updateReviewStatus', req.body, function ( err, results ) {
         if ( err ) {
@@ -104,7 +104,7 @@ router.put( '/reviewStatus/:reviewID', ( req, res ) => {
 } )
 
 //mark review as favourite
-router.put( '/favouriteReview/:reviewID', ( req, res ) => {
+router.put( '/favouriteReview/:reviewID', checkAuth, ( req, res ) => {
     req.body.params = req.params
     kafka.make_request( 'contributions_markReviewAsFavourite', req.body, function ( err, results ) {
         if ( err ) {
@@ -122,7 +122,7 @@ router.put( '/favouriteReview/:reviewID', ( req, res ) => {
 } )
 
 //mark review as featured
-router.put( '/featureReview/:reviewID', ( req, res ) => {
+router.put( '/featureReview/:reviewID', checkAuth, ( req, res ) => {
     req.body.params = req.params
     kafka.make_request( 'contributions_markReviewAsFeatured', req.body, function ( err, results ) {
         if ( err ) {
@@ -141,7 +141,7 @@ router.put( '/featureReview/:reviewID', ( req, res ) => {
 
 
 //reply to review
-router.put( '/reply/:reviewID', ( req, res ) => {
+router.put( '/reply/:reviewID', checkAuth, ( req, res ) => {
     req.body.params = req.params
     kafka.make_request( 'contributions_replyToReview', req.body, function ( err, results ) {
         if ( err ) {
@@ -159,7 +159,7 @@ router.put( '/reply/:reviewID', ( req, res ) => {
 } )
 
 //remove review
-router.delete( '/removeReview/:reviewID', checkAuth, ( req, res ) => {
+router.delete( '/removeReview/:reviewID', checkAuth, checkAuth, ( req, res ) => {
 
     kafka.make_request( 'contributions_removeReview', req.params, function ( err, results ) {
         if ( err ) {
@@ -177,7 +177,7 @@ router.delete( '/removeReview/:reviewID', checkAuth, ( req, res ) => {
 } )
 
 //add helpful vote
-router.put( '/helpfulReview/:reviewID', ( req, res ) => {
+router.put( '/helpfulReview/:reviewID', checkAuth, ( req, res ) => {
 
     kafka.make_request( 'contributions_helpfulReview', req.params, function ( err, results ) {
         if ( err ) {
@@ -195,7 +195,7 @@ router.put( '/helpfulReview/:reviewID', ( req, res ) => {
 } )
 
 //upload office photos
-router.post( '/uploadPhotos/:employerID', checkAuth, ( req, res ) => {
+router.post( '/uploadPhotos/:employerID', checkAuth, checkAuth, ( req, res ) => {
     let upload = req.app.get( 'upload_officePhotos' );
     upload( req, res, err => {
         if ( err ) {
@@ -223,7 +223,7 @@ router.post( '/uploadPhotos/:employerID', checkAuth, ( req, res ) => {
 } );
 
 //get photos by employer
-router.post( '/getPhotosByEmployer/:employerName', ( req, res ) => {
+router.post( '/getPhotosByEmployer/:employerName', checkAuth, ( req, res ) => {
     req.body.params = req.params
     kafka.make_request( 'contributions_getPhotosByEmployer', req.body, function ( err, results ) {
         if ( err ) {
@@ -241,7 +241,7 @@ router.post( '/getPhotosByEmployer/:employerName', ( req, res ) => {
 } )
 
 //get photos by student
-router.get( '/getPhotosByStudent/:studentID', ( req, res ) => {
+router.get( '/getPhotosByStudent/:studentID', checkAuth, ( req, res ) => {
 
     kafka.make_request( 'contributions_getPhotosByStudent', req.params, function ( err, results ) {
         if ( err ) {
@@ -260,7 +260,7 @@ router.get( '/getPhotosByStudent/:studentID', ( req, res ) => {
 
 
 //add salary
-router.post( '/addSalary', ( req, res ) => {
+router.post( '/addSalary', checkAuth, ( req, res ) => {
 
     kafka.make_request( 'contributions_addSalary', req.body, function ( err, results ) {
         if ( err ) {
@@ -278,7 +278,7 @@ router.post( '/addSalary', ( req, res ) => {
 } )
 
 //get salary by employer
-router.post( '/getSalariesByEmployer/:employerName', ( req, res ) => {
+router.post( '/getSalariesByEmployer/:employerName', checkAuth, ( req, res ) => {
     req.body.params = req.params
     kafka.make_request( 'contributions_getSalariesByEmployer', req.body, function ( err, results ) {
         if ( err ) {
@@ -296,7 +296,7 @@ router.post( '/getSalariesByEmployer/:employerName', ( req, res ) => {
 } )
 
 //get salary by student
-router.get( '/getSalariesByStudent/:studentID', ( req, res ) => {
+router.get( '/getSalariesByStudent/:studentID', checkAuth, ( req, res ) => {
 
     kafka.make_request( 'contributions_getSalariesByStudent', req.params, function ( err, results ) {
         if ( err ) {
@@ -314,7 +314,7 @@ router.get( '/getSalariesByStudent/:studentID', ( req, res ) => {
 } )
 
 //add interview
-router.post( '/addInterview', ( req, res ) => {
+router.post( '/addInterview', checkAuth, ( req, res ) => {
 
     kafka.make_request( 'contributions_addInterview', req.body, function ( err, results ) {
         if ( err ) {
@@ -332,7 +332,7 @@ router.post( '/addInterview', ( req, res ) => {
 } )
 
 //get interviews by employer
-router.post( '/getInterviewsByEmployer/:employerName', ( req, res ) => {
+router.post( '/getInterviewsByEmployer/:employerName', checkAuth, ( req, res ) => {
     req.body.params = req.params
     kafka.make_request( 'contributions_getInterviewsByEmployer', req.body, function ( err, results ) {
         if ( err ) {
@@ -350,7 +350,7 @@ router.post( '/getInterviewsByEmployer/:employerName', ( req, res ) => {
 } )
 
 //get interviews by student
-router.get( '/getInterviewsByStudent/:studentID', ( req, res ) => {
+router.get( '/getInterviewsByStudent/:studentID', checkAuth, ( req, res ) => {
 
     kafka.make_request( 'contributions_getInterviewsByStudent', req.params, function ( err, results ) {
         if ( err ) {
@@ -368,7 +368,7 @@ router.get( '/getInterviewsByStudent/:studentID', ( req, res ) => {
 } )
 
 //update photo status
-router.put( '/updatePhotoStatus/:employerID', ( req, res ) => {
+router.put( '/updatePhotoStatus/:employerID', checkAuth, ( req, res ) => {
     req.body.params = req.params
     kafka.make_request( 'contributions_updatePhotoStatus', req.body, function ( err, results ) {
         if ( err ) {
@@ -386,7 +386,7 @@ router.put( '/updatePhotoStatus/:employerID', ( req, res ) => {
 } )
 
 //update photo status
-router.post( '/reviewsPerDay', ( req, res ) => {
+router.post( '/reviewsPerDay', checkAuth, ( req, res ) => {
     kafka.make_request( 'analytics_reviewsperday', req.body, function ( err, results ) {
         if ( err ) {
             console.log( "Inside err", err );

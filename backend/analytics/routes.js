@@ -100,4 +100,39 @@ router.get( '/getEmployerByViews', ( req, res ) => {
 
 } )
 
+
+//get all photos
+router.get( '/getAllPhotos', ( req, res ) => {
+    kafka.make_request( 'analytics_getAllPhotos', req.body, function ( err, results ) {
+        if ( err ) {
+            console.log( "Inside err", err );
+            res.status( 404 ).send( "Failed" )
+
+
+        } else {
+            console.log( "Inside else", results );
+            res.status( 200 ).send( results )
+
+        }
+    } )
+
+} )
+
+//get all reviews
+router.get( '/getAllReviews', ( req, res ) => {
+    kafka.make_request( 'analytics_getAllReviews', req.body, function ( err, results ) {
+        if ( err ) {
+            console.log( "Inside err", err );
+            res.status( 404 ).send( "Failed" )
+
+
+        } else {
+            console.log( "Inside else", results );
+            res.status( 200 ).send( results )
+
+        }
+    } )
+
+} )
+
 module.exports = router;
