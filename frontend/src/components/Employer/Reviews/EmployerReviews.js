@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Redirect } from 'react-router'
 import axios from "axios";
+import { Link } from 'react-router-dom';
 
 import './EmployerReviews.css'
 import SEO from '../../SEO/SEO'
@@ -16,15 +17,17 @@ class EmployerProfile extends Component {
 
     constructor( props ) {
         super( props )
-        this.state ={
-            reviews:[],
-            logoImageUrl:"",
-            featuredReviews:[],
+        this.state = {
+            reviews: [],
+            logoImageUrl: "",
+            featuredReviews: [],
+            employerName: "",
+            employer_id: "",
             //pagination
-            currentPage:1,
+            currentPage: 1,
             elementsPerPage: 4,
-            reviewStats:{},
-            totalCount:0
+            reviewStats: {},
+            totalCount: 0
         }
     }
 
@@ -32,7 +35,29 @@ class EmployerProfile extends Component {
         SEO( {
             title: "Reviews | Glassdoor"
         } )
-        let id = localStorage.getItem( "id" )
+
+        let name = null
+        let id = null
+        if ( this.props.location ) {
+            if ( this.props.location.state ) {
+                name = this.props.location.state.employerName
+                id = this.props.location.state.employerID
+                this.setState( {
+                    isStudent: true,
+                } )
+            } else {
+                name = localStorage.getItem( "name" )
+                id = localStorage.getItem( "id" )
+            }
+        } else {
+            name = localStorage.getItem( "name" )
+            id = localStorage.getItem( "id" )
+        }
+        console.log( id )
+        this.setState( {
+            employerName: name,
+            employer_id: id
+        } )
         if ( id ) {
             axios.defaults.withCredentials = true
             axios.defaults.headers.common[ 'authorization' ] = localStorage.getItem( 'token' )
@@ -40,7 +65,7 @@ class EmployerProfile extends Component {
                 .then( ( res ) => {
                     //console.log(res)
                     if ( res.status === 200 ) {
-                        this.setState( {                           
+                        this.setState( {
                             logoImageUrl: res.data.logoImageUrl,
                         } )
                     }
@@ -55,38 +80,39 @@ class EmployerProfile extends Component {
                     }
                 } )
         }
-        let name = localStorage.getItem( "name" )
+
         if ( name ) {
+            console.log( name )
             axios.defaults.withCredentials = true
             axios.defaults.headers.common[ 'authorization' ] = localStorage.getItem( 'token' )
-            axios.post( BACKEND_URL + ":" + BACKEND_PORT + "/contributions/getReviewsbyEmployer/" + name,{firstTime:true, pageSize:4,pageNumber:1} )
+            axios.post( BACKEND_URL + ":" + BACKEND_PORT + "/contributions/getReviewsbyEmployer/" + name, { firstTime: true, pageSize: 4, pageNumber: 1 } )
                 .then( ( res ) => {
                     // console.log("******",res.data)
                     if ( res.status === 200 ) {
                         this.setState( {
-                            reviews:res.data.review,
+                            reviews: res.data.review,
                             reviewStats: res.data.reviewStats
                         } )
-                        // console.log("#####",this.state.reviews)
+                        console.log( "#####", res.data )
 
                         var featured = []
-                     
+
                         if ( res.status === 200 ) {
-                            
-                            res.data.review.map((r)=>{
-                                if(r.featured===true){
-                                    console.log(r)
-                                    featured.push(r)
+
+                            res.data.review.map( ( r ) => {
+                                if ( r.featured === true ) {
+                                    console.log( r )
+                                    featured.push( r )
                                 }
-                            })
-                            
-                            this.setState({
-                                featuredReviews:featured,
+                            } )
+
+                            this.setState( {
+                                featuredReviews: featured,
                                 totalCount: res.data.reviewStats.totalCount - featured.length
 
-                            })
+                            } )
                         }
-                        console.log("featured", featured)
+                        console.log( "featured", featured )
                     }
                 } )
                 .catch( ( err ) => {
@@ -107,9 +133,9 @@ class EmployerProfile extends Component {
         //         .then( ( res ) => {
         //               console.log(res.data)
         //               var featured = []
-                     
+
         //             if ( res.status === 200 ) {
-                        
+
         //                 res.data.review.map((r)=>{
         //                     if(r.featured===true){
         //                         console.log(r)
@@ -131,42 +157,42 @@ class EmployerProfile extends Component {
         //             }
         //         } )
         // }
-        
+
     }
 
-       // Change page
-        paginate = (pageNumber) => {
-            console.log("pagenumber ", pageNumber);
-            
-            let name = localStorage.getItem( "name" )
-            if ( name ) {
-                axios.defaults.withCredentials = true
-                axios.defaults.headers.common[ 'authorization' ] = localStorage.getItem( 'token' )
-                axios.post( BACKEND_URL + ":" + BACKEND_PORT + "/contributions/getReviewsbyEmployer/" + name,{firstTime:false, pageSize:4,pageNumber:pageNumber} )
-                    .then( ( res ) => {
-                         console.log(res.data)
-                        if ( res.status === 200 ) {
-                            this.setState( {
-                                reviews:res.data.review,
-                                // reviewStats: res.data.reviewStats
-                            } )
-                            console.log(this.state.reviews)
-                        }
-                    } )
-                    .catch( ( err ) => {
-                        if ( err.response ) {
-                            if ( err.response.status === 404 ) {
-                                console.log( err.response.message )
-                            } else if ( err.response.status === 400 ) {
-                                console.log( " " + err.response.message )
-                            }
-                        }
-                    } )
-            }
+    // Change page
+    paginate = ( pageNumber ) => {
+        console.log( "pagenumber ", pageNumber );
 
-        };
+        let name = localStorage.getItem( "name" )
+        if ( name ) {
+            axios.defaults.withCredentials = true
+            axios.defaults.headers.common[ 'authorization' ] = localStorage.getItem( 'token' )
+            axios.post( BACKEND_URL + ":" + BACKEND_PORT + "/contributions/getReviewsbyEmployer/" + name, { firstTime: false, pageSize: 4, pageNumber: pageNumber } )
+                .then( ( res ) => {
+                    console.log( res.data )
+                    if ( res.status === 200 ) {
+                        this.setState( {
+                            reviews: res.data.review,
+                            // reviewStats: res.data.reviewStats
+                        } )
+                        console.log( this.state.reviews )
+                    }
+                } )
+                .catch( ( err ) => {
+                    if ( err.response ) {
+                        if ( err.response.status === 404 ) {
+                            console.log( err.response.message )
+                        } else if ( err.response.status === 400 ) {
+                            console.log( " " + err.response.message )
+                        }
+                    }
+                } )
+        }
 
-    render() {
+    };
+
+    render () {
 
         let redirectVar = null
         if ( !localStorage.getItem( "active" ) ) {
@@ -174,81 +200,94 @@ class EmployerProfile extends Component {
             return redirectVar
         }
 
-        let allReviews = this.state.reviews.map((eachreview) => {
-            console.log("&&&&&&&",eachreview)
-            if(eachreview.reviewStatus === "Approved" && eachreview.featured !== true){
-                console.log("&&&&&&&",eachreview)
+        let allReviews = this.state.reviews.map( ( eachreview ) => {
+            console.log( "&&&&&&&", eachreview )
+            if ( eachreview.reviewStatus === "Approved" && eachreview.featured !== true ) {
+                console.log( "&&&&&&&", eachreview )
                 return (
                     <IndividualReview
-                       key={Math.random()}
-                       data={eachreview}
-                       logo={this.state.logoImageUrl}
+                        key={ Math.random() }
+                        data={ eachreview }
+                        logo={ this.state.logoImageUrl }
                     ></IndividualReview>
-                  );
+                );
             }
-            })
+        } )
 
-        let featuredReviews =  this.state.featuredReviews.map((featuredReview) =>{
-            if(featuredReview.featured === true){
+        let featuredReviews = this.state.featuredReviews.map( ( featuredReview ) => {
+            if ( featuredReview.featured === true ) {
                 return (
                     <IndividualReview
-                       key={Math.random()}
-                       data={featuredReview}
-                       logo={this.state.logoImageUrl}
+                        key={ Math.random() }
+                        data={ featuredReview }
+                        logo={ this.state.logoImageUrl }
                     ></IndividualReview>
-                  );
+                );
             }
-            })
+        } )
 
         return (
             <div className="employer-profile-wrapper">
-                {redirectVar}
+                {redirectVar }
                 <div className="root-header">
                     <div className="image-wrapper">
-                        <img className="cover" src={reviewCover} alt="Cover"  />
+                        <img className="cover" src={ reviewCover } alt="Cover" />
                     </div>
                     <div className="details-wrapper">
-                            <div className="employer-company-logo">
-                                <img className="logo" src={BACKEND_URL + ":" + BACKEND_PORT + "/public/images/profilepics/" + this.state.logoImageUrl} alt="logo"/>
-                            </div>
+                        <div className="employer-company-logo">
+                            <img className="logo" src={ BACKEND_URL + ":" + BACKEND_PORT + "/public/images/profilepics/" + this.state.logoImageUrl } alt="logo" />
+                        </div>
                         <div className="details">
-                            <h3 style={{marginTop:"10px"}}> {localStorage.getItem("name")} </h3>
-                            <br/>
-                            <br/>
+                            <h3 style={ { marginTop: "10px" } }> { this.state.employerName } </h3>
+                            <br />
+                            <br />
                         </div>
                         <div className="row multiple-links">
-                            <div className="col-1.2 single-link"><a href="/employer/profile">Overview</a> </div> 
-                            <div className="col-1.2 single-link"><a href="/employer/reviews">Reviews</a> </div>
-                            <div className="col-1.2 single-link"><a href="/employer/jobs">Jobs</a> </div>
-                            <div className="col-1.2 single-link"><a href="/employer/salaries">Salaries</a> </div>
-                            <div className="col-1.2 single-link"><a href="/employer/interviews">Interviews</a> </div>
-                            <div className="col-1.2 single-link"><a href="/employer/photos">Photos</a> </div>
-                            <div className="col-1.2 single-link"><a href="/employer/reports">Reports</a> </div>
+                            { this.state.isStudent ?
+                                <div>
+                                    <div style={ { display: "inline-block" } } className="col-1.2 single-link"><Link to={ { pathname: "/employer/profile", state: { employerID: this.state.employer_id } } } >Overview</Link> </div>
+                                    <div style={ { display: "inline-block" } } className="col-1.2 single-link"><Link to={ { pathname: "/employer/reviews", state: { employerID: this.state.employer_id, employerName: this.state.employerName } } } >Reviews</Link> </div>
+                                    <div style={ { display: "inline-block" } } className="col-1.2 single-link"><Link to={ { pathname: "/employer/jobs", state: { employerID: this.state.employer_id, employerName: this.state.employerName } } } > Jobs</Link> </div>
+                                    <div style={ { display: "inline-block" } } className="col-1.2 single-link"><Link to={ { pathname: "/employer/salaries", state: { employerID: this.state.employer_id, employerName: this.state.employerName } } } >Salaries</Link> </div>
+                                    <div style={ { display: "inline-block" } } className="col-1.2 single-link"><Link to={ { pathname: "/employer/interviews", state: { employerID: this.state.employer_id, employerName: this.state.employerName } } } >Interviews</Link> </div>
+                                    <div style={ { display: "inline-block" } } className="col-1.2 single-link"><Link to={ { pathname: "/employer/photos", state: { employerID: this.state.employer_id, employerName: this.state.employerName } } } >Photos</Link></div>
+                                </div>
+                                :
+                                <div>
+                                    <div style={ { display: "inline-block" } } className="col-1.2 single-link"><a href="/employer/profile">Overview</a> </div>
+                                    <div style={ { display: "inline-block" } } className="col-1.2 single-link"><a href="/employer/reviews">Reviews</a> </div>
+                                    <div style={ { display: "inline-block" } } className="col-1.2 single-link"><a href="/employer/jobs">Jobs</a> </div>
+                                    <div style={ { display: "inline-block" } } className="col-1.2 single-link"><a href="/employer/salaries">Salaries</a> </div>
+                                    <div style={ { display: "inline-block" } } className="col-1.2 single-link"><a href="/employer/interviews">Interviews</a> </div>
+                                    <div style={ { display: "inline-block" } } className="col-1.2 single-link"><a href="/employer/photos">Photos</a></div>
+                                    <div style={ { display: "inline-block" } } className="col-1.2 single-link"><a href="/employer/reports">Reports</a> </div>
+                                </div>
+                            }
                         </div>
-                    </div>   
-                    <div className="review-info-wrapper" style={{}}>
-                    <p style={{fontSize:"20px", lineHeight:"27px", marginLeft:"1px", fontWeight:"bold"}}>Featured Reviews</p>
-                    <hr/>
-                    {featuredReviews}
-                    <br/>
-                    <p style={{fontSize:"20px", lineHeight:"27px",marginLeft:"1px",fontWeight:"bold"}}>{localStorage.getItem("name")} Reviews</p>
-                    <hr/>
-                    {allReviews}
-                    <Paginate 
-                        elementsPerPage= {this.state.elementsPerPage}
-                        totalElements={this.state.totalCount}
-                        paginate={this.paginate}
-                    />
-                        
-                    <hr/>
-                       
-                    </div> 
+                    </div>
+                    <div className="review-info-wrapper" style={ {} }>
+                        <p style={ { fontSize: "20px", lineHeight: "27px", marginLeft: "1px", fontWeight: "bold" } }>Featured Reviews</p>
+                        <hr />
+                        { featuredReviews }
+                        <br />
+                        <p style={ { fontSize: "20px", lineHeight: "27px", marginLeft: "1px", fontWeight: "bold" } }>{ this.state.employerName } Reviews</p>
+                        <hr />
+                        { allReviews }
+                        <Paginate
+                            elementsPerPage={ this.state.elementsPerPage }
+                            totalElements={ this.state.totalCount }
+                            paginate={ this.paginate }
+                        />
+
+                        <hr />
+
+                    </div>
 
                     <div className="review-form-wrapper">
-                        <img src={reviewUs} style={{width:"100%"}} alt="Review Us"/>
-                    </div>     
+                        <img src={ reviewUs } style={ { width: "100%" } } alt="Review Us" />
+                    </div>
                 </div>
-                
+
             </div>
         )
     }

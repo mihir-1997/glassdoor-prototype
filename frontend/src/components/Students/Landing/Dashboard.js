@@ -213,7 +213,7 @@ class Dashboard extends Component {
                             </div >
                         </div >
                         <div className="col-8">
-                            <DonutChart data={ data01 } colors={ colors } />
+                            {/* <DonutChart data={ data01 } colors={ colors } /> */ }
                         </div>
                     </div >
                 </div >

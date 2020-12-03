@@ -19,6 +19,7 @@ class Education extends Component {
             collegeStartDate: this.props.education.collegeStartDate,
             collegeEndDate: this.props.education.collegeEndDate,
             collegeDescription: this.props.education.collegeDescription,
+            isEmployerActive: this.props.isEmployerActive
         }
     }
 
@@ -117,42 +118,49 @@ class Education extends Component {
                                     { this.state.collegeName }
                                 </div>
                                 <div className="col-2">
-                                    <div className="education-more-icon" onClick={ this.showEducationOptions }>
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                                            <defs>
-                                                <path id="prefix__more-a" d="M4 14a2 2 0 110-4 2 2 0 010 4zm8 0a2 2 0 110-4 2 2 0 010 4zm8 0a2 2 0 110-4 2 2 0 010 4z"></path>
-                                            </defs>
-                                            <g fill="none" fillRule="evenodd">
-                                                <mask id="prefix__more-b" fill="#fff">
-                                                    <use href="#prefix__more-a"></use>
-                                                </mask>
-                                                <use fill="#000" href="#prefix__more-a"></use>
-                                                <g className="education-more-icon-g" id="prefix__more-horizontal" fill="#858C94" mask="url(#prefix__more-b)">
-                                                    <path d="M0 0h24v24H0z"></path>
-                                                </g>
-                                                <g className="education-more-icon-g-hover" id="prefix__more-horizontal" fill="#20262E" mask="url(#prefix__more-b)">
-                                                    <path d="M0 0h24v24H0z"></path>
-                                                </g>
-                                            </g>
-                                        </svg>
-                                    </div>
-                                    <div className="education-more-icon-option-wrapper">
-                                        <div className="education-more-icon-option" id={ "education-more-icon-option-" + this.props.index } >
-                                            <button className="dropdown-item" type="button" onClick={ this.editEducation } value="Edit">
-                                                <svg className="basic-info-pen-svg" style={ { "width": "24px", "height": "24px" } } xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                                                    <g fill="#20262e" fillRule="evenodd">
-                                                        <path d="M14.775 6.202l2.99 2.99-11.81 11.663a.499.499 0 01-.352.144H3.498a.5.5 0 01-.5-.5v-2.342a.5.5 0 01.147-.354l11.63-11.6zM16.19 4.79l1.641-1.638a.502.502 0 01.707 0l2.3 2.298a.5.5 0 010 .707l-.003.003-1.648 1.627L16.19 4.79z"></path>
-                                                    </g>
-                                                </svg>&nbsp;
-                                            Edit</button>
-                                            <button className="dropdown-item" type="button" onClick={ this.deleteEducation } value="Delete">
+                                    { this.state.isEmployerActive ?
+                                        null
+                                        :
+                                        <div>
+                                            <div className="education-more-icon" onClick={ this.showEducationOptions }>
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                                                    <path d="M13.67 3h-3.34a.75.75 0 00-.75.75V5h4.84V3.71a.75.75 0 00-.75-.71zM15 8a.5.5 0 01.5.5v10a.5.5 0 01-1 0v-10A.5.5 0 0115 8zM9 8a.5.5 0 01.5.5v10a.5.5 0 01-1 0v-10A.5.5 0 019 8zm3 0a.5.5 0 01.5.5v10a.5.5 0 01-1 0v-10A.5.5 0 0112 8zm6-2H6l.21 14.83a.33.33 0 00.32.25l11-.08a.33.33 0 00.32-.26zm-4.33-4a1.75 1.75 0 011.75 1.75V5h5a.53.53 0 01.56.5.54.54 0 01-.56.5H19l-.17 14.8v.07A1.34 1.34 0 0117.5 22H6.55a1.33 1.33 0 01-1.32-1.12v-.07L5 6H3.56A.54.54 0 013 5.46.53.53 0 013.56 5h5V3.71A1.75 1.75 0 0110.33 2z" fill="currentColor" fillRule="evenodd"></path>
-                                                </svg>&nbsp;
-                                            Delete
-                                        </button>
+                                                    <defs>
+                                                        <path id="prefix__more-a" d="M4 14a2 2 0 110-4 2 2 0 010 4zm8 0a2 2 0 110-4 2 2 0 010 4zm8 0a2 2 0 110-4 2 2 0 010 4z"></path>
+                                                    </defs>
+                                                    <g fill="none" fillRule="evenodd">
+                                                        <mask id="prefix__more-b" fill="#fff">
+                                                            <use href="#prefix__more-a"></use>
+                                                        </mask>
+                                                        <use fill="#000" href="#prefix__more-a"></use>
+                                                        <g className="education-more-icon-g" id="prefix__more-horizontal" fill="#858C94" mask="url(#prefix__more-b)">
+                                                            <path d="M0 0h24v24H0z"></path>
+                                                        </g>
+                                                        <g className="education-more-icon-g-hover" id="prefix__more-horizontal" fill="#20262E" mask="url(#prefix__more-b)">
+                                                            <path d="M0 0h24v24H0z"></path>
+                                                        </g>
+                                                    </g>
+                                                </svg>
+                                            </div>
+                                            <div className="education-more-icon-option-wrapper">
+                                                <div className="education-more-icon-option" id={ "education-more-icon-option-" + this.props.index } >
+                                                    <button className="dropdown-item" type="button" onClick={ this.editEducation } value="Edit">
+                                                        <svg className="basic-info-pen-svg" style={ { "width": "24px", "height": "24px" } } xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                                            <g fill="#20262e" fillRule="evenodd">
+                                                                <path d="M14.775 6.202l2.99 2.99-11.81 11.663a.499.499 0 01-.352.144H3.498a.5.5 0 01-.5-.5v-2.342a.5.5 0 01.147-.354l11.63-11.6zM16.19 4.79l1.641-1.638a.502.502 0 01.707 0l2.3 2.298a.5.5 0 010 .707l-.003.003-1.648 1.627L16.19 4.79z"></path>
+                                                            </g>
+                                                        </svg>&nbsp;
+                                                        Edit
+                                                    </button>
+                                                    <button className="dropdown-item" type="button" onClick={ this.deleteEducation } value="Delete">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                                            <path d="M13.67 3h-3.34a.75.75 0 00-.75.75V5h4.84V3.71a.75.75 0 00-.75-.71zM15 8a.5.5 0 01.5.5v10a.5.5 0 01-1 0v-10A.5.5 0 0115 8zM9 8a.5.5 0 01.5.5v10a.5.5 0 01-1 0v-10A.5.5 0 019 8zm3 0a.5.5 0 01.5.5v10a.5.5 0 01-1 0v-10A.5.5 0 0112 8zm6-2H6l.21 14.83a.33.33 0 00.32.25l11-.08a.33.33 0 00.32-.26zm-4.33-4a1.75 1.75 0 011.75 1.75V5h5a.53.53 0 01.56.5.54.54 0 01-.56.5H19l-.17 14.8v.07A1.34 1.34 0 0117.5 22H6.55a1.33 1.33 0 01-1.32-1.12v-.07L5 6H3.56A.54.54 0 013 5.46.53.53 0 013.56 5h5V3.71A1.75 1.75 0 0110.33 2z" fill="currentColor" fillRule="evenodd"></path>
+                                                        </svg>&nbsp;
+                                                        Delete
+                                                    </button>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
+                                    }
                                 </div>
                             </div>
                         </div>

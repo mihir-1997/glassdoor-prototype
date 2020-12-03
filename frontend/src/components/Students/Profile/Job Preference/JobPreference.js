@@ -29,14 +29,17 @@ class JobPreference extends Component {
         SEO( {
             title: "Job Preferences | Glassdoor"
         } )
-        if ( this.props.location ) {
-            if ( this.props.location.active ) {
-                this.setState( {
-                    isEmployerActive: !this.state.isEmployerActive
-                } )
-            }
+        if ( this.props.active ) {
+            this.setState( {
+                isEmployerActive: true
+            } )
         }
-        let id = localStorage.getItem( "id" )
+        let id = null
+        if ( this.props.studentID ) {
+            id = this.props.studentID
+        } else {
+            id = localStorage.getItem( "id" )
+        }
         if ( id ) {
             axios.defaults.withCredentials = true
             axios.defaults.headers.common[ 'authorization' ] = localStorage.getItem( 'token' )
@@ -192,7 +195,7 @@ class JobPreference extends Component {
                             <span>Where are you in your job search?</span>
                         </div>
                         { this.state.isEmployerActive ?
-                            this.state.searchStatus
+                            <span className="employerSideAnswer">{ this.state.searchStatus }</span>
                             :
                             <div className="job-prefer-search-status-select">
                                 <form className="job-prefer-search-status-form">
@@ -215,7 +218,9 @@ class JobPreference extends Component {
                                 <span>What job titles are you looking for?</span>
                             </div>
                             { this.state.isEmployerActive ?
-                                this.state.jobTitle
+                                <div className="job-title">
+                                    <span >{ this.state.jobTitle }</span>
+                                </div>
                                 :
                                 <div className="job-prefer-job-title-add">
                                     <div className="add-title-icon" onClick={ this.showAddTitle }>+ Add Job Title</div>
@@ -252,7 +257,7 @@ class JobPreference extends Component {
                                 <span>What is your target salary range?</span>
                             </div>
                             { this.state.isEmployerActive ?
-                                this.state.targetSalary
+                                <span className="employerSideAnswer">{ this.state.targetSalary }</span>
                                 :
                                 <div className="job-prefer-salary-add">
                                     <div className="job-prefer-salary-add-button" id="salary-add-title" onClick={ this.showSalary }>+ Add Salary Range</div>
@@ -299,31 +304,40 @@ class JobPreference extends Component {
                     <div className="job-prefer-title">
                         <h3>Company Preferences</h3>
                     </div>
-                    { this.state.isEmployerActive ?
-                        this.state.openToRelocation
-                        :
-                        <div>
-                            <div className="job-prefer-text">
-                                <span>We use this information to help find you the best company matches.</span>
-                            </div>
-                            <div className="job-prefer-search-status">
-                                <div className="job-location-pref">
-                                    <div className="job-prefer-search-status-text">
-                                        <span>Where would you prefer to work?</span>
-                                    </div>
+
+                    <div>
+                        <div className="job-prefer-text">
+                            <span>We use this information to help find you the best company matches.</span>
+                        </div>
+                        <div className="job-prefer-search-status">
+                            <div className="job-location-pref">
+                                <div className="job-prefer-search-status-text">
+                                    <span>Where would you prefer to work?</span>
+                                </div>
+                                { this.state.isEmployerActive ?
+                                    this.state.openToRelocation ?
+                                        <span className="employerSideAnswer">Yes, I am open to relocation</span>
+                                        :
+                                        <span className="employerSideAnswer">No, I am not open to relocation</span>
+                                    :
                                     <div className="relocation-checkbox">
                                         <input type="checkbox" checked={ this.state.openToRelocation } onChange={ this.changeJobLocation } />&nbsp;&nbsp;<label>I'm open to relocation</label>
                                     </div>
-                                </div>
+                                }
                             </div>
                         </div>
-                    }
+                    </div>
+
                     <div className="job-industry-pref">
                         <div className="job-prefer-search-status-text">
                             <span>What industries do you prefer?</span>
                         </div>
                         { this.state.isEmployerActive ?
-                            this.state.typeOfIndustry
+                            this.state.typeOfIndustry ?
+                                <div className="job-title">
+                                    <span >{ this.state.typeOfIndustry }</span>
+                                </div>
+                                : null
                             :
                             <div>
                                 { this.state.typeOfIndustry ?

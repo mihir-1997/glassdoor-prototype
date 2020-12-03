@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Redirect } from 'react-router'
 import axios from "axios";
+import { Link } from 'react-router-dom';
 
 import './EmployerJobs.css'
 import AddJob from './AddJob'
@@ -17,13 +18,16 @@ class EmployerJobs extends Component {
 
     constructor( props ) {
         super( props )
-        this.state ={
-            jobs:[],
-            logoImageUrl:"",
-            currentPage:1,
-            totalCount:"",
+        this.state = {
+            jobs: [],
+            logoImageUrl: "",
+            currentPage: 1,
+            totalCount: "",
             elementsPerPage: 3,
-            jobStats:{},
+            jobStats: {},
+            employerName: "",
+            employer_id: "",
+            isStudent: false
         }
     }
 
@@ -31,7 +35,28 @@ class EmployerJobs extends Component {
         SEO( {
             title: "Jobs | Glassdoor"
         } )
-        let id = localStorage.getItem( "id" )
+        let name = null
+        let id = null
+        if ( this.props.location ) {
+            if ( this.props.location.state ) {
+                name = this.props.location.state.employerName
+                id = this.props.location.state.employerID
+                this.setState( {
+                    isStudent: true,
+                } )
+            } else {
+                name = localStorage.getItem( "name" )
+                id = localStorage.getItem( "id" )
+            }
+        } else {
+            name = localStorage.getItem( "name" )
+            id = localStorage.getItem( "id" )
+        }
+        console.log( id )
+        this.setState( {
+            employerName: name,
+            employer_id: id
+        } )
         if ( id ) {
             axios.defaults.withCredentials = true
             axios.defaults.headers.common[ 'authorization' ] = localStorage.getItem( 'token' )
@@ -39,7 +64,7 @@ class EmployerJobs extends Component {
                 .then( ( res ) => {
                     //console.log(res)
                     if ( res.status === 200 ) {
-                        this.setState( {                           
+                        this.setState( {
                             logoImageUrl: res.data.logoImageUrl,
                         } )
                     }
@@ -58,15 +83,15 @@ class EmployerJobs extends Component {
             axios.defaults.withCredentials = true
             axios.defaults.headers.common[ 'authorization' ] = localStorage.getItem( 'token' )
             axios.post( BACKEND_URL + ":" + BACKEND_PORT + "/jobs/getJobsForEmployer/" + id, {
-                "firstTime":true,
-                "pageNumber":1,
-                "pageSize":3
+                "firstTime": true,
+                "pageNumber": 1,
+                "pageSize": 3
             } )
                 .then( ( res ) => {
-                    console.log(res.data)
+                    console.log( res.data )
                     if ( res.status === 200 ) {
                         this.setState( {
-                            jobs:res.data.jobs,
+                            jobs: res.data.jobs,
                             totalCount: res.data.totalCount
                         } )
                         //console.log(this.state.jobs)
@@ -84,23 +109,23 @@ class EmployerJobs extends Component {
         }
     }
 
-        // Change page
-        paginate = (pageNumber) => {
-        console.log("pagenumber ", pageNumber);
-        
-        let id = localStorage.getItem( "id" )
-        if ( id ) {
+    // Change page
+    paginate = ( pageNumber ) => {
+        console.log( "pagenumber ", pageNumber );
+
+        // let id = localStorage.getItem( "id" )
+        if ( this.state.employer_id ) {
             axios.defaults.withCredentials = true
             axios.defaults.headers.common[ 'authorization' ] = localStorage.getItem( 'token' )
-            axios.post( BACKEND_URL + ":" + BACKEND_PORT + "/jobs/getJobsForEmployer/" + id,{firstTime:false, pageSize:3,pageNumber:pageNumber} )
+            axios.post( BACKEND_URL + ":" + BACKEND_PORT + "/jobs/getJobsForEmployer/" + this.state.employer_id, { firstTime: false, pageSize: 3, pageNumber: pageNumber } )
                 .then( ( res ) => {
-                        console.log(res.data)
+                    console.log( res.data )
                     if ( res.status === 200 ) {
                         this.setState( {
-                            jobs:res.data.jobs,
-                            
+                            jobs: res.data.jobs,
+
                         } )
-                        console.log(this.state.jobs)
+                        console.log( this.state.jobs )
                     }
                 } )
                 .catch( ( err ) => {
@@ -118,84 +143,99 @@ class EmployerJobs extends Component {
 
     addJob = ( e ) => {
         e.preventDefault()
-        
+
         let popup = document.getElementById( "add-job-popup" )
         let modal = document.getElementById( "modal" )
         modal.appendChild( popup )
         popup.classList.add( "popup-wrapper-show" )
     }
 
-    render() {
+    render () {
 
         let redirectVar = null
         if ( !localStorage.getItem( "active" ) ) {
             redirectVar = <Redirect to="/login" />
             return redirectVar
         }
-        let allJobs = this.state.jobs.map((eachJob) => {
-        return (
-            <IndividualJob
-               key={Math.random()}
-               data={eachJob}
-               logo={this.state.logoImageUrl}
-            ></IndividualJob>
-          );
-        })
+        let allJobs = this.state.jobs.map( ( eachJob ) => {
+            return (
+                <IndividualJob
+                    key={ Math.random() }
+                    data={ eachJob }
+                    logo={ this.state.logoImageUrl }
+                    isStudent={ this.state.isStudent }
+                ></IndividualJob>
+            );
+        } )
 
         return (
             <div className="employer-profile-wrapper">
-                {redirectVar}
+                {redirectVar }
                 <div className="root-header">
                     <div className="image-wrapper">
-                        <img className="cover" src={jobCover} alt="Cover"  />
+                        <img className="cover" src={ jobCover } alt="Cover" />
                     </div>
                     <div className="details-wrapper">
-                            <div className="employer-company-logo">
-                                <img className="logo" src={BACKEND_URL + ":" + BACKEND_PORT + "/public/images/profilepics/" + this.state.logoImageUrl} alt="logo"/>
-                            </div>
+                        <div className="employer-company-logo">
+                            <img className="logo" src={ BACKEND_URL + ":" + BACKEND_PORT + "/public/images/profilepics/" + this.state.logoImageUrl } alt="logo" />
+                        </div>
                         <div className="details">
-                            <h3 style={{marginTop:"10px"}}> {localStorage.getItem("name")} </h3>
-                            <br/>
-                            <br/>
+                            <h3 style={ { marginTop: "10px" } }> { this.state.employerName } </h3>
+                            <br />
+                            <br />
                         </div>
                         <div className="row multiple-links">
-                            <div className="col-1.2 single-link"><a href="/employer/profile">Overview</a> </div> 
-                            <div className="col-1.2 single-link"><a href="/employer/reviews">Reviews</a> </div>
-                            <div className="col-1.2 single-link"><a href="/employer/jobs">Jobs</a> </div>
-                            <div className="col-1.2 single-link"><a href="/employer/salaries">Salaries</a> </div>
-                            <div className="col-1.2 single-link"><a href="/employer/interviews">Interviews</a> </div>
-                            <div className="col-1.2 single-link"><a href="/employer/photos">Photos</a> </div>
-                            <div className="col-1.2 single-link"><a href="/employer/reports">Reports</a> </div>
-                            
-                            {/* <button className="col-1.2 btn btn-primary d-flex justify-content-center align-items-center" style={{marginLeft:"320px", marginBottom:"15px", marginTop:"15px", color:"rgb(24, 97, 191)", background:"white",fontWeight:"bold" ,border:"1px solid rgb(24, 97, 191)"}}>Follow</button> */}
-                            {/* <button className="col-1.2 btn btn-primary d-flex justify-content-center align-items-center" style={{marginLeft:"10px", marginBottom:"15px", marginTop:"15px", color:"rgb(24, 97, 191)", background:"white",fontWeight:"bold" ,border:"1px solid rgb(24, 97, 191)"}}> + Add Review</button> */}
-
+                            { this.state.isStudent ?
+                                <div>
+                                    <div style={ { display: "inline-block" } } className="col-1.2 single-link"><Link to={ { pathname: "/employer/profile", state: { employerID: this.state.employer_id } } } >Overview</Link> </div>
+                                    <div style={ { display: "inline-block" } } className="col-1.2 single-link"><Link to={ { pathname: "/employer/reviews", state: { employerID: this.state.employer_id, employerName: this.state.employerName } } } >Reviews</Link> </div>
+                                    <div style={ { display: "inline-block" } } className="col-1.2 single-link"><Link to={ { pathname: "/employer/jobs", state: { employerID: this.state.employer_id, employerName: this.state.employerName } } } >Jobs</Link> </div>
+                                    <div style={ { display: "inline-block" } } className="col-1.2 single-link"><Link to={ { pathname: "/employer/salaries", state: { employerID: this.state.employer_id, employerName: this.state.employerName } } } >Salaries</Link> </div>
+                                    <div style={ { display: "inline-block" } } className="col-1.2 single-link"><Link to={ { pathname: "/employer/interviews", state: { employerID: this.state.employer_id, employerName: this.state.employerName } } } >Interviews</Link> </div>
+                                    <div style={ { display: "inline-block" } } className="col-1.2 single-link"><Link to={ { pathname: "/employer/photos", state: { employerID: this.state.employer_id, employerName: this.state.employerName } } } >Photos</Link></div>
+                                </div>
+                                :
+                                <div>
+                                    <div style={ { display: "inline-block" } } className="col-1.2 single-link"><a href="/employer/profile">Overview</a> </div>
+                                    <div style={ { display: "inline-block" } } className="col-1.2 single-link"><a href="/employer/reviews">Reviews</a> </div>
+                                    <div style={ { display: "inline-block" } } className="col-1.2 single-link"><a href="/employer/jobs">Jobs</a> </div>
+                                    <div style={ { display: "inline-block" } } className="col-1.2 single-link"><a href="/employer/salaries">Salaries</a> </div>
+                                    <div style={ { display: "inline-block" } } className="col-1.2 single-link"><a href="/employer/interviews">Interviews</a> </div>
+                                    <div style={ { display: "inline-block" } } className="col-1.2 single-link"><a href="/employer/photos">Photos</a></div>
+                                    <div style={ { display: "inline-block" } } className="col-1.2 single-link"><a href="/employer/reports">Reports</a> </div>
+                                </div>
+                            }
                         </div>
-                    </div>   
-                    <div className="info-wrapper" style={{ }}>
-                    
-                    <p style={{fontSize:"20px", lineHeight:"27px", marginLeft:"1px", fontWeight:"bolder", textAlign:"center"}}>Jobs at {localStorage.getItem("name")}</p>
+                    </div>
+                    <div className="info-wrapper" style={ {} }>
 
-                    <hr/>
-                    {allJobs} 
-                    <Paginate 
-                        elementsPerPage= {this.state.elementsPerPage}
-                        totalElements={this.state.totalCount}
-                        paginate={this.paginate}
-                    />                    
-                    </div> 
+                        <p style={ { fontSize: "20px", lineHeight: "27px", marginLeft: "1px", fontWeight: "bolder", textAlign: "center" } }>Jobs at { this.state.employerName }</p>
+
+                        <hr />
+                        { allJobs }
+                        <Paginate
+                            elementsPerPage={ this.state.elementsPerPage }
+                            totalElements={ this.state.totalCount }
+                            paginate={ this.paginate }
+                        />
+                    </div>
 
                     <div className="form-wrapper-jobs">
-                    <button onClick={this.addJob} className = "emp-profile-btn btn btn-primary d-flex justify-content-center align-items-center" style={{marginLeft:"75px", marginBottom:"15px", marginTop:"15px", color:"rgb(24, 97, 191)", background:"white",fontWeight:"bold" ,border:"1px solid rgb(24, 97, 191),",  }}>+ Add Job</button>
-                    <AddJob 
-                    logo={this.state.logoImageUrl}
-                     />
-                    <div style={{margin:"0% 0% 0% 10%"}}>
-                        <img style={{width:"91%", height:"140%"}} src={bestPlaces} alt="Best Places to work in 2020"/>
+                        { this.state.isStudent ?
+                            null :
+                            <div>
+                                <button onClick={ this.addJob } className="emp-profile-btn btn btn-primary d-flex justify-content-center align-items-center" style={ { marginLeft: "75px", marginBottom: "15px", marginTop: "15px", color: "rgb(24, 97, 191)", background: "white", fontWeight: "bold", border: "1px solid rgb(24, 97, 191),", } }>+ Add Job</button>
+                                <AddJob
+                                    logo={ this.state.logoImageUrl }
+                                />
+                                <div style={ { margin: "0% 0% 0% 10%" } }>
+                                    <img style={ { width: "91%", height: "140%" } } src={ bestPlaces } alt="Best Places to work in 2020" />
+                                </div>
+                            </div>
+                        }
                     </div>
-                    </div>     
                 </div>
-                
+
             </div>
         )
     }

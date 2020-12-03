@@ -122,16 +122,16 @@ class UserProfile extends Component {
 
     render () {
         let redirectVar = null
-        if ( localStorage.getItem( "active" ) === "employers" ) {
+        if ( localStorage.getItem( "active" ) === "admin" ) {
             redirectVar = <Redirect to="/login" />
             return redirectVar
         }
         let activeSection = null
         if ( this.props.location.state ) {
             if ( this.state.selectedSection === "profile" ) {
-                activeSection = <BasicInfo active="employer" />
+                activeSection = <BasicInfo active="employer" studentID={ this.props.location.state.studentID } />
             } else if ( this.state.selectedSection === "job-preference" ) {
-                activeSection = <JobPreference active="employer" />
+                activeSection = <JobPreference active="employer" studentID={ this.props.location.state.studentID } />
             }
         } else {
             if ( this.state.selectedSection === "profile" ) {
@@ -193,18 +193,21 @@ class UserProfile extends Component {
                                 this.props.location.state ?
                                     null
                                     :
-                                    <div>
-                                        <div className="userinfo-profile sections-each-link" id="resumes" onClick={ () => this.selectSection( "resumes" ) }>
-                                            <span className="sections-each-link-text">Resumes</span>
-                                        </div>
-                                        <div className="userinfo-profile sections-each-link" id="job-preference" onClick={ () => this.selectSection( "job-preference" ) }>
-                                            <span className="sections-each-link-text">Job Preference</span>
-                                        </div>
-                                    </div> }
-
-                            <div className="userinfo-profile sections-each-link" id="demographics" onClick={ () => this.selectSection( "demographics" ) }>
-                                <span className="sections-each-link-text">Demographics</span>
+                                    <div className="userinfo-profile sections-each-link" id="resumes" onClick={ () => this.selectSection( "resumes" ) }>
+                                        <span className="sections-each-link-text">Resumes</span>
+                                    </div>
+                            }
+                            <div className="userinfo-profile sections-each-link" id="job-preference" onClick={ () => this.selectSection( "job-preference" ) }>
+                                <span className="sections-each-link-text">Job Preference</span>
                             </div>
+                            {
+                                this.props.location.state ?
+                                    null
+                                    :
+                                    <div className="userinfo-profile sections-each-link" id="demographics" onClick={ () => this.selectSection( "demographics" ) }>
+                                        <span className="sections-each-link-text">Demographics</span>
+                                    </div>
+                            }
                         </div>
                     </div>
                     <div className="col-8">

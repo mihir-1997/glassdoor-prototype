@@ -60,7 +60,7 @@
     vertical-align: middle;
     line-height: 32px;
     border-radius: 2px;
-    color: #fff;
+    color: #fff !important;
     display: inline-block;
 }
 
@@ -103,4 +103,12 @@
 
 .relocation-checkbox {
     margin: 2% 0;
+}
+
+.job-industry-pref {
+    margin-top: 5%;
+}
+
+.employerSideAnswer {
+    color: gray;
 }

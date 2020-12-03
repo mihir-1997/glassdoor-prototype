@@ -22,11 +22,6 @@
     min-width: 200px;
 }
 
-.second-row-buttons:hover {
-    box-shadow: 0 0 2px #c4c7cc, 0 4px 5px rgba(133,140,148,0.3);
-    cursor: pointer;
-}
-
 .userdashboard-second-row {
     padding: 0 5% 1% 6%;
     font-family: 'Lato', sans-serif;

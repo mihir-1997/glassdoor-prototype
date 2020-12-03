@@ -1,5 +1,5 @@
 .info-wrapper {
-  padding: 2% 0% 2% 0%;
+  padding: 2% 0% 2% 2%;
 }
 
 .salary-wrapper {
@@ -43,8 +43,7 @@ p {
   color: #505863;
 }
 
-.salary,
-span {
+.salary span {
   font-weight: normal;
   font-family: sans-serif;
   font-size: 15px;

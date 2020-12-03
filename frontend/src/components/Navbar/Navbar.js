@@ -138,7 +138,7 @@ class Navbar extends Component {
                 redirect = <Redirect to={ {
                     pathname: "/employer/interviews",
                     state: {
-                        searchTerm: this.state.searchTerm
+                        employerName: this.state.searchTerm
                     }
                 } } />
             }
@@ -152,7 +152,7 @@ class Navbar extends Component {
                 redirect = <Redirect to={ {
                     pathname: "/employer/salaries",
                     state: {
-                        searchTerm: this.state.searchTerm
+                        employerName: this.state.searchTerm
                     }
                 } } />
             }

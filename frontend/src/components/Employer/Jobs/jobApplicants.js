@@ -9,15 +9,15 @@ import IndividualApplicant from './individualApplicant'
 import { BACKEND_URL, BACKEND_PORT } from '../../Config/Config'
 
 class JobApplicants extends Component {
-    
+
     constructor( props ) {
         super( props )
-        this.state ={
-            applicants:[],
+        this.state = {
+            applicants: [],
         }
     }
     componentDidMount () {
-    
+
         let id = this.props.jobId
         if ( id ) {
             axios.defaults.withCredentials = true
@@ -27,7 +27,7 @@ class JobApplicants extends Component {
                     // console.log(res.data[0].applicants)
                     if ( res.status === 200 ) {
                         this.setState( {
-                            applicants:res.data[0].applicants
+                            applicants: res.data[ 0 ].applicants.filter( d => d.status !== "withdrawn" )
                         } )
                         //console.log("%%%%%%%%%" + this.state.applicants)
                     }
@@ -45,43 +45,44 @@ class JobApplicants extends Component {
     }
 
     closePopup = () => {
-        console.log("close called")
-        let popup = document.getElementById( "job-applicant-popup-"+this.props.jobId )
+        console.log( "close called" )
+        let popup = document.getElementById( "job-applicant-popup-" + this.props.jobId )
         popup.classList.remove( "popup-wrapper-show" )
     }
 
     onChange = ( e ) => {
         e.preventDefault()
         this.setState( {
-            newStatus : e.target.value
+            newStatus: e.target.value
         } )
     }
 
     render () {
 
-        let allApplicants = this.state.applicants.map((eachApplicant) => {
+        let allApplicants = this.state.applicants.map( ( eachApplicant ) => {
             return (
                 <IndividualApplicant
-                   key={Math.random()}
-                   data={eachApplicant}
+                    key={ Math.random() }
+                    data={ eachApplicant }
+                    closePopup={ this.closePopup }
                 ></IndividualApplicant>
-              );
-        })
+            );
+        } )
 
         return (
-            <div id={"job-applicant-popup-"+ this.props.jobId} className="popup-container">
+            <div id={ "job-applicant-popup-" + this.props.jobId } className="popup-container">
                 <div className="popup-wrapper">
                     <Header closePopup={ this.closePopup } />
                     <div className="popup-body">
                         <div className="popup-title">
-                           Applicants for job : {this.props.title}
+                            Applicants for job : { this.props.title }
+                        </div>
+                        <div style={ { overflowY: "auto" } }>
+                            { allApplicants }
+                        </div>
+
                     </div>
-                    <div style={{overflowY:"auto"}}>
-                        {allApplicants}
-                    </div>
-                        
-                    </div>
-                    <Footer closePopup={ this.closePopup } saveChanges={ this.closePopup }  />
+                    <Footer closePopup={ this.closePopup } saveChanges={ this.closePopup } />
                 </div>
             </div>
         )

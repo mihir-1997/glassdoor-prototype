@@ -40,7 +40,11 @@ class AdminDashboard extends Component {
                         // format review data for chart
                         let reviewData = []
                         let date = new Date( Date.now() )
+                        var weekDay = 0
                         for ( const key in res.data.analytics.reviews_per_day ) {
+                            if ( weekDay > 7 ) {
+                                break
+                            }
                             let singleItem = {}
                             let newDate = date.getDate() - key
                             console.log( newDate )
@@ -57,6 +61,7 @@ class AdminDashboard extends Component {
                             singleItem.name = newDate + "/" + month
                             singleItem[ "Reviews/Day" ] = res.data.analytics.reviews_per_day[ key ]
                             reviewData.splice( 0, 0, singleItem )
+                            weekDay++
                         }
                         reviewData = reviewData.slice( 1, 8 )
 

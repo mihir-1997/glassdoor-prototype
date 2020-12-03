@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import { Redirect } from 'react-router'
 import axios from "axios";
-import {CardColumns, CardRows,Card} from 'react-bootstrap'
+import { CardColumns, CardRows, Card } from 'react-bootstrap'
+import { Link } from 'react-router-dom';
 
 import SEO from '../../SEO/SEO'
 import './EmployerPhotos.css'
@@ -18,9 +19,11 @@ class EmployerPhotos extends Component {
 
         super( props )
         this.state = {
-            photos:[],
-            pictures:[],
-            logoImageUrl:""
+            photos: [],
+            pictures: [],
+            logoImageUrl: "",
+            employerName: "",
+            employer_id: "",
         }
     }
 
@@ -29,7 +32,28 @@ class EmployerPhotos extends Component {
             title: "Photos | Glassdoor"
         } )
 
-        let id = localStorage.getItem( "id" )
+        let name = null
+        let id = null
+        if ( this.props.location ) {
+            if ( this.props.location.state ) {
+                name = this.props.location.state.employerName
+                id = this.props.location.state.employerID
+                this.setState( {
+                    isStudent: true,
+                } )
+            } else {
+                name = localStorage.getItem( "name" )
+                id = localStorage.getItem( "id" )
+            }
+        } else {
+            name = localStorage.getItem( "name" )
+            id = localStorage.getItem( "id" )
+        }
+        console.log( id )
+        this.setState( {
+            employerName: name,
+            employer_id: id
+        } )
         if ( id ) {
             axios.defaults.withCredentials = true
             axios.defaults.headers.common[ 'authorization' ] = localStorage.getItem( 'token' )
@@ -37,7 +61,7 @@ class EmployerPhotos extends Component {
                 .then( ( res ) => {
                     //console.log(res)
                     if ( res.status === 200 ) {
-                        this.setState( {                           
+                        this.setState( {
                             logoImageUrl: res.data.logoImageUrl,
                         } )
                     }
@@ -53,37 +77,35 @@ class EmployerPhotos extends Component {
                 } )
         }
 
-        let name = localStorage.getItem( "name" )
-        
         axios.defaults.withCredentials = true
         axios.defaults.headers.common[ 'authorization' ] = localStorage.getItem( 'token' )
-        axios.post( BACKEND_URL + ":" + BACKEND_PORT + "/contributions/getPhotosByEmployer/" + name,{ "firstTime":true,"pageNumber":1 ,"pageSize":100} )
+        axios.post( BACKEND_URL + ":" + BACKEND_PORT + "/contributions/getPhotosByEmployer/" + name, { "firstTime": true, "pageNumber": 1, "pageSize": 100 } )
             .then( ( res ) => {
-                 
+
                 if ( res.status === 200 ) {
                     //console.log(res)
-                    this.setState( {                           
+                    this.setState( {
                         photos: res.data.photos
                     } )
-                    
-                    const pictures = [];    
-           
-                    this.state.photos.map((photo)=>{
+
+                    const pictures = [];
+
+                    this.state.photos.map( ( photo ) => {
                         //console.log(photo)
-                        photo.photos.map((p)=>{
-                            if(p.photoStatus === "Approved"){
-                                 // console.log(p)
-                                 pictures.push(p)
+                        photo.photos.map( ( p ) => {
+                            if ( p.photoStatus === "Approved" ) {
+                                // console.log(p)
+                                pictures.push( p )
                             }
-                           
-                        })
-                    })
-                    this.setState( {                           
+
+                        } )
+                    } )
+                    this.setState( {
                         pictures: pictures
                     } )
 
-                    console.log(this.state.pictures)
-        
+                    console.log( this.state.pictures )
+
                 }
             } )
             .catch( ( err ) => {
@@ -96,85 +118,98 @@ class EmployerPhotos extends Component {
                 }
             } )
     }
- 
+
     displayboxes = () => {
-        console.log("inside for loop")
-            let arr = [1,2,3,4,5]       
-                arr.map(i=>{
-                    console.log(i)
-                    return (
-                    <div className="col-4" style={{border:"1px solid black", height:"200px",margin:"3px"}}> 
-                        {i}
-                    </div>
-                )
-                })           
+        console.log( "inside for loop" )
+        let arr = [ 1, 2, 3, 4, 5 ]
+        arr.map( i => {
+            console.log( i )
+            return (
+                <div className="col-4" style={ { border: "1px solid black", height: "200px", margin: "3px" } }>
+                    {i }
+                </div>
+            )
+        } )
     }
 
 
-render() {
+    render () {
 
-    let redirectVar = null
+        let redirectVar = null
         if ( !localStorage.getItem( "active" ) ) {
             redirectVar = <Redirect to="/login" />
             return redirectVar
         }
 
-    return(
+        return (
 
-        <div className="employer-profile-wrapper">
-        {redirectVar}
-        <div className="root-header">
-            <div className="image-wrapper">
-                <img className="cover" src={photoCover} alt="Cover"  />
-            </div>
-            <div className="details-wrapper">
-                    <div className="employer-company-logo">
-                        <img className="logo" src={BACKEND_URL + ":" + BACKEND_PORT + "/public/images/profilepics/" + this.state.logoImageUrl} alt="logo"/>
+            <div className="employer-profile-wrapper">
+                {redirectVar }
+                <div className="root-header">
+                    <div className="image-wrapper">
+                        <img className="cover" src={ photoCover } alt="Cover" />
                     </div>
-                <div className="details">
-                    <h3 style={{marginTop:"10px"}}> {localStorage.getItem("name")} </h3>
-                    <br/>
-                    <br/>
-                </div>
-                <div className="row multiple-links">
-                    <div className="col-1.2 single-link"><a href="/employer/profile">Overview</a> </div> 
-                    <div className="col-1.2 single-link"><a href="/employer/reviews">Reviews</a> </div>
-                    <div className="col-1.2 single-link"><a href="/employer/jobs">Jobs</a> </div>
-                    <div className="col-1.2 single-link"><a href="/employer/salaries">Salaries</a> </div>
-                    <div className="col-1.2 single-link"><a href="/employer/interviews">Interviews</a> </div>
-                    <div className="col-1.2 single-link"><a href="/employer/photos">Photos</a> </div>
-                    
-                </div>
-            </div>   
-            <div className="photo-info-wrapper">
-            <p style={{marginLeft:"1px",fontSize:"20px", lineHeight:"27px"}}> {localStorage.getItem("name")} Photos</p>
-            <hr/>  
-                <div className="row" style={{margin:"2px 2px 0px 0px", height:"400px", overflowY:"auto"}}>
-                    <CardColumns>
-                        {this.state.pictures.map((pic)=>{
-                        console.log("Inside")
-                        return (
-                        <Card  style={{margin:"5px 2px 0px 0px"}} >
-                            <Card.Img variant="top" src={BACKEND_URL + ":" + BACKEND_PORT + "/public/images/officePhotos/"+ pic.photo} height="200px" width="60px" />
-                            
-                            {/* <Card.Title>Card title that wraps to a new line</Card.Title> */}
-                            <Card.Text style={{marginLeft:"0px"}}>
-                                {pic.photo}
-                            </Card.Text>
-                            
-                        </Card>
-                        )
-                    })}
-                    </CardColumns>    
-               
-              
-                </div>
-        </div> 
-        </div>
-        
-    </div>
+                    <div className="details-wrapper">
+                        <div className="employer-company-logo">
+                            <img className="logo" src={ BACKEND_URL + ":" + BACKEND_PORT + "/public/images/profilepics/" + this.state.logoImageUrl } alt="logo" />
+                        </div>
+                        <div className="details">
+                            <h3 style={ { marginTop: "10px" } }> { this.state.employerName } </h3>
+                            <br />
+                            <br />
+                        </div>
+                        <div className="row multiple-links">
+                            { this.state.isStudent ?
+                                <div>
+                                    <div style={ { display: "inline-block" } } className="col-1.2 single-link"><Link to={ { pathname: "/employer/profile", state: { employerID: this.state.employer_id } } } >Overview</Link> </div>
+                                    <div style={ { display: "inline-block" } } className="col-1.2 single-link"><Link to={ { pathname: "/employer/reviews", state: { employerID: this.state.employer_id, employerName: this.state.employerName } } } >Reviews</Link> </div>
+                                    <div style={ { display: "inline-block" } } className="col-1.2 single-link"><Link to={ { pathname: "/employer/jobs", state: { employerID: this.state.employer_id, employerName: this.state.employerName } } } >Jobs</Link> </div>
+                                    <div style={ { display: "inline-block" } } className="col-1.2 single-link"><Link to={ { pathname: "/employer/salaries", state: { employerID: this.state.employer_id, employerName: this.state.employerName } } } >Salaries</Link> </div>
+                                    <div style={ { display: "inline-block" } } className="col-1.2 single-link"><Link to={ { pathname: "/employer/interviews", state: { employerID: this.state.employer_id, employerName: this.state.employerName } } } >Interviews</Link> </div>
+                                    <div style={ { display: "inline-block" } } className="col-1.2 single-link"><Link to={ { pathname: "/employer/photos", state: { employerID: this.state.employer_id, employerName: this.state.employerName } } } >Photos</Link></div>
+                                </div>
+                                :
+                                <div>
+                                    <div style={ { display: "inline-block" } } className="col-1.2 single-link"><a href="/employer/profile">Overview</a> </div>
+                                    <div style={ { display: "inline-block" } } className="col-1.2 single-link"><a href="/employer/reviews">Reviews</a> </div>
+                                    <div style={ { display: "inline-block" } } className="col-1.2 single-link"><a href="/employer/jobs">Jobs</a> </div>
+                                    <div style={ { display: "inline-block" } } className="col-1.2 single-link"><a href="/employer/salaries">Salaries</a> </div>
+                                    <div style={ { display: "inline-block" } } className="col-1.2 single-link"><a href="/employer/interviews">Interviews</a> </div>
+                                    <div style={ { display: "inline-block" } } className="col-1.2 single-link"><a href="/employer/photos">Photos</a></div>
+                                    <div style={ { display: "inline-block" } } className="col-1.2 single-link"><a href="/employer/reports">Reports</a> </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    <div className="photo-info-wrapper">
+                        <p style={ { marginLeft: "1px", fontSize: "20px", lineHeight: "27px" } }> { this.state.employerName } Photos</p>
+                        <hr />
+                        <div className="row" style={ { margin: "2px 2px 0px 0px", height: "400px", overflowY: "auto" } }>
+                            <CardColumns>
+                                { this.state.pictures.map( ( pic ) => {
+                                    console.log( "Inside" )
+                                    return (
+                                        <Card style={ { margin: "5px 2px 0px 0px" } } >
+                                            <Card.Img variant="top" src={ BACKEND_URL + ":" + BACKEND_PORT + "/public/images/officePhotos/" + pic.photo } height="200px" width="60px" />
 
-    )
+                                            {/* <Card.Title>Card title that wraps to a new line</Card.Title> */ }
+                                            <Card.Text style={ { marginLeft: "0px" } }>
+                                                { pic.photo }
+                                            </Card.Text>
+
+                                        </Card>
+                                    )
+                                } ) }
+                            </CardColumns>
+
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        )
     }
 }
 

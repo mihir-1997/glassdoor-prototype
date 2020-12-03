@@ -61,8 +61,7 @@ p {
   color: #505863;
 }
 
-.review,
-span {
+.review span {
   font-weight: normal;
   font-family: sans-serif;
   font-size: 15px;

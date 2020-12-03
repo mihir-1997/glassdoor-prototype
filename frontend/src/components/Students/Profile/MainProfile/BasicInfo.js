@@ -37,14 +37,17 @@ class BasicInfo extends Component {
         SEO( {
             title: "User Profile | Glassdoor"
         } )
-        if ( this.props.location ) {
-            if ( this.props.location.active ) {
-                this.setState( {
-                    isEmployerActive: !this.state.isEmployerActive
-                } )
-            }
+        if ( this.props.active ) {
+            this.setState( {
+                isEmployerActive: true
+            } )
         }
-        let id = localStorage.getItem( "id" )
+        let id = null
+        if ( this.props.studentID ) {
+            id = this.props.studentID
+        } else {
+            id = localStorage.getItem( "id" )
+        }
         if ( id ) {
             axios.defaults.withCredentials = true
             axios.defaults.headers.common[ 'authorization' ] = localStorage.getItem( 'token' )
@@ -330,16 +333,19 @@ class BasicInfo extends Component {
                 <div className="about-me basic-info-each-section">
                     <h3>
                         About Me
-                        <span onClick={ this.updateAboutMe }>
-                            <svg className="basic-info-pen-svg" style={ { "width": "24px", "height": "24px" } } xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                                <g className="basic-info-pen" fill="#ccc" fillRule="evenodd">
-                                    <path d="M14.775 6.202l2.99 2.99-11.81 11.663a.499.499 0 01-.352.144H3.498a.5.5 0 01-.5-.5v-2.342a.5.5 0 01.147-.354l11.63-11.6zM16.19 4.79l1.641-1.638a.502.502 0 01.707 0l2.3 2.298a.5.5 0 010 .707l-.003.003-1.648 1.627L16.19 4.79z"></path>
-                                </g>
-                                <g className="basic-info-pen-hover" fill="#20262e" fillRule="evenodd">
-                                    <path d="M14.775 6.202l2.99 2.99-11.81 11.663a.499.499 0 01-.352.144H3.498a.5.5 0 01-.5-.5v-2.342a.5.5 0 01.147-.354l11.63-11.6zM16.19 4.79l1.641-1.638a.502.502 0 01.707 0l2.3 2.298a.5.5 0 010 .707l-.003.003-1.648 1.627L16.19 4.79z"></path>
-                                </g>
-                            </svg>
-                        </span>
+                        { this.state.isEmployerActive ?
+                            null :
+                            <span onClick={ this.updateAboutMe }>
+                                <svg className="basic-info-pen-svg" style={ { "width": "24px", "height": "24px" } } xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                    <g className="basic-info-pen" fill="#ccc" fillRule="evenodd">
+                                        <path d="M14.775 6.202l2.99 2.99-11.81 11.663a.499.499 0 01-.352.144H3.498a.5.5 0 01-.5-.5v-2.342a.5.5 0 01.147-.354l11.63-11.6zM16.19 4.79l1.641-1.638a.502.502 0 01.707 0l2.3 2.298a.5.5 0 010 .707l-.003.003-1.648 1.627L16.19 4.79z"></path>
+                                    </g>
+                                    <g className="basic-info-pen-hover" fill="#20262e" fillRule="evenodd">
+                                        <path d="M14.775 6.202l2.99 2.99-11.81 11.663a.499.499 0 01-.352.144H3.498a.5.5 0 01-.5-.5v-2.342a.5.5 0 01.147-.354l11.63-11.6zM16.19 4.79l1.641-1.638a.502.502 0 01.707 0l2.3 2.298a.5.5 0 010 .707l-.003.003-1.648 1.627L16.19 4.79z"></path>
+                                    </g>
+                                </svg>
+                            </span>
+                        }
                     </h3>
                     <div className="aboutme-text">
                         { this.state.aboutMe }
@@ -352,24 +358,27 @@ class BasicInfo extends Component {
                 <div className="experience basic-info-each-section">
                     <h3>
                         Experience
-                        <span onClick={ this.addExperience }>
-                            <svg className="basic-info-circle-svg" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
-                                <g className="basic-info-circle-g" fill="none" fillRule="evenodd">
-                                    <circle cx="12" cy="12" fill="#f5f6f7" r="12"></circle>
-                                    <path d="M12.5 12.5H18h-5.5V7zm0 0V18v-5.5H7z" stroke="#1861bf" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"></path>
-                                </g>
-                                <g className="basic-info-circle-g-hover" fill="none" fillRule="evenodd">
-                                    <circle cx="12" cy="12" fill="#1861bf" r="12"></circle>
-                                    <path d="M12.5 12.5H18h-5.5V7zm0 0V18v-5.5H7z" stroke="#f5f6f7" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"></path>
-                                </g>
-                            </svg>
+                        { this.state.isEmployerActive ?
+                            null :
+                            <span onClick={ this.addExperience }>
+                                <svg className="basic-info-circle-svg" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+                                    <g className="basic-info-circle-g" fill="none" fillRule="evenodd">
+                                        <circle cx="12" cy="12" fill="#f5f6f7" r="12"></circle>
+                                        <path d="M12.5 12.5H18h-5.5V7zm0 0V18v-5.5H7z" stroke="#1861bf" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"></path>
+                                    </g>
+                                    <g className="basic-info-circle-g-hover" fill="none" fillRule="evenodd">
+                                        <circle cx="12" cy="12" fill="#1861bf" r="12"></circle>
+                                        <path d="M12.5 12.5H18h-5.5V7zm0 0V18v-5.5H7z" stroke="#f5f6f7" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"></path>
+                                    </g>
+                                </svg>
 
-                        </span>
+                            </span>
+                        }
                     </h3>
                     {
                         this.state.experience ?
                             this.state.experience.map( ( experience, index ) => {
-                                return <Experience key={ index } index={ index } experience={ experience } />
+                                return <Experience key={ index } index={ index } experience={ experience } isEmployerActive={ this.state.isEmployerActive } />
                             } )
                             : null
                     }
@@ -381,16 +390,19 @@ class BasicInfo extends Component {
                 <div className="skills">
                     <h3>
                         Skills
-                        <span onClick={ this.updateSkills }>
-                            <svg className="basic-info-pen-svg" style={ { "width": "24px", "height": "24px" } } xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                                <g className="basic-info-pen" fill="#ccc" fillRule="evenodd">
-                                    <path d="M14.775 6.202l2.99 2.99-11.81 11.663a.499.499 0 01-.352.144H3.498a.5.5 0 01-.5-.5v-2.342a.5.5 0 01.147-.354l11.63-11.6zM16.19 4.79l1.641-1.638a.502.502 0 01.707 0l2.3 2.298a.5.5 0 010 .707l-.003.003-1.648 1.627L16.19 4.79z"></path>
-                                </g>
-                                <g className="basic-info-pen-hover" fill="#20262e" fillRule="evenodd">
-                                    <path d="M14.775 6.202l2.99 2.99-11.81 11.663a.499.499 0 01-.352.144H3.498a.5.5 0 01-.5-.5v-2.342a.5.5 0 01.147-.354l11.63-11.6zM16.19 4.79l1.641-1.638a.502.502 0 01.707 0l2.3 2.298a.5.5 0 010 .707l-.003.003-1.648 1.627L16.19 4.79z"></path>
-                                </g>
-                            </svg>
-                        </span>
+                        { this.state.isEmployerActive ?
+                            null :
+                            <span onClick={ this.updateSkills }>
+                                <svg className="basic-info-pen-svg" style={ { "width": "24px", "height": "24px" } } xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                    <g className="basic-info-pen" fill="#ccc" fillRule="evenodd">
+                                        <path d="M14.775 6.202l2.99 2.99-11.81 11.663a.499.499 0 01-.352.144H3.498a.5.5 0 01-.5-.5v-2.342a.5.5 0 01.147-.354l11.63-11.6zM16.19 4.79l1.641-1.638a.502.502 0 01.707 0l2.3 2.298a.5.5 0 010 .707l-.003.003-1.648 1.627L16.19 4.79z"></path>
+                                    </g>
+                                    <g className="basic-info-pen-hover" fill="#20262e" fillRule="evenodd">
+                                        <path d="M14.775 6.202l2.99 2.99-11.81 11.663a.499.499 0 01-.352.144H3.498a.5.5 0 01-.5-.5v-2.342a.5.5 0 01.147-.354l11.63-11.6zM16.19 4.79l1.641-1.638a.502.502 0 01.707 0l2.3 2.298a.5.5 0 010 .707l-.003.003-1.648 1.627L16.19 4.79z"></path>
+                                    </g>
+                                </svg>
+                            </span>
+                        }
                     </h3>
                     {
                         this.state.skills ?
@@ -405,24 +417,27 @@ class BasicInfo extends Component {
                 <div className="education">
                     <h3>
                         Education
-                        <span onClick={ this.addEducation }>
-                            <svg className="basic-info-circle-svg" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
-                                <g className="basic-info-circle-g" fill="none" fillRule="evenodd">
-                                    <circle cx="12" cy="12" fill="#f5f6f7" r="12"></circle>
-                                    <path d="M12.5 12.5H18h-5.5V7zm0 0V18v-5.5H7z" stroke="#1861bf" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"></path>
-                                </g>
-                                <g className="basic-info-circle-g-hover" fill="none" fillRule="evenodd">
-                                    <circle cx="12" cy="12" fill="#1861bf" r="12"></circle>
-                                    <path d="M12.5 12.5H18h-5.5V7zm0 0V18v-5.5H7z" stroke="#f5f6f7" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"></path>
-                                </g>
-                            </svg>
+                        { this.state.isEmployerActive ?
+                            null :
+                            <span onClick={ this.addEducation }>
+                                <svg className="basic-info-circle-svg" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+                                    <g className="basic-info-circle-g" fill="none" fillRule="evenodd">
+                                        <circle cx="12" cy="12" fill="#f5f6f7" r="12"></circle>
+                                        <path d="M12.5 12.5H18h-5.5V7zm0 0V18v-5.5H7z" stroke="#1861bf" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"></path>
+                                    </g>
+                                    <g className="basic-info-circle-g-hover" fill="none" fillRule="evenodd">
+                                        <circle cx="12" cy="12" fill="#1861bf" r="12"></circle>
+                                        <path d="M12.5 12.5H18h-5.5V7zm0 0V18v-5.5H7z" stroke="#f5f6f7" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"></path>
+                                    </g>
+                                </svg>
 
-                        </span>
+                            </span>
+                        }
                     </h3>
                     {
                         this.state.education ?
                             this.state.education.map( ( education, index ) => {
-                                return <Education key={ index } index={ index } education={ education } />
+                                return <Education key={ index } index={ index } education={ education } isEmployerActive={ this.state.isEmployerActive } />
                             } )
                             : null
                     }

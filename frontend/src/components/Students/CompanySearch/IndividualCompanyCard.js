@@ -120,7 +120,10 @@ class IndividualCompanyCard extends Component {
             redirect = <Redirect to="/students/addcontribution" />
         }
         if ( this.state.redirectToCompany ) {
-            redirect = <Redirect to="/employer/profile" />
+            redirect = <Redirect to={ {
+                pathname: "/employer/profile",
+                state: { employerID: this.state._id }
+            } } />
         }
         return (
             <div className="individual-comanycard-wrapper">

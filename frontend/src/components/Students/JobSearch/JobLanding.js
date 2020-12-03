@@ -66,6 +66,8 @@ class JobLanding extends Component {
         } else {
             let id = localStorage.getItem( "id" )
             if ( id ) {
+                axios.defaults.withCredentials = true
+                axios.defaults.headers.common[ 'authorization' ] = localStorage.getItem( 'token' )
                 axios.get( BACKEND_URL + ":" + BACKEND_PORT + "/jobs/getApplicationStatus/" + id )
                     .then( ( res ) => {
                         if ( res.status === 200 ) {
