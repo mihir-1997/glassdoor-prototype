@@ -29,8 +29,8 @@ class EmployerInterviews extends Component {
             donuChartData: [],
             //paginate 
             elementsPerPage: 4,
-            currentPage:1,
-            totalCount:0
+            currentPage: 1,
+            totalCount: 0
 
         }
     }
@@ -67,7 +67,7 @@ class EmployerInterviews extends Component {
             axios.defaults.headers.common[ 'authorization' ] = localStorage.getItem( 'token' )
             axios.get( BACKEND_URL + ":" + BACKEND_PORT + "/employers/getEmployerById/" + id )
                 .then( ( res ) => {
-                  
+
                     if ( res.status === 200 ) {
                         this.setState( {
                             logoImageUrl: res.data.logoImageUrl,
@@ -236,10 +236,10 @@ class EmployerInterviews extends Component {
                                     <div style={ { display: "inline-block" } } className="col-1.2 single-link"><Link to={ { pathname: "/employer/salaries", state: { employerID: this.state.employer_id, employerName: this.state.employerName } } } >Salaries</Link> </div>
                                     <div style={ { display: "inline-block" } } className="col-1.2 single-link"><Link to={ { pathname: "/employer/interviews", state: { employerID: this.state.employer_id, employerName: this.state.employerName } } } >Interviews</Link> </div>
                                     <div style={ { display: "inline-block" } } className="col-1.2 single-link"><Link to={ { pathname: "/employer/photos", state: { employerID: this.state.employer_id, employerName: this.state.employerName } } } >Photos</Link></div>
-                                    {localStorage.getItem("active") === "admin"?
-                                    <div style={{display:"inline-block"}} className="col-1.2 single-link"><Link to={ { pathname: "/employer/reports", state: { employerID: this.state.employer_id, employerName: this.state.employerName } } } >Reports</Link> </div>
-                                    :
-                                    null}
+                                    { localStorage.getItem( "active" ) === "admin" ?
+                                        <div style={ { display: "inline-block" } } className="col-1.2 single-link"><Link to={ { pathname: "/employer/reports", state: { employerID: this.state.employer_id, employerName: this.state.employerName } } } >Reports</Link> </div>
+                                        :
+                                        null }
                                 </div>
                                 :
                                 <div>
@@ -256,7 +256,10 @@ class EmployerInterviews extends Component {
                     </div>
                     <div className="interview-info-wrapper" style={ {} }>
                         <div className="">
-                            <DonutChart key={ Math.random() } data={ this.state.donuChartData } colors={ colors } />
+                            { this.state.donuChartData ?
+                                <DonutChart key={ Math.random() } data={ this.state.donuChartData } colors={ colors } />
+                                :
+                                null }
                         </div>
                         <p style={ { fontSize: "20px", lineHeight: "27px", marginLeft: "0px", fontWeight: "bold" } }>Interviews at { this.state.employerName } </p>
                         <hr />
@@ -270,14 +273,14 @@ class EmployerInterviews extends Component {
                     </div>
 
                     <div className="interview-form-wrapper">
-                    { localStorage.getItem("active") === "admin" ?
-                        null
-                        :
-                        this.state.isStudent ?
-                            <button onClick={ this.addInterview } className="col-1.2 btn btn-primary d-flex justify-content-center align-items-center" style={ { marginLeft: "200px", marginBottom: "15px", marginTop: "15px", color: "rgb(24, 97, 191)", background: "white", fontWeight: "bold", border: "1px solid rgb(24, 97, 191)" } }>+ Add Interview</button>
-                            :
+                        { localStorage.getItem( "active" ) === "admin" ?
                             null
-                    }
+                            :
+                            this.state.isStudent ?
+                                <button onClick={ this.addInterview } className="col-1.2 btn btn-primary d-flex justify-content-center align-items-center" style={ { marginLeft: "200px", marginBottom: "15px", marginTop: "15px", color: "rgb(24, 97, 191)", background: "white", fontWeight: "bold", border: "1px solid rgb(24, 97, 191)" } }>+ Add Interview</button>
+                                :
+                                null
+                        }
                     </div>
                 </div>
 
