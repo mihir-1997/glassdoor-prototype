@@ -131,7 +131,7 @@ class IndividualCompanyCard extends Component {
                 <div className="row">
                     <div className="col-2">
                         { this.state.profileImageUrl ?
-                            <img className="company-search-company-logo" src={ BACKEND_URL + ":" + BACKEND_PORT + "/public/images/profilepics/" + this.state.profileImageUrl } alt="company_logo" />
+                            <img className="company-search-company-logo" src={ BACKEND_URL + ":" + BACKEND_PORT + "/public/images/profilepics/" + this.state.logoImageUrl } alt="company_logo" />
                             :
                             <svg xmlns="http://www.w3.org/2000/svg" width="75" height="75" viewBox="0 0 48 48">
                                 <g fill="none" fillRule="evenodd">

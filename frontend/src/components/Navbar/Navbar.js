@@ -1,10 +1,14 @@
 import React, { Component } from 'react'
 import { Redirect } from 'react-router'
 import { Link } from 'react-router-dom'
+import axios from 'axios'
 import { withRouter } from "react-router"
+import { Typeahead } from 'react-bootstrap-typeahead'
 
 import Glassdoor_logo from '../../Images/glassdoor-logo.svg'
 import './Navbar.css'
+
+import { BACKEND_URL, BACKEND_PORT } from '../Config/Config'
 
 class Navbar extends Component {
 
@@ -17,7 +21,9 @@ class Navbar extends Component {
             redirectToCompanies: false,
             redirectToInterviews: false,
             redirectToSalaries: false,
-            dropDownValue: "Jobs"
+            dropDownValue: "Jobs",
+            employerName: "",
+            employerID: ""
         }
     }
 
@@ -37,6 +43,25 @@ class Navbar extends Component {
                 dropDownValue: "Jobs"
             } )
         }
+        axios.defaults.withCredentials = true
+        axios.defaults.headers.common[ 'authorization' ] = localStorage.getItem( 'token' )
+        axios.get( BACKEND_URL + ":" + BACKEND_PORT + "/employers/getAllEmployers" )
+            .then( ( res ) => {
+                if ( res.status === 200 ) {
+                    this.setState( {
+                        employers: res.data
+                    } )
+                }
+            } )
+            .catch( ( err ) => {
+                if ( err.response ) {
+                    if ( err.response.status === 404 ) {
+                        console.log( err.response.message )
+                    } else if ( err.response.status === 400 ) {
+                        console.log( err.response.message )
+                    }
+                }
+            } )
     }
 
     onChange = ( e ) => {
@@ -55,7 +80,7 @@ class Navbar extends Component {
     searchJobs = ( e ) => {
         e.preventDefault()
         if ( localStorage.getItem( "active" ) === "admin" ) {
-            if ( this.state.searchTerm && this.state.dropDownValue === "Companies" ) {
+            if ( this.state.employerName && this.state.dropDownValue === "Companies" ) {
                 this.setState( {
                     redirectToCompanies: !this.state.redirectToCompanies
                 } )
@@ -65,17 +90,29 @@ class Navbar extends Component {
                 this.setState( {
                     redirectToJobs: !this.state.redirectToJobs
                 } )
-            } else if ( this.state.searchTerm && this.state.dropDownValue === "Companies" ) {
+            } else if ( this.state.employerName && this.state.dropDownValue === "Companies" ) {
                 this.setState( {
                     redirectToCompanies: !this.state.redirectToCompanies
                 } )
-            } else if ( this.state.searchTerm && this.state.dropDownValue === "Interviews" ) {
+            } else if ( this.state.employerName && this.state.dropDownValue === "Interviews" ) {
                 this.setState( {
                     redirectToInterviews: !this.state.redirectToInterviews
                 } )
-            } else if ( this.state.searchTerm && this.state.dropDownValue === "Salaries" ) {
+            } else if ( this.state.employerName && this.state.dropDownValue === "Salaries" ) {
                 this.setState( {
                     redirectToSalaries: !this.state.redirectToSalaries
+                } )
+            }
+        }
+    }
+
+    employerNameChange = ( e ) => {
+        console.log( e )
+        if ( e.length > 0 ) {
+            if ( e[ 0 ].label !== undefined && e[ 0 ].id !== undefined ) {
+                this.setState( {
+                    employerName: e[ 0 ].label,
+                    employerID: e[ 0 ].id
                 } )
             }
         }
@@ -115,7 +152,7 @@ class Navbar extends Component {
                 redirect = <Redirect to={ {
                     pathname: "/admin/companies",
                     state: {
-                        searchTerm: this.state.searchTerm,
+                        searchTerm: this.state.employerName,
                         active: localStorage.getItem( "active" )
                     }
                 } } />
@@ -123,7 +160,7 @@ class Navbar extends Component {
                 redirect = <Redirect to={ {
                     pathname: "/students/companies",
                     state: {
-                        searchTerm: this.state.searchTerm,
+                        searchTerm: this.state.employerName,
                         active: localStorage.getItem( "active" )
                     }
                 } } />
@@ -138,7 +175,8 @@ class Navbar extends Component {
                 redirect = <Redirect to={ {
                     pathname: "/employer/interviews",
                     state: {
-                        employerName: this.state.searchTerm
+                        employerName: this.state.employerName,
+                        employerID: this.state.employerID
                     }
                 } } />
             }
@@ -152,10 +190,18 @@ class Navbar extends Component {
                 redirect = <Redirect to={ {
                     pathname: "/employer/salaries",
                     state: {
-                        employerName: this.state.searchTerm
+                        employerName: this.state.searchTerm,
+                        employerID: this.state.employerID
                     }
                 } } />
             }
+        }
+        let options = []
+        if ( this.state.employers ) {
+            this.state.employers.forEach( employer => {
+                options.push( { id: employer._id, label: employer.name } )
+            } );
+            // options = this.state.employers.map( employer => { return { id: employer.ceoname, value: employer.name } } )
         }
         return (
             <div className="navbar-container-wrapper">
@@ -174,7 +220,12 @@ class Navbar extends Component {
                                 <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
                                     <li className="nav-item navbar-search-wrapper">
                                         <svg viewBox="0 0 15 15" fill="none" className="navbar-search-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18"><path d="M14.5 14.5l-4-4m-4 2a6 6 0 110-12 6 6 0 010 12z" stroke="#056b27"></path></svg>
-                                        <input type="text" name="searchTerm" className="form-control navbar-search" onChange={ this.onChange } value={ this.state.searchTerm } placeholder="Job Title, Keywords, or Company" />
+                                        { this.state.dropDownValue === "Jobs" ?
+                                            <input type="text" name="searchTerm" className="form-control navbar-search" onChange={ this.onChange } value={ this.state.searchTerm } placeholder="Job Title, Keywords, or Company" />
+                                            :
+
+                                            <Typeahead id="employerName" name="employerName" options={ options } paginate={ false } placeholder="Select Employer..." onChange={ this.employerNameChange } />
+                                        }
                                     </li>
                                     <li className="navbar-item">
                                         <div className="dropdown">
@@ -240,7 +291,7 @@ class Navbar extends Component {
                                     <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
                                         <li className="nav-item navbar-search-wrapper">
                                             <svg viewBox="0 0 15 15" fill="none" className="navbar-search-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18"><path d="M14.5 14.5l-4-4m-4 2a6 6 0 110-12 6 6 0 010 12z" stroke="#056b27"></path></svg>
-                                            <input type="text" name="searchTerm" className="form-control navbar-search" onChange={ this.onChange } value={ this.state.searchTerm } placeholder="Company Name" />
+                                            <Typeahead id="employerName" name="employerName" options={ options } paginate={ false } placeholder="Select Employer..." onChange={ this.employerNameChange } />
                                         </li>
                                         <li className="navbar-item">
                                             <div className="dropdown">
