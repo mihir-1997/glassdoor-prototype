@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Redirect } from 'react-router'
 import axios from "axios"
 import {Card, Table} from 'react-bootstrap'
+import { Link } from 'react-router-dom';
 
 import './EmployerReports.css'
 import { BACKEND_URL, BACKEND_PORT } from '../../Config/Config'
@@ -18,7 +19,10 @@ class EmployerReports extends Component {
         super( props )
         this.state = {
             logoImageUrl:"",
-            reports:[]
+            reports:[],
+            isStudent: false,
+            employerName: "",
+            employer_id: ""
         }
     }
     componentDidMount () {
@@ -26,7 +30,28 @@ class EmployerReports extends Component {
             title: "Reports | Glassdoor"
         } )
 
-        let id = localStorage.getItem( "id" )
+        let name = null
+        let id = null
+        if ( this.props.location ) {
+            if ( this.props.location.state ) {
+                name = this.props.location.state.employerName
+                id = this.props.location.state.employerID
+                this.setState( {
+                    isStudent: true,
+                } )
+            } else {
+                name = localStorage.getItem( "name" )
+                id = localStorage.getItem( "id" )
+            }
+        } else {
+            name = localStorage.getItem( "name" )
+            id = localStorage.getItem( "id" )
+        }
+        console.log( id )
+        this.setState( {
+            employerName: name,
+            employer_id: id
+        } )
         if ( id ) {
             axios.defaults.withCredentials = true
             axios.defaults.headers.common[ 'authorization' ] = localStorage.getItem( 'token' )
@@ -211,13 +236,30 @@ render() {
                     <br/>
                 </div>
                 <div className="row multiple-links">
-                    <div className="col-1.2 single-link"><a href="/employer/profile">Overview</a> </div> 
-                    <div className="col-1.2 single-link"><a href="/employer/reviews">Reviews</a> </div>
-                    <div className="col-1.2 single-link"><a href="/employer/jobs">Jobs</a> </div>
-                    <div className="col-1.2 single-link"><a href="/employer/salaries">Salaries</a> </div>
-                    <div className="col-1.2 single-link"><a href="/employer/interviews">Interviews</a> </div>
-                    <div className="col-1.2 single-link"><a href="/employer/photos">Photos</a> </div>
-                    <div className="col-1.2 single-link"><a href="/employer/reports">Reports</a> </div>
+                { this.state.isStudent ?
+                                <div>
+                                    <div style={ { display: "inline-block" } } className="col-1.2 single-link"><Link to={ { pathname: "/employer/profile", state: { employerID: this.state.employer_id } } } >Overview</Link> </div>
+                                    <div style={ { display: "inline-block" } } className="col-1.2 single-link"><Link to={ { pathname: "/employer/reviews", state: { employerID: this.state.employer_id, employerName: this.state.employerName } } } >Reviews</Link> </div>
+                                    <div style={ { display: "inline-block" } } className="col-1.2 single-link"><Link to={ { pathname: "/employer/jobs", state: { employerID: this.state.employer_id, employerName: this.state.employerName } } } >Jobs</Link> </div>
+                                    <div style={ { display: "inline-block" } } className="col-1.2 single-link"><Link to={ { pathname: "/employer/salaries", state: { employerID: this.state.employer_id, employerName: this.state.employerName } } } >Salaries</Link> </div>
+                                    <div style={ { display: "inline-block" } } className="col-1.2 single-link"><Link to={ { pathname: "/employer/interviews", state: { employerID: this.state.employer_id, employerName: this.state.employerName } } } >Interviews</Link> </div>
+                                    <div style={ { display: "inline-block" } } className="col-1.2 single-link"><Link to={ { pathname: "/employer/photos", state: { employerID: this.state.employer_id, employerName: this.state.employerName } } } >Photos</Link></div>
+                                    {localStorage.getItem("active") === "admin"?
+                                    <div style={{display:"inline-block"}} className="col-1.2 single-link"><Link to={ { pathname: "/employer/reports", state: { employerID: this.state.employer_id, employerName: this.state.employerName } } } >Reports</Link> </div>
+                                    :
+                                    null}
+                                </div>
+                                :
+                                <div>
+                                    <div style={ { display: "inline-block" } } className="col-1.2 single-link"><a href="/employer/profile">Overview</a> </div>
+                                    <div style={ { display: "inline-block" } } className="col-1.2 single-link"><a href="/employer/reviews">Reviews</a> </div>
+                                    <div style={ { display: "inline-block" } } className="col-1.2 single-link"><a href="/employer/jobs">Jobs</a> </div>
+                                    <div style={ { display: "inline-block" } } className="col-1.2 single-link"><a href="/employer/salaries">Salaries</a> </div>
+                                    <div style={ { display: "inline-block" } } className="col-1.2 single-link"><a href="/employer/interviews">Interviews</a> </div>
+                                    <div style={ { display: "inline-block" } } className="col-1.2 single-link"><a href="/employer/photos">Photos</a></div>
+                                    <div style={ { display: "inline-block" } } className="col-1.2 single-link"><a href="/employer/reports">Reports</a> </div>
+                                </div>
+                            }
                     
                 </div>
             </div>   

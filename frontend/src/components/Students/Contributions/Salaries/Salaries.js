@@ -101,7 +101,7 @@ class Salaries extends Component {
                             return <div className="row contributions-stats" key={ index }>
                                 <div className="col-6 contributions-stat-column">
                                     <strong>{ salary.jobTitle }</strong> in { salary.location } at { salary.employerName }
-                                    <br /> ${ salary.baseSalary } hourly
+                                    <br /> ${ salary.baseSalary } yearly
                         </div>
                                 <div className="col-2 contributions-stat-column">
                                     { salary.employeeStatus }

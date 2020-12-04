@@ -236,6 +236,10 @@ class EmployerInterviews extends Component {
                                     <div style={ { display: "inline-block" } } className="col-1.2 single-link"><Link to={ { pathname: "/employer/salaries", state: { employerID: this.state.employer_id, employerName: this.state.employerName } } } >Salaries</Link> </div>
                                     <div style={ { display: "inline-block" } } className="col-1.2 single-link"><Link to={ { pathname: "/employer/interviews", state: { employerID: this.state.employer_id, employerName: this.state.employerName } } } >Interviews</Link> </div>
                                     <div style={ { display: "inline-block" } } className="col-1.2 single-link"><Link to={ { pathname: "/employer/photos", state: { employerID: this.state.employer_id, employerName: this.state.employerName } } } >Photos</Link></div>
+                                    {localStorage.getItem("active") === "admin"?
+                                    <div style={{display:"inline-block"}} className="col-1.2 single-link"><Link to={ { pathname: "/employer/reports", state: { employerID: this.state.employer_id, employerName: this.state.employerName } } } >Reports</Link> </div>
+                                    :
+                                    null}
                                 </div>
                                 :
                                 <div>
@@ -266,11 +270,14 @@ class EmployerInterviews extends Component {
                     </div>
 
                     <div className="interview-form-wrapper">
-                        { this.state.isStudent ?
+                    { localStorage.getItem("active") === "admin" ?
+                        null
+                        :
+                        this.state.isStudent ?
                             <button onClick={ this.addInterview } className="col-1.2 btn btn-primary d-flex justify-content-center align-items-center" style={ { marginLeft: "200px", marginBottom: "15px", marginTop: "15px", color: "rgb(24, 97, 191)", background: "white", fontWeight: "bold", border: "1px solid rgb(24, 97, 191)" } }>+ Add Interview</button>
                             :
                             null
-                        }
+                    }
                     </div>
                 </div>
 

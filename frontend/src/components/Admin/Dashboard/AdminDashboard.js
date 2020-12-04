@@ -38,32 +38,32 @@ class AdminDashboard extends Component {
                     if ( res.status === 200 ) {
                         console.log( res.data )
                         // format review data for chart
-                        let reviewData = []
-                        let date = new Date( Date.now() )
-                        var weekDay = 0
-                        for ( const key in res.data.analytics.reviews_per_day ) {
-                            if ( weekDay > 7 ) {
-                                break
-                            }
-                            let singleItem = {}
-                            let newDate = date.getDate() - key
-                            console.log( newDate )
-                            let month = date.getMonth() + 1
-                            if ( newDate <= 0 ) {
-                                if ( newDate.getMonth % 2 === 0 ) {
-                                    newDate = 31 + newDate
-                                    month = date.getMonth()
-                                } else {
-                                    newDate = 30 + newDate
-                                    month = date.getMonth()
-                                }
-                            }
-                            singleItem.name = newDate + "/" + month
-                            singleItem[ "Reviews/Day" ] = res.data.analytics.reviews_per_day[ key ]
-                            reviewData.splice( 0, 0, singleItem )
-                            weekDay++
-                        }
-                        reviewData = reviewData.slice( 1, 8 )
+                        // let reviewData = []
+                        // let date = new Date( Date.now() )
+                        // var weekDay = 0
+                        // for ( const key in res.data.analytics.reviews_per_day ) {
+                        //     if ( weekDay > 7 ) {
+                        //         break
+                        //     }
+                        //     let singleItem = {}
+                        //     let newDate = date.getDate() - key
+                        //     console.log( newDate )
+                        //     let month = date.getMonth() + 1
+                        //     if ( newDate <= 0 ) {
+                        //         if ( newDate.getMonth % 2 === 0 ) {
+                        //             newDate = 31 + newDate
+                        //             month = date.getMonth()
+                        //         } else {
+                        //             newDate = 30 + newDate
+                        //             month = date.getMonth()
+                        //         }
+                        //     }
+                        //     singleItem.name = newDate + "/" + month
+                        //     singleItem[ "Reviews/Day" ] = res.data.analytics.reviews_per_day[ key ]
+                        //     reviewData.splice( 0, 0, singleItem )
+                        //     weekDay++
+                        // }
+                        // reviewData = reviewData.slice( 1, 8 )
 
                         // format company reviews data for chart
                         let companyReviews = []
@@ -95,7 +95,7 @@ class AdminDashboard extends Component {
 
                         // set state for chart data
                         this.setState( {
-                            reviewsPerDay: reviewData,
+                            reviewsPerDay: res.data.analytics.reviews_per_day.reverse(),
                             mostReviewedCompanies: companyReviews.slice( 0, 5 ),
                             companiesAvgRatings: { name: "root", children: companyAvgReviews },
                             mostReviewesByStudents: studentData,

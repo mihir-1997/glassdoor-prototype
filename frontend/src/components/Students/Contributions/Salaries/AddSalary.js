@@ -132,7 +132,7 @@ class AddSalary extends Component {
                     <div className="form-group row">
                         <label htmlFor="salaryrate" className="col-4">Salary*</label>
                         <div className="col-8">
-                            <input type="number" name="baseSalary" className="form-control" id="salaryrate" placeholder="Salary/hr" onChange={ this.onChange } />
+                            <input type="number" name="baseSalary" className="form-control" id="salaryrate" placeholder="Salary/year" onChange={ this.onChange } />
                         </div>
                     </div>
                     <div className="form-group row">

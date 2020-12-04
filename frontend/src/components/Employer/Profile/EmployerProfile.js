@@ -227,6 +227,10 @@ class EmployerProfile extends Component {
                                     <div style={{display:"inline-block"}} className="col-1.2 single-link"><Link to={{pathname:"/employer/salaries", state: { employerID: this.state.employer_id, employerName: this.state.name } }} >Salaries</Link> </div>
                                     <div style={{display:"inline-block"}} className="col-1.2 single-link"><Link to={{pathname:"/employer/interviews", state: { employerID: this.state.employer_id, employerName: this.state.name } }} >Interviews</Link> </div>
                                     <div style={{display:"inline-block"}} className="col-1.2 single-link"><Link to={{pathname:"/employer/photos", state: { employerID: this.state.employer_id, employerName: this.state.name } }} >Photos</Link></div>
+                                    {localStorage.getItem("active") === "admin"?
+                                    <div style={{display:"inline-block"}} className="col-1.2 single-link"><Link to={ { pathname: "/employer/reports", state: { employerID: this.state.employer_id, employerName: this.state.name } } } >Reports</Link> </div>
+                                    :
+                                    null}
                                 </div>
                                     :
                                 <div>
@@ -300,18 +304,7 @@ class EmployerProfile extends Component {
                                 </div>
 
                         </div>
-                        {/* <br/> */}
-                        {/* <div className="single-row">
-                            <span style={{fontWeight:"bold",  color:"#5D5D5D"}}> Competitors:</span>  
-                                New Work SE, Monster Worldwide   &nbsp; &nbsp;  
-                            <svg class="SVGInline-svg mr-xsm-svg" xmlns="http://www.w3.org/2000/svg" width="20" height="14" viewBox="0 0 20 14"><path fill="#1861BF" d="M7.01 9H0v2h7.01v3L11 10 7.01 6v3zm5.98-1V5H20V3h-7.01V0L9 4l3.99 4z" id="comparisonIcon-prefix__compare" stroke="currentColor"></path></svg>
-                        </div> */}
-    {/* 
-                            LinkedIn is the world’s largest professional network, with nearly 690+ million members in over 200 countries and territories around the world. LinkedIn was built to help professionals achieve more in their careers, and every day our members use our products to make connections, discover opportunities, and gain insights.
-                            {/* Info */}
-    {/* 
-                            <br/> */} 
-                            {/* <br/> */}
+
                         <span style={{fontWeight:"bold", color:"#5D5D5D"}}> Mission:</span> {this.state.mission} 
                           
                     </div> 
