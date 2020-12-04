@@ -27,7 +27,7 @@ class JobLanding extends Component {
             selectedLocation: "Location",
             selectedSort: "Most Recent",
             currPage: 1,
-            eachPageSize: 10
+            eachPageSize: 4
         }
     }
 

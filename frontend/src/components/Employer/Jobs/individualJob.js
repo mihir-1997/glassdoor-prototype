@@ -58,9 +58,9 @@ class IndividualJob extends Component {
 
                         <span style={ { color: "#7F7F7F", fontSize: "14px", fontWeight: "normal", marginTop: "0px", marginBottom: "2px", marginLeft: "320px", display: "inline-block" } }>Posted on: { this.convertDate( this.props.data.date ) }</span>
                         <br />
-                        <span className="job-title-employer">{ this.props.data.title }</span>
+                        <span className="job-title-employer"><strong>{ this.props.data.title }</strong></span>
                         <span style={ { display: "inline-block", marginLeft: "115px" } }>{ this.props.data.type }</span>
-                        <span style={ { display: "inline-block", paddingLeft: "120px" } }> <span style={ { fontWeight: "bold", display: "inline-block", margin: "0px 0px 0px 0px" } }>Industry:</span> { this.props.data.industry }</span>
+                        <span style={ { display: "inline-block", paddingLeft: "65px" } }> <span style={ { fontWeight: "bold", display: "inline-block", margin: "0px 0px 0px 0px" } }>Industry:</span> { this.props.data.industry }</span>
 
                         <div className="basic-job-info">
                             <span style={ { fontWeight: "bold" } }>Description</span>
@@ -78,7 +78,7 @@ class IndividualJob extends Component {
                         </div >
                         <div className="job-address">
                             <span style={ { fontWeight: "bold" } }>Location</span>
-                            <span style={ { display: "inline-block", marginLeft: "385px" } }> <span style={ { fontWeight: "bold", display: "inline-block", margin: "0px" } }>Salary : $</span>{ this.props.data.salary }</span>
+                            {/* <span style={ { display: "inline-block", marginLeft: "385px" } }> <span style={ { fontWeight: "bold", display: "inline-block", margin: "0px" } }>Salary : $</span>{ this.props.data.salary }</span> */ }
                             <br />
                             <span>📍 { this.props.data.address }, { this.props.data.city }, { this.props.data.state }, { this.props.data.country }, { this.props.data.zip }</span>
                             <br />

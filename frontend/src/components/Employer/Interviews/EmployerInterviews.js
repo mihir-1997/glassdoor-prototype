@@ -99,15 +99,15 @@ class EmployerInterviews extends Component {
                             donuChartData: [
                                 {
                                     "name": "Positive",
-                                    "value": parseInt( res.data.interviewStats.positive )
+                                    "value": res.data.interviewStats.positive ? parseInt( res.data.interviewStats.positive ) : 0
                                 },
                                 {
                                     "name": "Neutral",
-                                    "value": parseInt( res.data.interviewStats.neutral )
+                                    "value": res.data.interviewStats.neutral ? parseInt( res.data.interviewStats.neutral ) : 0
                                 },
                                 {
                                     "name": "Negative",
-                                    "value": parseInt( res.data.interviewStats.negative )
+                                    "value": res.data.interviewStats.negative ? parseInt( res.data.interviewStats.negative ) : 0
                                 },
                             ]
                         } )

@@ -85,7 +85,7 @@ class AddReview extends Component {
 
     addReview = ( e ) => {
         e.preventDefault()
-        if ( this.state.employerName && this.state.rating && this.state.headline && this.state.pros && this.state.cons && this.state.isPositive && this.state.recommended && this.state.approveCEO && this.state.description && !this.state.error ) {
+        if ( this.state.employerName && this.state.rating && this.state.headline && this.state.pros && this.state.cons && this.state.isPositive && this.state.recommended && this.state.approveCEO && this.state.description && this.state.error === "" ) {
             let id = localStorage.getItem( "id" )
             if ( id ) {
                 let review = {

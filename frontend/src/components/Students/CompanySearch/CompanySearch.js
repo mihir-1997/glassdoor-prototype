@@ -102,7 +102,8 @@ class CompanySearch extends Component {
         }
     }
 
-    handlePageChange = ( value ) => {
+    handlePageChange = ( event, value ) => {
+        console.log( value )
         this.setState( {
             currPage: value,
         } )
@@ -141,7 +142,7 @@ class CompanySearch extends Component {
                     : null }
                 <div className="companysearch-page-wrapper">
                     { this.state.allCompanies.length > 0 ?
-                        <Pagination count={ Math.ceil( this.state.allCompanies.length / this.state.eachPageSize ) } onChange={ this.handlePageChange } />
+                        <Pagination count={ Math.ceil( this.state.allCompanies.length / this.state.eachPageSize ) } page={ this.state.currPage } onChange={ this.handlePageChange } />
                         : null }
                 </div>
             </div>
