@@ -5,7 +5,7 @@ function handle_request ( msg, callback ) {
         params: msg
     }
 
-    employerSchema.find( {} ).select( 'name website profileImageUrl ceoname views' ).then( doc => {
+    employerSchema.find( {} ).select( 'name website profileImageUrl logoImageUrl ceoname views' ).then( doc => {
 
         // console.log( "User", doc )
         callback( null, doc )
