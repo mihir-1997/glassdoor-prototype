@@ -102,7 +102,7 @@ class Photos extends Component {
                                         : null }
                                 </div>
                                 <div className="col-4 contributions-stat-column">
-                                    { photo.photos.length > 1 ?
+                                    { photo.photos.length > 0 ?
                                         photo.photos[ 0 ].photoStatus
                                         : null }
                                 </div>
