@@ -5,6 +5,7 @@ import SEO from '../../../SEO/SEO'
 import AddContribution from '../AddContributionHelper'
 
 import { BACKEND_URL, BACKEND_PORT } from '../../../Config/Config'
+import { Link } from 'react-router-dom'
 
 class Reviews extends Component {
 
@@ -103,7 +104,21 @@ class Reviews extends Component {
                         this.state.reviews.map( ( review, index ) => {
                             return <div className="row contributions-stats" key={ index }>
                                 <div className="col-4 contributions-stat-column">
-                                    <div><a href="fake/path">{ review.employerName }</a></div>
+                                    { review.reviewStatus === "Approved" ?
+
+                                        <div>
+                                            <Link to={ {
+                                                pathname: "/employer/reviews",
+                                                state: { employerName: review.employerName, employerID: "" }
+                                            } }>
+                                                { review.employerName }
+                                            </Link>
+                                        </div>
+                                        :
+                                        <div>
+                                            { review.employerName }
+                                        </div>
+                                    }
                                     <div className="review-description">{ review.description.length > 100 ?
                                         "\"" + review.description.substring( 0, 100 ) + "...\""
                                         : "\"" + review.description + "\""
