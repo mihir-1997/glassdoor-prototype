@@ -83,14 +83,17 @@ class IndividualJob extends Component {
                             <span>📍 { this.props.data.address }, { this.props.data.city }, { this.props.data.state }, { this.props.data.country }, { this.props.data.zip }</span>
                             <br />
                             { this.props.isStudent ?
-                                this.props.data.applicants.length > 0 ?
-                                    this.props.data.applicants.some( d => d.studentID === localStorage.getItem( "id" ) ) ?
-                                        <button disabled={ true } className="btn btn-primary d-flex justify-content-center align-items-center" style={ { marginLeft: "210px", marginTop: "10px", height: "30px", color: "rgb(24, 97, 191)", background: "white", fontWeight: "bold", border: "1px solid rgb(24, 97, 191)" } }>Applied</button>
+                                localStorage.getItem( "active" ) !== "admin" ?
+                                    this.props.data.applicants.length > 0 ?
+                                        this.props.data.applicants.some( d => d.studentID === localStorage.getItem( "id" ) ) ?
+                                            <button disabled={ true } className="btn btn-primary d-flex justify-content-center align-items-center" style={ { marginLeft: "210px", marginTop: "10px", height: "30px", color: "rgb(24, 97, 191)", background: "white", fontWeight: "bold", border: "1px solid rgb(24, 97, 191)" } }>Applied</button>
+                                            :
+                                            <span>
+                                                <button onClick={ this.applyForJob } className="btn btn-primary d-flex justify-content-center align-items-center" style={ { marginLeft: "210px", marginTop: "10px", height: "30px", color: "rgb(24, 97, 191)", background: "white", fontWeight: "bold", border: "1px solid rgb(24, 97, 191)" } }>Apply</button>
+                                                <JobApplication key={ Math.random() } employerName={ this.props.data.employerName } jobId={ this.props.data._id } applyToJob={ this.applyToJob } />
+                                            </span>
                                         :
-                                        <span>
-                                            <button onClick={ this.applyForJob } className="btn btn-primary d-flex justify-content-center align-items-center" style={ { marginLeft: "210px", marginTop: "10px", height: "30px", color: "rgb(24, 97, 191)", background: "white", fontWeight: "bold", border: "1px solid rgb(24, 97, 191)" } }>Apply</button>
-                                            <JobApplication key={ Math.random() } employerName={ this.props.data.employerName } jobId={ this.props.data._id } applyToJob={ this.applyToJob } />
-                                        </span>
+                                        null
                                     :
                                     <span>
                                         <button onClick={ this.applyForJob } className="btn btn-primary d-flex justify-content-center align-items-center" style={ { marginLeft: "210px", marginTop: "10px", height: "30px", color: "rgb(24, 97, 191)", background: "white", fontWeight: "bold", border: "1px solid rgb(24, 97, 191)" } }>Apply</button>
