@@ -59,16 +59,16 @@ function handle_request ( msg, callback ) {
             }
 
             //change employer name to ceo name
-            if ( review.employerName in ceo_rating ) {
+            if ( review.ceoname in ceo_rating ) {
                 if ( review.approveCEO == true ) {
-                    ceo_rating[ review.employerName ][ "positive" ] += 1
+                    ceo_rating[ review.ceoname ][ "positive" ] += 1
                 }
-                ceo_rating[ review.employerName ][ "total" ] += 1
+                ceo_rating[ review.ceoname ][ "total" ] += 1
 
             } else {
-                ceo_rating[ review.employerName ] = { "positive": 0, "total": 1 }
+                ceo_rating[ review.ceoname ] = { "positive": 0, "total": 1 }
                 if ( review.approveCEO == true ) {
-                    ceo_rating[ review.employerName ][ "positive" ] = 1
+                    ceo_rating[ review.ceoname ][ "positive" ] = 1
                 }
 
             }
