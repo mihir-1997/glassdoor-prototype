@@ -123,7 +123,7 @@ class EmployerJobs extends Component {
         if ( this.state.employer_id ) {
             axios.defaults.withCredentials = true
             axios.defaults.headers.common[ 'authorization' ] = localStorage.getItem( 'token' )
-            axios.post( BACKEND_URL + ":" + BACKEND_PORT + "/jobs/getJobsForEmployer/" + this.state.employer_id, { firstTime: false, pageSize: 3, pageNumber: pageNumber } )
+            axios.post( BACKEND_URL + ":" + BACKEND_PORT + "/jobs/getJobsForEmployer/" + this.state.employer_id, { firstTime: false, pageSize: 5, pageNumber: pageNumber } )
                 .then( ( res ) => {
                     console.log( res.data )
                     if ( res.status === 200 ) {
