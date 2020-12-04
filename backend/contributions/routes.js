@@ -29,7 +29,7 @@ router.get( '/getReviewsbyStudent/:studentID', checkAuth, ( req, res ) => {
     //         console.log( "from redis" )
     //         res.status( 200 ).send( JSON.parse( data ) )
     //     } else {
-    kafka.make_request( 'contributions_getReview', checkAuth, req.params, function ( err, results ) {
+    kafka.make_request( 'contributions_getReview', req.params, function ( err, results ) {
         if ( err ) {
             console.log( "Inside err", err );
             res.status( 404 ).send( "Failed" )
