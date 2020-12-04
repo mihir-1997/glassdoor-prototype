@@ -26,7 +26,7 @@ class EmployerJobs extends Component {
             logoImageUrl: "",
             currentPage: 1,
             totalCount: "",
-            elementsPerPage: 3,
+            elementsPerPage: 5,
             jobStats: {},
             employerName: "",
             employer_id: "",
