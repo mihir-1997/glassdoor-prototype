@@ -115,12 +115,15 @@ class AddJob extends Component {
 
                             </div>
                             <div className="form-row">
-                                <div className="form-group col-md-8">
+                                <div className="form-group col-md-7">
                                     <label htmlFor="experienceInputCompanyName">Address</label>
                                     <input type="text" className="form-control" name="address" onChange={this.onChange} placeholder="Address" />
                                 </div>
-
-                                <div className="form-group col-md-4">
+                                <div className="form-group col-md-2">
+                                    <label htmlFor="experienceInputCompanyName">Type</label>
+                                    <input type="text" className="form-control" name="type" onChange={this.onChange} placeholder="Type" />
+                                </div>
+                                <div className="form-group col-md-3">
                                     <label htmlFor="experienceInputCompanyName">Industry</label>
                                     <input type="text" className="form-control" name="industry" onChange={this.onChange} placeholder="Industry" />
                                 </div>
