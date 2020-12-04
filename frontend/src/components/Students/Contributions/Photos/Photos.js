@@ -87,7 +87,7 @@ class Photos extends Component {
                                         { photo.employerName }
                                     </div>
                                     <div>
-                                        { photo.photos.length > 1 ?
+                                        { photo.photos.length > 0 ?
                                             <img src={ BACKEND_URL + ":" + BACKEND_PORT + "/public/images/officePhotos/" + photo.photos[ 0 ].photo } className="contributions-table-photo" alt="company" />
                                             : null }
                                         <AllPhotos id={ index } photos={ photo.photos } employerName={ photo.employerName } key={ Math.random() } />
