@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import { Redirect } from 'react-router'
 import axios from "axios";
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom'
+import { Typeahead } from 'react-bootstrap-typeahead'
 
 import './EmployerJobs.css'
 import AddJob from './AddJob'
@@ -20,6 +21,8 @@ class EmployerJobs extends Component {
         super( props )
         this.state = {
             jobs: [],
+            filteredJobs: [],
+            allLocations: [],
             logoImageUrl: "",
             currentPage: 1,
             totalCount: "",
@@ -27,6 +30,7 @@ class EmployerJobs extends Component {
             jobStats: {},
             employerName: "",
             employer_id: "",
+            jobSearchTerm: "",
             isStudent: false
         }
     }
@@ -85,13 +89,15 @@ class EmployerJobs extends Component {
             axios.post( BACKEND_URL + ":" + BACKEND_PORT + "/jobs/getJobsForEmployer/" + id, {
                 "firstTime": true,
                 "pageNumber": 1,
-                "pageSize": 3
+                "pageSize": 5
             } )
                 .then( ( res ) => {
                     console.log( res.data )
                     if ( res.status === 200 ) {
                         this.setState( {
                             jobs: res.data.jobs,
+                            filteredJobs: res.data.jobs,
+                            allLocations: Array.from( new Set( res.data.jobs.map( data => data.city ) ) ),
                             totalCount: res.data.totalCount
                         } )
                         //console.log(this.state.jobs)
@@ -123,7 +129,8 @@ class EmployerJobs extends Component {
                     if ( res.status === 200 ) {
                         this.setState( {
                             jobs: res.data.jobs,
-
+                            filteredJobs: res.data.jobs,
+                            allLocations: Array.from( new Set( res.data.jobs.map( data => data.city ) ) )
                         } )
                         console.log( this.state.jobs )
                     }
@@ -141,6 +148,36 @@ class EmployerJobs extends Component {
 
     };
 
+    searchJob = ( e ) => {
+        e.preventDefault()
+        if ( e.target.value ) {
+            this.setState( {
+                jobSearchTerm: e.target.value,
+                filteredJobs: this.state.filteredJobs.filter( job => job.title.toUpperCase().startsWith( e.target.value.toUpperCase() ) )
+            } )
+        } else {
+            this.setState( {
+                filteredJobs: this.state.jobs
+            } )
+        }
+    }
+
+    locationFilterChange = ( e ) => {
+        this.setState( {
+            selectedLocation: e[ 0 ]
+        }, () => {
+            if ( this.state.selectedLocation ) {
+                this.setState( {
+                    filteredJobs: this.state.jobs.filter( job => job.city === this.state.selectedLocation )
+                } )
+            } else {
+                this.setState( {
+                    filteredJobs: this.state.jobs
+                } )
+            }
+        } )
+    }
+
     addJob = ( e ) => {
         e.preventDefault()
 
@@ -157,7 +194,7 @@ class EmployerJobs extends Component {
             redirectVar = <Redirect to="/login" />
             return redirectVar
         }
-        let allJobs = this.state.jobs.map( ( eachJob ) => {
+        let allJobs = this.state.filteredJobs.map( ( eachJob ) => {
             return (
                 <IndividualJob
                     key={ Math.random() }
@@ -193,10 +230,10 @@ class EmployerJobs extends Component {
                                     <div style={ { display: "inline-block" } } className="col-1.2 single-link"><Link to={ { pathname: "/employer/salaries", state: { employerID: this.state.employer_id, employerName: this.state.employerName } } } >Salaries</Link> </div>
                                     <div style={ { display: "inline-block" } } className="col-1.2 single-link"><Link to={ { pathname: "/employer/interviews", state: { employerID: this.state.employer_id, employerName: this.state.employerName } } } >Interviews</Link> </div>
                                     <div style={ { display: "inline-block" } } className="col-1.2 single-link"><Link to={ { pathname: "/employer/photos", state: { employerID: this.state.employer_id, employerName: this.state.employerName } } } >Photos</Link></div>
-                                    {localStorage.getItem("active") === "admin"?
-                                    <div style={{display:"inline-block"}} className="col-1.2 single-link"><Link to={ { pathname: "/employer/reports", state: { employerID: this.state.employer_id, employerName: this.state.employerName } } } >Reports</Link> </div>
-                                    :
-                                    null}
+                                    { localStorage.getItem( "active" ) === "admin" ?
+                                        <div style={ { display: "inline-block" } } className="col-1.2 single-link"><Link to={ { pathname: "/employer/reports", state: { employerID: this.state.employer_id, employerName: this.state.employerName } } } >Reports</Link> </div>
+                                        :
+                                        null }
                                 </div>
                                 :
                                 <div>
@@ -216,6 +253,16 @@ class EmployerJobs extends Component {
                         <p style={ { fontSize: "20px", lineHeight: "27px", marginLeft: "1px", fontWeight: "bolder", textAlign: "center" } }>Jobs at { this.state.employerName }</p>
 
                         <hr />
+                        <div className="employer-job-search-wrapper">
+                            <div className="row">
+                                <div className="col-6">
+                                    <input type="text" name="jobSearchTerm" className="form-control" placeholder="Search Job" onChange={ this.searchJob } />
+                                </div>
+                                <div className="col-6">
+                                    <Typeahead id="locationFilter" name="locationFilter" options={ this.state.allLocations } paginate={ false } placeholder="Location" onChange={ this.locationFilterChange } />
+                                </div>
+                            </div>
+                        </div>
                         { allJobs }
                         <Paginate
                             elementsPerPage={ this.state.elementsPerPage }
