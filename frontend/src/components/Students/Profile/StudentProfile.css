@@ -1,0 +1,54 @@
+.userprofile-wrapper {
+    padding: 2% 5% 1% 6%;
+    font-family: 'Lato', sans-serif;
+}
+
+.userinfo-profile-picture {
+    position: relative;
+    cursor: pointer;
+}
+
+.userinfo-profile {
+    height: 48px;
+    width: 48px;
+}
+
+#user-profile-picture {
+    display: none;
+}
+
+.userinfo-profile-icon {
+    position: absolute;
+    top: 40px;
+    left: 40px;
+}
+
+.add-photo {
+    color: rgb(24, 97, 191);
+}
+
+.userinfo-sections-links {
+    margin-top: 5%;
+}
+
+.sections-each-link {
+    width: 90%;
+    height: 40px;
+    padding: 7px 0;
+    border-bottom: 2px solid lightgray;
+    cursor: pointer;
+}
+
+.sections-each-link:hover{
+    background-color: rgb(245, 246, 247);
+}
+
+.sections-each-link-active {
+    border-bottom: 4px solid #0caa41;
+}
+
+.sections-each-link-text {
+    margin-left: 5%;
+    font-weight: bold;
+    font-size: 15px;
+}

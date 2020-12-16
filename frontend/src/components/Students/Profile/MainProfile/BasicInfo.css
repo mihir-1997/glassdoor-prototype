@@ -1,0 +1,58 @@
+.basic-info-wrapper h3 {
+    font-size: 24px;
+    font-weight: 900;
+    color: #20262e;
+    padding-bottom: 2%;
+    border-bottom: 1px solid lightgray;
+}
+
+.basic-info-pen-svg {
+    cursor: pointer;
+}
+
+.basic-info-pen-svg .basic-info-pen-hover {
+    display: none;
+}
+
+.basic-info-pen-svg:hover .basic-info-pen {
+    display: none;
+}
+
+.basic-info-pen-svg:hover .basic-info-pen-hover {
+    display: block;
+}
+
+.basic-info-row {
+    margin-top: 1%;
+}
+
+.basic-info-each-item {
+    margin: 4% 0;
+    color: #505963;
+}
+
+.basic-info-each-section {
+    margin: 5% 0 0 0;
+}
+
+.basic-info-circle-svg {
+    cursor: pointer
+}
+
+.basic-info-circle-svg .basic-info-circle-g-hover {
+    display: none;
+}
+
+.basic-info-circle-svg:hover .basic-info-circle-g {
+    display: none;
+}
+
+.basic-info-circle-svg:hover .basic-info-circle-g-hover {
+    display: block;
+}
+
+.skills,
+.education,
+.license {
+    margin-top: 3%;
+}

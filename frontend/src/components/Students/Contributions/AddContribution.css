@@ -1,0 +1,71 @@
+.add-contribution-wrapper {
+    background-color: #fff;
+    padding: 1% 2% 5%;
+}
+
+.add-contrihution-header {
+    font-size: 24px;
+    line-height: 32px;
+    color: #0d0d0d;
+    margin: 16px 0 0 3%;
+    font-weight: 400;
+}
+
+.add-contribution-static-text {
+    margin: 16px 0 0 3%;
+    padding: 0;
+    line-height: 22px;
+    color: #404040;
+    font-size: 15px;
+}
+
+.add-contribution-options {
+    margin: 4px 0 0 3%;
+}
+
+.add-contribution-wrapper label {
+    color: #505963;
+    line-height: 32px;
+}
+
+/* add contribution right pane */
+
+.add-contribution-right-pane {
+    padding: 5% 5% 7% 5%;
+    margin-right: 5%;
+    background-color: #fff;
+}
+
+.add-contribution-right-pane h5 {
+    line-height: 32px;
+}
+
+.add-contribution-right-pane .each-line {
+    margin: 7% 0;
+    font-style: italic;
+    color: #404040;
+    font-size: 15px;
+}
+
+.add-contribution-active-section{
+    margin: 4% 0 0 3%;
+    color: #404040;
+}
+
+.add-contribution-active-section input, 
+.add-contribution-active-section textarea, 
+.add-contribution-active-section select {
+    width: 90%;
+}
+
+.add-contribution-active-section input::placeholder,
+.add-contribution-active-section textarea::placeholder{
+    color: #C4C7CB
+}
+
+/* add review */
+
+.add-review input[type="radio"],
+.add-interview input[type="radio"] {
+    width: auto;
+}

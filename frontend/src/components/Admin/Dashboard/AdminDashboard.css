@@ -1,0 +1,57 @@
+.admin-dashboard {
+    font-family: 'Lato', sans-serif ;
+}
+
+.admin-dashboard-heading {
+    font-size: x-large;
+    padding: 1% 0;
+    text-align: center;
+    font-weight: 700;
+    background-color: #F6F6F6;
+    color: #81CA9C;
+}
+
+.admin-dashboard-row,
+.admin-dashboard-second-row {
+    height: 50vh;
+    padding-top: 2%;
+    display: grid;
+    grid-template-columns: 1fr 25fr;
+    grid-gap: 10px;
+}
+
+.admin-dashboard-second-row {
+    margin: 2% 0;
+}
+
+.admin-dashboard-col-5 {
+    display: table;
+    height: 100%;
+    width: 100%;
+    background-color: #81CA9C;
+    clip-path: polygon(15% 0%, 72% 0%, 72% 42%, 100% 47%, 72% 52%, 72% 100%, 15% 100%);
+    text-align: center;
+    padding-right: 15%;
+    color: #ffffff;
+    font-weight: 700;
+}
+
+.admin-dashboard-col-95-wrapper {
+    margin-left: 1%;
+}
+
+.admin-dashboard-col-95 .row {
+    padding: 0;
+    margin: 0 0 0 1%;
+}
+
+.vertically-aligned-div {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.admin-reviews-wrapper,
+.admin-ratings-wrapper {
+    padding: 1%;
+    background-color: #F6F6F6;
+}

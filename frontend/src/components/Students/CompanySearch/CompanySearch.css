@@ -1,0 +1,85 @@
+.company-search-wrapper {
+    background-color: #EAEAEA;
+    padding: 0 5% 0 17%;
+    min-height: calc(100vh - 80px);
+}
+
+.company-result-text-wrapper {
+    width: 60%;
+    min-height: 100px;
+    max-height: 150px;
+}
+
+.company-result-text {
+    padding: 5% 0 0 3%; 
+    height: 100%;
+    width: 100%;
+    font-size: 20px;
+    color: #505963;
+}
+
+.companysearch-page-wrapper {
+    width: 60%;
+    margin-top: 20px;
+}
+
+.companysearch-page-wrapper .MuiPagination-root {
+    padding-top: 25px;
+}
+
+/* Individual company card */
+
+.individual-comanycard-wrapper {
+    width: 60%;
+    min-height: 180px;
+    max-height: 250px;
+    background-color: #fff;
+    padding: 2% 3%;
+    margin: 1% 0;
+    box-shadow: 0 1px 1px 1px rgba(127,127,127,0.3);
+}
+
+.company-search-company-logo {
+    height: 75px;
+    width: 75px;
+}
+
+.individual-company-right-pane {
+    padding: 5% 0 0 0;
+}
+
+.individual-company-name {
+    font-size: 22px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.individual-company-ratings {
+    font-weight: 600;
+}
+
+.individual-company-location {
+    margin-top: 12%;
+    color: #404040;
+}
+
+.individual-company-website {
+    margin-top: 2%;
+    color: #858C94
+}
+
+.individual-company-stats {
+    margin: 10% 0 0 5%;
+}
+
+.individual-company-numbers {
+    font-weight: 600;
+}
+
+.individual-company-stats-text {
+    color: #505963
+}
+
+.individual-company-add-review {
+    margin-top: 8%;
+}

@@ -1,0 +1,85 @@
+.resume-wrapper {
+    margin-right: 5%;
+}
+
+.resume-title {
+    border-bottom: 1px solid lightgray;
+    padding-bottom: 2%;
+}
+
+.resume-wrapper h3 {
+    font-size: 24px;
+    font-weight: 900;
+    color: #20262e;
+}
+
+.reume-title {
+    position: relative;
+}
+
+.resume-add-icon {
+    position: absolute;
+    right: 8%;
+}
+
+.each-resume {
+    margin: 2% 0;
+    padding: 2% 0;
+    border-bottom: 1px solid lightgray;
+}
+
+.resume-date {
+    font-size: 15px
+}
+
+.resume-details-left {
+    float: left
+}
+
+.resume-delete-icon {
+    float: right;
+}
+
+.resume-upload-wrapper {
+    height: 270px;
+    width: 70%;
+    padding: 5%;
+    margin: 7% auto 0;
+    border: 1px solid lightgray;
+    border-radius: 3%;
+    cursor: pointer;
+}
+
+.resume-upload-wrapper:hover {
+    box-shadow: 0 4px 10px rgba(133,140,148,.3), 0 0 2px 0 #c4c7cc;
+}
+
+.resume-upload {
+    margin: auto;
+    width: 25%;
+}
+
+.resume-upload-text {
+    padding-top: 15%;
+    text-align: center;
+}
+
+.resume-upload-bold-text {
+    font-weight: bold;
+}
+
+.isprimary-input {
+    width: 100%;
+}
+
+.isprimary-input div {
+    margin: 2% 0 0 15%;
+}
+
+.resume-upload-input {
+    display: none;
+}
+
+.resume-delete-icon {
+    cursor: pointer;
+}

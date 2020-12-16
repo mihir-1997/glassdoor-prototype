@@ -1,0 +1,56 @@
+.demographics-title h3 {
+    font-size: 24px;
+    font-weight: 900;
+    color: #20272E;
+    padding: 2% 0;
+    border-bottom: 1px solid lightgray;
+}
+
+.demographics-icon {
+    height: 90%;
+    width: 90%;
+}
+
+.demographics-text-wrapper {
+    margin: 2% 0;
+}
+
+.demographics-text-title {
+    font-weight: bold;
+    font-size: 18px;
+    padding: 1% 0;
+}
+
+.demographics-text {
+    color: #404040;
+}
+
+.demographics-section {
+    margin: 3% 0 0 0;
+}
+
+.demographics-section h3 {
+    font-size: 18px;
+    font-weight: 900;
+    color: #20262e;
+    padding-bottom: 2%;
+    border-bottom: 1px solid lightgray;
+    width: 100%;
+}
+
+.demographics-section-title {
+    float: left;
+}
+
+.demographics-section-add {
+    float: right;
+}
+
+.demographics-each-section {
+    clear: both;
+    margin: 5% 0;
+}
+
+.demographics-answer {
+    font-weight: bold;
+}

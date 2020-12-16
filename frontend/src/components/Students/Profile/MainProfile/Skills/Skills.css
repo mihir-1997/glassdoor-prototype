@@ -1,0 +1,9 @@
+.each-skill {
+    background-color: rgb(182, 232, 252);
+    border-radius: 16px 16px 16px 16px;
+    color: rgb(1, 103, 143);
+    display: inline-block;
+    font-size: 15px; 
+    padding: 8px 20px;
+    margin: 1%;
+}

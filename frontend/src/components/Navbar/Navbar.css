@@ -8,6 +8,11 @@
 
 nav {
     background-color: #fff;
+    height: 80px;
+}
+
+nav input.form-control::placeholder {
+    color: #C4C7CB;
 }
 
 .logo-image {
@@ -79,7 +84,6 @@ nav .dropdown-toggle::after {
     min-width: 88px;
     background-color: #0CA941;
     padding: 5px 16px;
-    font-family: 'Lato', sans-serif;
     height: 40px;
 }
 
@@ -106,17 +110,45 @@ nav .dropdown-toggle::after {
     display: none;
 }
 
+.user-icon-wrapper {
+    position: relative;
+}
+
 .user-icon {
     margin-top: 2px;
     margin-left: 10px;
     cursor: pointer;
+    display: inline-block;
+}
+
+.user-icon-dropdown {
+    position: absolute;
+    padding-top: 10px;
+    right: 1px;
+    background-color: #fff;
+    box-shadow: 0 4px 5px rgba(133,140,148,.3), 0 0 2px 0 #c4c7cc;
+    display: none;
+    z-index: 1;
+}
+
+.user-icon-dropdown .dropdown-item {
+    height: 60px;
+}
+
+.user-icon-dropdown .sign-out {
+    border-top: 1px solid lightgray;
+}
+
+.user-icon-dropdown .dropdown-item:hover {
+    background-color: #dee0e3;
 }
 
 .user-icon .user-icon-hover {
     display: none;
 }
 
-.user-icon:hover .user-icon-hover {
+.user-icon:hover .user-icon-hover,
+.user-icon:hover .user-icon-dropdown  {
     display: block;
 }
 

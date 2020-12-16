@@ -1,0 +1,118 @@
+.popup-container {
+    background-color: #fff;
+    width: 100%;
+    height: 100%;
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(77,82,87,0.9);
+    z-index: 1;
+    overflow: auto;
+}
+
+.popup-wrapper {
+    background-color: #fff;
+    width: 600px;
+    height: 600px;
+    margin: 5% 0 0 30%;
+    border-radius: 1%;
+}
+
+.popup-wrapper-show {
+    display: block;
+    overflow: hidden;
+}
+
+/* Header */
+.header-wrapper {
+    height: 45px;
+    margin: 0 1%;
+    border-bottom: 1px solid lightgray;
+}
+
+.header-text {
+    float: left;
+    margin: 2% 0 0 5%;
+    color: #1762BF;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.cancel-button {
+    float: right;
+    margin: 1% 1%;
+    cursor: pointer;
+}
+
+.cancel-icon .cancel-icon-path-hover {
+    display: none;
+}
+
+.cancel-icon:hover .cancel-icon-path {
+    display: none;
+}
+
+.cancel-icon:hover .cancel-icon-path-hover {
+    display: block;
+}
+
+/* body */
+
+.popup-body {
+    min-height: 450px;
+    max-height: 450px;
+    overflow-y: scroll;
+    margin: 0 5%;
+}
+
+.popup-body::-webkit-scrollbar {
+    display: none;
+}
+
+.popup-title {
+    text-align: center;
+    width: 100%;
+    font-weight: bold;
+    font-size: 18px;
+    padding: 2% 0 0 0;
+}
+
+.popup-form label {
+    font-size: small;
+}
+
+.popup-form input::placeholder,
+.popup-form textarea::placeholder {
+    color: #C4C7CB;
+}
+
+/* Footer */
+
+.popup-buttons-wrapper {
+    height: 100px;
+    border-top: 2px solid lightgray;
+}
+
+.popup-buttons {
+    width: 58%;
+    margin: auto;
+    padding: 3% 0;
+}
+
+.reverse-update-proflie {
+    margin-top: 2%;
+    border: 1px solid #fff;
+    background-color: rgb(24, 97, 191);
+    color: #fff;
+    min-width: 156px;
+    font-weight: bold;
+    font-size: 15px;
+    padding: 7px 16px;
+    animation: background-color;
+}
+
+.reverse-update-proflie:hover {
+    color: #fff;
+    background-color: rgb(12, 64, 133);
+}

@@ -1,0 +1,94 @@
+.experience-wrapper {
+    margin-top: 2%;
+}
+
+.building-icon-wrapper {
+    height: 60px;
+    width: 55px;
+    padding: 2px;
+    border: 1px solid #DEDEDE;
+}
+
+.building-icon {
+    background-color: #F1F2F2;
+    height: 100%;
+    width: 100%;
+    position: relative;
+}
+
+.building-icon-svg {
+    position: absolute;
+    top: 12px;
+    left: 10px;
+}
+
+.experience-second-col {
+    padding-bottom: 2%;
+    margin-bottom: 2%;
+    border-bottom: 1px solid lightgray;
+}
+
+.experience-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 1%;
+}
+
+.experience-more-icon {
+    cursor: pointer;
+}
+
+.experience-more-icon .experience-more-icon-g-hover {
+    display: none;
+}
+
+.experience-more-icon:hover .experience-more-icon-g {
+    display: none;
+}
+
+.experience-more-icon:hover .experience-more-icon-g-hover {
+    display: block;
+}
+
+.experience-more-icon-option-wrapper {
+    position: relative;
+}
+
+.experience-more-icon-option {
+    position: absolute;
+    top: 0px;
+    right: 80px;
+    display: none;
+    box-shadow: 0 4px 6px 0 rgba(69,77,87,.32);
+    padding: 5px 0px;
+    font-size: 16px;
+    min-width: 120px;
+    background-color: #fff;
+}
+
+.experience-more-icon-option-show {
+    display: block;
+}
+
+.experience-more-icon-option .dropdown-item {
+    padding: 10px 15px;
+}
+
+.experience-company {
+    font-size: 15px;
+    color: #2367C1;
+    font-weight: bold;
+}
+
+.experience-location,
+.experience-duration {
+    color: #6E6E6E;
+}
+
+.experience-description {
+    margin-top: 3%;
+}
+
+.error {
+    color: red;
+}

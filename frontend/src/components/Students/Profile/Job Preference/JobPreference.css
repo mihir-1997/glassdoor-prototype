@@ -1,0 +1,114 @@
+.job-prefer-wrapper,
+.company-preference-wrapper { 
+    margin: 3% 5% 1% 1%;
+    padding: 4% 10% 2% 3%;
+    width: 93%;
+    min-height: 500px;
+    box-shadow: 0 0 2px #c4c7cc, 0 1px 3px 0 rgba(133,140,148,.3);
+}
+
+.job-prefer-title h3 {
+    font-size: 24px;
+    font-weight: 900;
+    color: #20262e;
+}
+
+.job-prefer-text {
+    margin: 3% 0;
+}
+
+.job-prefer-search-status-text,
+.job-prefer-job-title-text,
+.job-prefer-salary {
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.job-prefer-search-status-select {
+    margin-top: 2%;
+    width: 60%;
+}
+
+.job-prefer-search-status-form label{
+    font-size: small;
+}
+
+.job-prefer-job-title,
+.job-prefer-salary {
+    margin: 4% 0
+}
+
+.job-prefer-job-title-add {
+    margin-top: 2%;
+    font-size: 15px;
+    width: 60%;
+}
+
+.job-prefer-job-title-add .add-title-icon,
+.job-prefer-salary-add-button{
+    color: #1762BF;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.job-title {
+    margin: 1% 0;
+    padding: 0 8px;
+    background-color: #00A1DF;
+    border: none;
+    height: 32px;
+    vertical-align: middle;
+    line-height: 32px;
+    border-radius: 2px;
+    color: #fff !important;
+    display: inline-block;
+}
+
+.remove-job-title {
+    cursor: pointer;
+}
+
+.add-title-input {
+    display: none;
+    margin: 1% 0;
+}
+
+.add-title-input-show {
+    display:block
+}
+
+.job-prefer-salary-add {
+    margin: 2% 0;
+    width: 60%;
+}
+
+.salary-add-div {
+    display: none;
+    margin: 1% 0;
+    font-weight: normal;
+}
+
+.salary-add-div-show {
+    display: block;
+}
+
+.job-prefer-salary-add-button-hide {
+    display: none;
+}
+
+.salary-add-title {
+    margin: 2% 0;
+    font-size: 24px;;
+}
+
+.relocation-checkbox {
+    margin: 2% 0;
+}
+
+.job-industry-pref {
+    margin-top: 5%;
+}
+
+.employerSideAnswer {
+    color: gray;
+}

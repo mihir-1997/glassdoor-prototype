@@ -1,0 +1,81 @@
+.userdashboard-first-row {
+    padding: 0 5% 1% 6%;
+    border-bottom: 1px solid lightgray;
+}
+
+.dashboard-tagline {
+    margin: 2% 0 0 0;
+}
+
+.dashboard-tagline h3 {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.dashboard-font {
+    font-size: 17px;
+    font-weight: 600;
+}
+
+.second-row-buttons {
+    padding: 3% 0;
+    min-width: 200px;
+}
+
+.userdashboard-second-row {
+    padding: 0 5% 1% 6%;
+    font-family: 'Lato', sans-serif;
+}
+
+.userdashboard-userinfo-wrapper {
+    margin-top: 5%;
+}
+
+.userdashboard-userinfo {
+    box-shadow: 0 0 2px #c4c7cc;
+    cursor: pointer;
+    height: 270px;
+    padding: 5%;
+}
+
+.userdashboard-userinfo:hover {
+    box-shadow: 0 8px 10px rgba(133,140,148,0.4), 0 0 2px #c4c7cc;
+}
+
+.userinfo-profile {
+    margin: 0 0 2% 2%;
+    height: 55px;
+    width: 55px;
+}
+
+.dashboard-profile {
+    height: 40px;
+    width: 40px;
+}
+
+.userinfo-name {
+    font-weight: bold;
+    font-size: 20px;;
+}
+
+.userinfo-title,
+.userinfo-location {
+    color: gray;
+    margin: 3% 0;
+}
+
+.update-profile {
+    margin-top: 2%;
+    border: 1px solid rgb(24, 97, 191);
+    color: rgb(24, 97, 191);
+    min-width: 156px;
+    font-weight: bold;
+    font-size: 15px;
+    padding: 7px 16px;
+    animation: background-color;
+}
+
+.update-profile:hover {
+    background-color: rgb(24, 97, 191);
+    color: #fff
+}

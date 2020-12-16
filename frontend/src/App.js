@@ -8,9 +8,13 @@ import './App.css';
 function App () {
   return (
     <div className="App">
-      <BrowserRouter>
-        <Routes></Routes>
-      </BrowserRouter>
+      <div id="no-popup">
+        <BrowserRouter>
+          <Routes></Routes>
+        </BrowserRouter>
+      </div>
+      <div id="modal">
+      </div>
     </div>
   );
 }

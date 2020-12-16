@@ -1,0 +1,108 @@
+.employer-profile-wrapper {
+  background-color: #eaeaea;
+  width: 100%;
+  padding: 2% 12% 1% 12%;
+}
+
+.root-header {
+  /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(206, 200, 200, 0.19); */
+  height: 100%;
+  width: 100%;
+}
+.button {
+  transition-duration: 0.4s;
+}
+
+.button:hover {
+  color: #4b7dbd; /* Green */
+}
+
+.details-wrapper {
+  font-weight: bold;
+  background-color: #fff;
+  top: 10%;
+  padding-bottom: 1%;
+}
+
+.multiple-links {
+  padding-left: 25px;
+}
+
+.single-link {
+  font-weight: normal;
+  padding: 15px;
+  color: #1861bf;
+  font-size: 15px;
+  font-style: sans-serif;
+  border-right: 1px solid #eaeaea;
+}
+
+.details {
+  position: relative;
+  margin-left: 13%;
+  margin-top: -6%;
+  /* font-size: xx-large; */
+}
+.cover {
+  min-height: 200px;
+  max-height: 400px;
+  width: 100%;
+}
+
+.employer-company-logo {
+  margin: -3% 0 0 2%;
+}
+
+.logo {
+  border: 2px solid #fff;
+  height: 100px;
+  width: 100px;
+}
+
+.info-wrapper {
+  padding: 20px;
+  margin-top: 20px;
+  background-color: #fff;
+  width: 70%;
+  height: 100%;
+}
+
+.employer-profile-info-wrapper {
+  padding: 20px;
+  margin-top: 20px;
+  background-color: #fff;
+}
+
+.form-wrapper-side {
+  position: absolute;
+  top: 70%;
+  right: 12%;
+  padding: 20px;
+  margin-top: 20px;
+  background-color: #fff;
+  width: 22%;
+  height: 60%;
+}
+.info-wrapper-row {
+  font-size: 15px;
+}
+
+.span-info {
+  color: #505963;
+  font-weight: bold;
+  font: Lato;
+  padding-bottom: 12px;
+}
+
+.single-row {
+  padding-bottom: 12px;
+}
+
+.jobs-at {
+  align-items: center;
+  margin-left: 40%;
+  background-color: #09aa41;
+  color: #fff;
+  font-weight: bold;
+  border: #09aa41;
+}

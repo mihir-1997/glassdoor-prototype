@@ -1,0 +1,261 @@
+.job-search-wrapper {
+    background-color: #EAEAEA;
+    padding: 0 5% 0 6%;
+    height: calc(100vh - 80px);
+}
+
+.job-search {
+    padding-top: 15px;
+    height: 100%;
+}
+
+.job-search-filters {
+    height: 60px;
+    background-color: #fff;
+    border-bottom: 1px solid #E7E7E7;
+    padding: 10px 10px;
+}
+
+.job-type-filter,
+.salary-filter,
+.location-filter {
+    height: 40px;
+    width: 90%;
+    border: 1px solid #C2C2C2;
+    color: #656565;
+}
+
+.job-type-filter:hover,
+.salary-filter:hover,
+.location-filter:hover {
+    border: 1px solid #7F7F7F;
+    color: #656565;
+}
+
+.salary-filter {
+    width: 100%;
+}
+
+.job-search-filters .dropdown-toggle {
+    text-align: left;
+}
+
+.job-search-filters .dropdown-toggle::after {
+    float: right;
+    margin-top: 10px;
+}
+
+.job-search-display {
+    background-color: #fff;
+    height: calc(100vh - 145px);
+}
+
+.job-search-display-left {
+    overflow-y: scroll;
+}
+
+/* Job search left pane */
+
+.job-search-display-left {
+    width: 40%;
+    border-right: 1px solid #E7E7E7;
+}
+
+.job-search-sort-wrapper {
+    height: 50px;
+    border-bottom: 1px solid lightgray;
+    padding: 8px 10px;
+    color: #505963
+}
+
+.job-search-sort-div:hover {
+    border: 1px solid lightgray;
+    cursor: pointer;
+}
+
+.job-search-sort-wrapper {
+    position: relative;
+}
+
+.job-search-sort-option {
+    position: absolute;
+    top: 40px;
+    display: none;
+    box-shadow: 0 4px 6px 0 rgba(69,77,87,.32);
+    padding: 5px 0px;
+    font-size: 16px;
+    min-width: 120px;
+    background-color: #fff;
+    color: #505963
+}
+
+.job-search-sort-option-show {
+    display: block;
+}
+
+.job-search-total-jobs-wrapper {
+    color: #7A8089;
+    font-size: 12px;
+    padding-top: 15px;
+}
+
+.each-job {
+    height: 110px;
+    padding: 0 1%;
+    border-bottom: 1px solid lightgray;
+    cursor: pointer;
+}
+
+.each-job:hover {
+    box-shadow: 0 0 6px 0 #c4c7cc;
+}
+
+.active-job {
+    border: 1.5px solid #2aabde;
+    border-left: 8px solid #2aabde;
+    border-radius: 3px;
+    box-sizing: border-box;
+    background-color: transparent;
+}
+
+.each-job-left-pane {
+    width: 20%;
+}
+
+.each-job-company-logo {
+    height: 50%;
+}
+
+.company-logo-wrapper {
+    padding: 20% 0 0 20%;
+    width: 100%;
+    height: 100%;
+}
+
+.company-logo {
+    width: 45%;
+    height: 100%;
+    border: 1px solid lightgray;
+}
+
+.each-job-company-ratings {
+    line-height: 1.6;
+    padding-left: 22%;
+    font-size: 12px;
+    color: #0CA941;
+    font-weight: 700;
+}
+
+.each-job-right-pane {
+    width: 80%
+}
+
+.each-job-company-name {
+    color: #505863;
+    font-size: 15px;
+    line-height: 20px;
+    margin-top: 4%;
+}
+
+.each-job-title {
+    color: #505863;
+    font-weight: 600;
+}
+
+.each-job-location,
+.each-job-salary,
+.each-job-date {
+    font-size: small;
+    color: #8E959B;
+}
+
+.each-job-date-wrapper {
+    position: relative;
+}
+
+.each-job-date {
+    position: absolute;
+    right: 10px;
+    bottom: 3px;
+}
+
+/* Job search right pane */
+
+.job-search-display-right {
+    width: 60%;
+}
+
+.company-image {
+    height: 20%;
+    width: 100%;
+}
+
+.job-description-company {
+    padding: 2%;
+    border-bottom: 1px solid lightgray;
+}
+
+.job-description-ratings {
+    line-height: 1.6;
+    font-size: 12px;
+    color: #0CA941;
+    font-weight: 700;
+}
+
+.company-left-pane {
+    width: 70%
+}
+
+.company-right-pane {
+    width: 30%;
+}
+
+.company-title {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.job-description-text-wrapper {
+    overflow-y: scroll;
+    height: 300px;
+    padding: 2% 2% 15% 2%;
+}
+
+.job-description-heading {
+    font-weight: 500;
+    line-height: 4;
+}
+
+.job-description-text {
+    color: rgb(80, 88, 99);
+    line-height: 1.4em;
+    font-size: 15px;
+}
+
+/* Common css */
+
+.left-pane {
+    float: left;
+    height: 100%;
+}
+
+.right-pane {
+    float: right;
+    height: 100%;
+}
+
+.clear-float {
+    clear: both;
+}
+
+/* Scrollbar css */
+
+::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 7px;
+  }
+  
+::-webkit-scrollbar-thumb {
+background-color: #DDDDDD;
+box-shadow: 0 0 1px rgba(255, 255, 255, .5);
+}
